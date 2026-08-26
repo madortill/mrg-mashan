@@ -1,0 +1,158 @@
+/* ========================================
+   מיקום וגודל הלפטופ
+
+   הרוחב והגובה נקבעים בנפרד.
+   לכן שינוי הרוחב לא מגדיל אוטומטית
+   את הגובה באותו היחס.
+======================================== */
+
+.laptop-positioner {
+  position: absolute;
+
+  left: 50%;
+  bottom: -4dvh;
+
+  /*
+    שינוי הרוחב לא משפיע על הגובה.
+  */
+  width: min(94vw, 108rem);
+  height: min(86dvh, 58rem);
+
+  transform: translateX(-50%);
+
+  /*
+    מיקום המסך בתוך computer_home.png.
+    צריך לדייק רק את ארבעת הערכים האלה.
+  */
+  --screen-top: 4.5%;
+  --screen-left: 14.8%;
+  --screen-width: 70.4%;
+  --screen-height: 74%;
+
+  z-index: 3;
+}
+
+
+/*
+  אנימציות כניסה צריכות להיות על האלמנט
+  הזה ולא על laptop-positioner.
+
+  כך האנימציה לא דורסת את translateX.
+*/
+
+.laptop-motion {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  animation:
+    laptop-desktop-enter
+    0.65s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+
+/*
+  בכוונה משתמשים ב-fill:
+
+  רק תמונת המחשב עצמה מקבלת שינוי קל ביחס.
+  התוכן האינטראקטיבי שבתוך המסך לא מתעוות.
+*/
+
+.laptop-image {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: fill;
+  object-position: center bottom;
+
+  pointer-events: none;
+  user-select: none;
+
+  z-index: 1;
+}
+
+
+/* ========================================
+   האזור הלחיץ בתוך מסך הלפטופ
+======================================== */
+
+.laptop-screen {
+  position: absolute;
+
+  top: var(--screen-top);
+  left: var(--screen-left);
+
+  width: var(--screen-width);
+  height: var(--screen-height);
+
+  overflow: hidden;
+
+  /*
+    אם הרקע כבר נמצא ב-PNG של המחשב,
+    משאירים transparent.
+  */
+  background-color: transparent;
+
+  border-radius: clamp(0.25rem, 0.45vw, 0.6rem);
+
+  container-type: inline-size;
+
+  z-index: 2;
+}
+
+
+/* ========================================
+   אנימציית כניסה למסך הבית
+======================================== */
+
+@keyframes laptop-desktop-enter {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(1.5rem)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* ========================================
+   מסכים נמוכים
+======================================== */
+
+@media (max-height: 44rem) {
+  .laptop-positioner {
+    bottom: -7dvh;
+
+    width: min(90vw, 96rem);
+    height: min(82dvh, 48rem);
+  }
+}
+
+
+/* ========================================
+   מסכים צרים
+======================================== */
+
+@media (max-width: 60rem) {
+  .laptop-positioner {
+    width: 97vw;
+    height: min(80dvh, 45rem);
+  }
+}

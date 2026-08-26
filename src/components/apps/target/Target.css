@@ -1,0 +1,271 @@
+/* ==========================================================================
+   Target component styles
+   - Fully responsive: fluid sizing via clamp()/%, grid collapses to a single
+     column on narrow viewports.
+   - Colors/spacing pulled into variables at the top so this can be re-themed
+     without touching the rules below.
+   ========================================================================== */
+
+.target-screen {
+  --target-accent: #c0202b;      /* red used for the title / target rings */
+  --target-text: #1f1f1f;
+  --target-box-border: #d8d8d8;
+  --target-box-bg: #ffffff;
+  --target-cta-bg: #f3b8bb;
+  --target-cta-text: #7a1a1f;
+
+  --target-gap: clamp(10px, 2vw, 24px);
+  --target-box-radius: 10px;
+  --target-transition: 550ms cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(14px, 2.5vw, 22px);
+  padding: clamp(12px, 2vw, 20px);
+  box-sizing: border-box;
+  font-family: inherit;
+  color: var(--target-text);
+}
+
+/* ---------- header box (top banner text) ---------- */
+
+.target-header-box {
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--target-box-border);
+  border-radius: var(--target-box-radius);
+  background: var(--target-box-bg);
+  padding: clamp(10px, 1.6vw, 16px) clamp(12px, 2vw, 20px);
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.target-header-box__text {
+  font-size: clamp(11px, 1.3vw, 13px);
+  line-height: 1.5;
+}
+
+/* ---------- grid: 4 quadrant boxes + center target ---------- */
+
+.target-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr minmax(140px, 220px) 1fr;
+  grid-template-areas:
+    'tl center tr'
+    'bl center br';
+  align-items: center;
+  gap: var(--target-gap);
+}
+
+.target-box {
+  grid-area: var(--area);
+  min-height: clamp(56px, 8vw, 74px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid var(--target-box-border);
+  border-radius: var(--target-box-radius);
+  background: var(--target-box-bg);
+  padding: clamp(8px, 1.4vw, 14px);
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(6px) scale(0.98);
+  transition: opacity var(--target-transition), transform var(--target-transition);
+}
+
+.target-box.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.target-box__text {
+  font-size: clamp(10.5px, 1.15vw, 12.5px);
+  line-height: 1.5;
+}
+
+.target-box--top-left { --area: tl; }
+.target-box--top-right { --area: tr; }
+.target-box--bottom-left { --area: bl; }
+.target-box--bottom-right { --area: br; }
+
+/* ---------- center: target graphic + arrows ---------- */
+
+.target-center {
+  grid-area: center;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 220px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.target-hit-area {
+  all: unset;
+  cursor: pointer;
+  width: 62%;
+  height: 62%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.target-hit-area:disabled {
+  cursor: default;
+}
+
+.target-hit-area:focus-visible {
+  outline: 2px solid var(--target-accent);
+  outline-offset: 4px;
+}
+
+.target-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  transition: transform 200ms ease;
+}
+
+.target-hit-area:not(:disabled):hover .target-image,
+.target-hit-area:not(:disabled):focus-visible .target-image {
+  transform: scale(1.04);
+}
+
+/* Arrows: absolutely positioned over the target, each resting outside the
+   ring on its own quadrant side, pointing inward. On reveal they travel to
+   the center and fade out ("absorbed" into the target).
+   Swap --arrow-travel-x/y and rotation per quadrant to match the real
+   artwork once it's available. */
+
+.target-arrows {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.target-arrow {
+  position: absolute;
+  width: clamp(16px, 3.4vw, 26px);
+  height: auto;
+  left: 50%;
+  top: 50%;
+  opacity: 1;
+  transition: transform var(--target-transition), opacity var(--target-transition);
+}
+
+.target-arrow--top-left {
+  transform: translate(-135%, -135%) rotate(-45deg);
+}
+.target-arrow--top-left.target-arrow--merged {
+  transform: translate(-50%, -50%) rotate(-45deg) scale(0.5);
+  opacity: 0;
+}
+
+.target-arrow--top-right {
+  transform: translate(35%, -135%) rotate(45deg);
+}
+.target-arrow--top-right.target-arrow--merged {
+  transform: translate(-50%, -50%) rotate(45deg) scale(0.5);
+  opacity: 0;
+}
+
+.target-arrow--bottom-left {
+  transform: translate(-135%, 35%) rotate(-135deg);
+}
+.target-arrow--bottom-left.target-arrow--merged {
+  transform: translate(-50%, -50%) rotate(-135deg) scale(0.5);
+  opacity: 0;
+}
+
+.target-arrow--bottom-right {
+  transform: translate(35%, 35%) rotate(135deg);
+}
+.target-arrow--bottom-right.target-arrow--merged {
+  transform: translate(-50%, -50%) rotate(135deg) scale(0.5);
+  opacity: 0;
+}
+
+/* ---------- CTA button, revealed after the last click ---------- */
+
+.target-cta-wrap {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--target-transition), height var(--target-transition);
+}
+
+.target-cta-wrap.is-revealed {
+  height: auto;
+  opacity: 1;
+  overflow: visible;
+}
+
+.target-cta {
+  min-width: 140px;
+  padding: 10px 28px;
+  border: none;
+  border-radius: 999px;
+  background: var(--target-cta-bg);
+  color: var(--target-cta-text);
+  font-size: clamp(12px, 1.4vw, 14px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 150ms ease, transform 150ms ease;
+}
+
+.target-cta:hover {
+  filter: brightness(0.97);
+  transform: translateY(-1px);
+}
+
+.target-cta:focus-visible {
+  outline: 2px solid var(--target-accent);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Responsive: collapse to a single column under 560px so boxes stack
+   above/below the target instead of squeezing sideways.
+   ========================================================================== */
+
+@media (max-width: 560px) {
+  .target-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'tl'
+      'tr'
+      'center'
+      'bl'
+      'br';
+  }
+
+  .target-center {
+    max-width: 180px;
+    margin-block: 8px;
+  }
+
+  .target-header-box {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .target-box,
+  .target-arrow,
+  .target-cta-wrap,
+  .target-image {
+    transition-duration: 1ms;
+  }
+}

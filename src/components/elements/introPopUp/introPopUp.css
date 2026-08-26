@@ -1,0 +1,113 @@
+.intro-popup-backdrop {
+  position: absolute;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  padding: 7%;
+
+  background-color:
+    rgba(18, 30, 52, 0.45);
+
+  backdrop-filter: blur(0.2rem);
+
+  z-index: 50;
+}
+
+.intro-popup {
+  position: relative;
+
+  width: min(72%, 34rem);
+  min-height: 48%;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  padding: 7% 8% 4%;
+
+  border-radius: 0.8rem;
+
+  background-color: #ffffff;
+
+  box-shadow:
+    0 0.6rem 1.8rem
+    rgba(0, 0, 0, 0.22);
+}
+
+.intro-popup__close {
+  position: absolute;
+
+  top: -0.35rem;
+  left: -0.35rem;
+
+  width: clamp(
+    1.5rem,
+    3.5cqw,
+    2.2rem
+  );
+
+  aspect-ratio: 1;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 0.15rem;
+
+  background-color: #ff4f55;
+  color: #ffffff;
+
+  font-size: clamp(
+    0.9rem,
+    2cqw,
+    1.3rem
+  );
+
+  cursor: pointer;
+}
+
+.intro-popup__bubble {
+  align-self: flex-start;
+
+  width: 58%;
+
+  padding: 5%;
+
+  border-radius: 50%;
+
+  background-color: #55a9c4;
+  color: #ffffff;
+
+  font-family: ploni;
+  font-size: clamp(
+    0.65rem,
+    1.65cqw,
+    1rem
+  );
+
+  line-height: 1.25;
+
+  text-align: center;
+}
+
+.intro-popup__bubble p {
+  margin:
+    0
+    0
+    0.5rem;
+}
+
+.intro-popup__bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.intro-popup__character {
+  width: 28%;
+  height: auto;
+
+  object-fit: contain;
+}

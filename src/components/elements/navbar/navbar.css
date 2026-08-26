@@ -1,0 +1,207 @@
+.course-navbar,
+.course-navbar * {
+  box-sizing: border-box;
+}
+
+.course-navbar {
+  position: relative;
+
+  width: min(
+    calc(100vw - 2rem),
+    42rem
+  );
+
+  margin-inline: auto;
+
+  direction: rtl;
+
+  z-index: 100;
+}
+
+.course-navbar__trigger {
+  position: relative;
+
+  width: 100%;
+  min-height: 3.4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    0.6rem
+    4rem;
+
+  border: none;
+  border-radius: 999rem;
+
+  background-color: #ffffff;
+  color: #151515;
+
+  box-shadow:
+    0 0.2rem 0.4rem
+    rgba(0, 0, 0, 0.2);
+
+  font-family: ploni;
+  font-size: clamp(
+    1rem,
+    1.5vw,
+    1.45rem
+  );
+
+  cursor: pointer;
+}
+
+.course-navbar__title {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.course-navbar__arrow {
+  position: absolute;
+
+  top: 50%;
+  right: 1.4rem;
+
+  width: 1.5rem;
+  height: 1.5rem;
+
+  transform: translateY(-50%);
+
+  transition: transform 180ms ease;
+}
+
+.course-navbar__trigger[aria-expanded="true"]
+.course-navbar__arrow {
+  transform:
+    translateY(-50%)
+    rotate(180deg);
+}
+
+.course-navbar__arrow svg {
+  width: 100%;
+  height: 100%;
+
+  fill: none;
+
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.course-navbar__menu {
+  position: absolute;
+
+  top: calc(100% + 0.35rem);
+  left: 0;
+
+  width: 100%;
+  max-height: min(50vh, 25rem);
+
+  overflow-y: auto;
+
+  padding: 0.55rem;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.25rem;
+
+  border-radius: 1.5rem;
+
+  background-color: #ffffff;
+
+  box-shadow:
+    0 0.35rem 0.7rem
+    rgba(0, 0, 0, 0.18);
+
+  animation:
+    navbar-menu-enter
+    160ms
+    ease-out
+    both;
+}
+
+.course-navbar__item {
+  width: 100%;
+  min-height: 2.7rem;
+
+  display: flex;
+  align-items: center;
+
+  gap: 0.75rem;
+
+  padding:
+    0.45rem
+    1rem;
+
+  border: none;
+  border-radius: 999rem;
+
+  background-color: transparent;
+  color: #171717;
+
+  font-family: ploni;
+  font-size: clamp(
+    0.95rem,
+    1.3vw,
+    1.25rem
+  );
+
+  text-align: right;
+
+  cursor: pointer;
+}
+
+.course-navbar__status {
+  width: 1.5rem;
+
+  text-align: center;
+}
+
+.course-navbar__item:hover:not(:disabled) {
+  background-color: #eeeeee;
+}
+
+.course-navbar__item--current {
+  background-color: #d2d2d2;
+
+  font-weight: 700;
+}
+
+.course-navbar__item--next {
+  background-color: #e5f2f7;
+}
+
+.course-navbar__item--completed {
+  color: #1b5f45;
+}
+
+.course-navbar__item--locked {
+  background-color: #f4f4f4;
+  color: #9b9b9b;
+
+  cursor: not-allowed;
+}
+
+@keyframes navbar-menu-enter {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(-0.4rem)
+      scaleY(0.97);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scaleY(1);
+  }
+}

@@ -1,0 +1,1251 @@
+.laptop-wrapper {
+  position: absolute;
+
+  left: 50%;
+  bottom: -12.5%;
+
+  /*
+    88vw הופך אותו לגדול מאוד במסך רחב.
+
+    122dvh מונע ממנו להיות גבוה מדי
+    במסכים נמוכים.
+
+    100rem הוא הגודל המקסימלי.
+  */
+  width: min(88vw, 132dvh, 120rem);
+
+  transform: translateX(-50%);
+
+  /*
+    לפי היחסים שנראים בצילום שלך.
+
+    אם צריך דיוק קטן, משנים רק
+    את ארבעת המשתנים האלו.
+  */
+  --screen-top: 3.7%;
+  --screen-left: 13.8%;
+  --screen-width: 72.4%;
+  --screen-height: 67.2%;
+
+  z-index: 3;
+}
+
+
+
+
+
+.title-start {
+color: #07435D;
+text-align: center;
+font-family: ploni;
+font-size: 3.5625rem;
+font-style: normal;
+font-weight: 700;
+line-height: 3.617rem; 
+}
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+.opening-page,
+.opening-page * {
+  box-sizing: border-box;
+}
+
+.opening-page {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+
+  overflow: hidden;
+
+  direction: rtl;
+
+  background-color: #e8ecf3;
+}
+
+
+/* ========================================
+   כל אזור מסך הפתיחה
+======================================== */
+
+.opening-scene {
+  /*
+    גודל הלפטופ מתחשב גם ברוחב
+    וגם בגובה של חלון הדפדפן.
+  */
+  --laptop-width: min(72vw, 130dvh, 108rem);
+
+  /*
+    המיקום והגודל של המלבן הצבעוני
+    בתוך computer_home.png.
+
+    המסך קטן יותר מהגרסה הקודמת.
+  */
+  --screen-top: 4.3%;
+  --screen-left: 14.8%;
+  --screen-width: 70.4%;
+  --screen-height: 74.5%;
+
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  background-color: #e8ecf3;
+}
+
+
+/* ========================================
+   רקע
+======================================== */
+
+.background-decoration {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center top;
+
+  z-index: 0;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* ========================================
+   שולחן
+======================================== */
+
+.desk {
+  position: absolute;
+
+  left: 0;
+  bottom: -3.5%;
+
+  width: 100%;
+  height: clamp(10rem, 22dvh, 15rem);
+
+  object-fit: fill;
+  object-position: center bottom;
+
+  display: block;
+
+  z-index: 1;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* ========================================
+   עציץ
+======================================== */
+
+.plant {
+  position: absolute;
+
+  left: clamp(-1.5rem, -1vw, -0.25rem);
+  bottom: clamp(4rem, 8.5dvh, 7rem);
+
+  width: clamp(10rem, 14vw, 17rem);
+  height: auto;
+
+  z-index: 2;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* ========================================
+   מיקום משותף לשני מצבי הלפטופ
+======================================== */
+
+.laptop-wrapper,
+.intro-laptop {
+  position: absolute;
+
+  left: 50%;
+  bottom: -7.5dvh;
+
+  width: var(--laptop-width);
+}
+
+
+/* ========================================
+   אנימציית הלפטופ הראשונית
+======================================== */
+
+.intro-laptop {
+  z-index: 10;
+
+  perspective: 100rem;
+  transform-style: preserve-3d;
+
+  animation:
+    intro-laptop-sequence
+    3.9s
+    linear
+    both;
+}
+
+
+/*
+  התמונה הזו שקופה,
+  אבל היא מגדירה ל-wrapper את הגובה
+  לפי היחס האמיתי של computer_home.png.
+*/
+
+.intro-laptop-sizer {
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+
+/* שתי השכבות של המחשב */
+
+.intro-laptop-base,
+.intro-laptop-lid {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+/*
+  מציג רק את אזור המקלדת והבסיס.
+  ניתן לכוון את 77.5% לפי התמונה שלך.
+*/
+
+.intro-laptop-base {
+  clip-path: inset(77.5% 0 0 0);
+
+  z-index: 2;
+}
+
+
+/*
+  מציג רק את המסך והמכסה.
+*/
+
+.intro-laptop-lid {
+  clip-path: inset(0 0 22% 0);
+
+  transform-origin: 50% 78%;
+  transform:
+    perspective(100rem)
+    rotateX(84deg);
+
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+
+  filter: brightness(0.7);
+
+  animation:
+    laptop-lid-open
+    1.3s
+    0.55s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+
+  z-index: 3;
+}
+
+.intro-laptop-part {
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* ========================================
+   המסך השחור שמתעורר לחיים
+======================================== */
+
+.intro-screen-power {
+  position: absolute;
+
+  top: var(--screen-top);
+  left: var(--screen-left);
+
+  width: var(--screen-width);
+  height: var(--screen-height);
+
+  overflow: hidden;
+
+  background-color: #03070a;
+
+  border-radius: clamp(0.2rem, 0.35vw, 0.55rem);
+
+  box-shadow:
+    inset 0 0 1.5rem rgba(0, 0, 0, 0.95);
+
+  z-index: 4;
+}
+
+
+/* שכבת הצבע שנדלקת */
+
+.intro-screen-power::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(232, 255, 255, 0.5) 0%,
+      transparent 37%
+    ),
+    linear-gradient(
+      110deg,
+      #a8deeb 0%,
+      #b8d9f0 48%,
+      #d5d1f8 100%
+    );
+
+  opacity: 0;
+
+  animation:
+    intro-screen-color
+    0.9s
+    2.05s
+    cubic-bezier(0.2, 0.75, 0.2, 1)
+    forwards;
+
+  z-index: 0;
+}
+
+
+/* קו ההדלקה האופקי */
+
+.intro-boot-line {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 0;
+  height: clamp(0.12rem, 0.25cqw, 0.28rem);
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 999rem;
+
+  background-color: #edffff;
+
+  box-shadow:
+    0 0 0.8rem rgba(207, 254, 255, 1),
+    0 0 2.4rem rgba(98, 217, 236, 0.9);
+
+  animation:
+    intro-boot-line
+    0.55s
+    1.82s
+    ease-out
+    forwards;
+
+  z-index: 3;
+}
+
+
+/* סימן הפעלה במרכז */
+
+.intro-power-core {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: clamp(2.6rem, 3.5cqw, 5rem);
+  aspect-ratio: 1;
+
+  transform:
+    translate(-50%, -50%)
+    scale(0.25);
+
+  opacity: 0;
+
+  border:
+    clamp(0.15rem, 0.3cqw, 0.3rem)
+    solid
+    rgba(255, 255, 255, 0.94);
+
+  border-top-color: transparent;
+
+  border-radius: 50%;
+
+  filter:
+    drop-shadow(
+      0 0 0.7rem rgba(216, 255, 255, 0.9)
+    );
+
+  animation:
+    intro-power-core-in
+    0.7s
+    2.5s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards,
+    intro-power-pulse
+    0.55s
+    3.2s
+    ease-in-out
+    2
+    alternate;
+
+  z-index: 4;
+}
+
+.intro-power-core::after {
+  content: "";
+
+  position: absolute;
+
+  top: -20%;
+  left: 50%;
+
+  width: 12%;
+  height: 48%;
+
+  transform: translateX(-50%);
+
+  border-radius: 999rem;
+
+  background-color: rgba(255, 255, 255, 0.96);
+}
+
+
+/* צל מתחת למחשב */
+
+.intro-laptop-shadow {
+  position: absolute;
+
+  left: 50%;
+  bottom: 3%;
+
+  width: 58%;
+  height: 4%;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background-color: rgba(0, 0, 0, 0.22);
+
+  filter: blur(1.2rem);
+
+  z-index: 0;
+}
+
+
+/* ========================================
+   פס ברוכים הבאים
+======================================== */
+
+.welcome-bar {
+  position: absolute;
+
+  top: clamp(3.7rem, 7.8dvh, 5.5rem);
+  left: 50%;
+
+  width: clamp(23rem, 38vw, 43rem);
+  height: clamp(3rem, 6.3dvh, 4.15rem);
+
+  transform: translateX(-50%);
+
+  display: grid;
+  place-items: center;
+
+  padding-inline: 4rem;
+
+  background-color: #ffffff;
+
+  border-radius: 999rem;
+
+  box-shadow:
+    0 0.25rem 0.7rem rgba(0, 0, 0, 0.16);
+
+  opacity: 0;
+
+  animation:
+    welcome-bar-enter
+    0.65s
+    0.15s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+
+  z-index: 8;
+}
+
+.welcome-text {
+  width: 100%;
+
+  text-align: center;
+
+  font-family: ploni;
+  font-size: clamp(1rem, 1.35vw, 1.5rem);
+  line-height: 1;
+
+  color: #252525;
+
+  white-space: nowrap;
+}
+
+.welcome-search-icon {
+  position: absolute;
+
+  top: 50%;
+  right: clamp(1rem, 3%, 1.5rem);
+
+  width: clamp(1rem, 12vw, 1.8rem);
+  height: auto;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* ========================================
+   הלפטופ במסך ה-Start
+======================================== */
+
+.laptop-wrapper {
+  transform: translateX(-50%);
+
+  container-type: inline-size;
+
+  animation:
+    start-laptop-settle
+    0.65s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+
+  z-index: 3;
+}
+
+.laptop-image {
+  position: relative;
+
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  z-index: 2;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* ========================================
+   המסך הצבעוני בתוך הלפטופ
+======================================== */
+
+.laptop-screen {
+  position: absolute;
+
+  top: var(--screen-top);
+  left: var(--screen-left);
+
+  width: var(--screen-width);
+  height: var(--screen-height);
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      110deg,
+      #a8deeb 0%,
+      #b8d9f0 48%,
+      #d5d1f8 100%
+    );
+
+  border-radius: clamp(0.2rem, 0.35vw, 0.55rem);
+
+  container-type: inline-size;
+
+  opacity: 0;
+
+  animation:
+    start-screen-enter
+    0.65s
+    0.08s
+    ease-out
+    forwards;
+
+  z-index: 3;
+}
+
+
+/* ========================================
+   החבל בפינה
+======================================== */
+
+.screen-rope {
+  position: absolute;
+
+  top: -2%;
+  right: -0.5%;
+
+  width: 15%;
+  height: auto;
+
+  transform: translateY(-35%);
+
+  opacity: 0;
+
+  animation:
+    rope-enter
+    0.75s
+    0.45s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+
+  z-index: 2;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* ========================================
+   המטוס והמסלול
+======================================== */
+
+.flight-graphic {
+  position: absolute;
+
+  left: -2%;
+  bottom: 6%;
+
+  width: 39%;
+  height: auto;
+
+  overflow: visible;
+
+  z-index: 2;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/*
+  המסלול המקווקו שרואים על המסך.
+*/
+
+.flight-route {
+  fill: none;
+
+  stroke: #4b879f;
+  stroke-width: 5;
+  stroke-linecap: round;
+
+  stroke-dasharray: 10 11;
+
+  opacity: 0.95;
+}
+
+
+/*
+  המסלול הלבן שבתוך ה-mask.
+  הוא נפתח בהדרגה וכך חושף
+  את הקו המקווקו שמתחתיו.
+*/
+
+.flight-route-mask {
+  fill: none;
+
+  stroke: #ffffff;
+  stroke-width: 13;
+  stroke-linecap: round;
+
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+
+  animation:
+    reveal-flight-route
+    3.2s
+    0.15s
+    linear
+    forwards;
+}
+
+
+/* המטוס */
+
+.flight-plane {
+  opacity: 0;
+
+  transform:rotate(45deg);
+  animation:
+    show-flight-plane
+    0.2s
+    0.18s
+    linear
+    forwards;
+}
+
+.plane-main-shape {
+  fill: #568da4;
+}
+
+.plane-fold-shape {
+  fill: #87b8c9;
+}
+
+.plane-detail-shape {
+  fill: none;
+
+  stroke: #356f87;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+
+/* ========================================
+   תוכן מסך ה-Start
+======================================== */
+
+.screen-content {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: clamp(0.7rem, 2cqw, 1.55rem);
+
+  padding: 8% 9% 9%;
+
+  transform: translateY(-1.5%);
+
+  text-align: center;
+
+  z-index: 4;
+}
+
+.opening-title {
+  margin: 0;
+
+  max-width: 88%;
+
+  font-family: ploni-bold;
+  font-size: clamp(1.4rem, 5.1cqw, 3.65rem);
+  font-weight: 700;
+  line-height: 1.08;
+
+  color: #07435d;
+
+  white-space: nowrap;
+
+  opacity: 0;
+
+  animation:
+    start-content-enter
+    0.65s
+    0.35s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+.opening-icon {
+  width: clamp(4.8rem, 14cqw, 9rem);
+  height: auto;
+
+  display: block;
+
+  opacity: 0;
+
+  animation:
+    start-content-enter
+    0.65s
+    0.52s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.start-button {
+  min-width: 19cqw;
+
+  padding:
+    clamp(0.5rem, 1.2cqw, 0.85rem)
+    clamp(1.3rem, 3.2cqw, 2.5rem);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.4rem;
+
+  border: none;
+  border-radius: 999rem;
+
+  background-color: #9c8fcf;
+  color: #ffffff;
+
+  font-family: ploni;
+  font-size: clamp(0.75rem, 2.15cqw, 1.1rem);
+  line-height: 1;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  animation:
+    start-content-enter
+    0.65s
+    0.7s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+
+  transition:
+    transform 180ms ease,
+    filter 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.start-button-arrow {
+  font-size: 1.35em;
+  line-height: 0.7;
+}
+
+.start-button:hover {
+  transform: scale(1.05);
+
+  filter: brightness(1.05);
+
+  box-shadow:
+    0 0.3rem 0.8rem rgba(78, 65, 130, 0.28);
+}
+
+.start-button:active {
+  transform: scale(0.97);
+}
+
+
+/* ========================================
+   Keyframes – פתיחת הלפטופ
+======================================== */
+
+@keyframes intro-laptop-sequence {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      translateY(15dvh)
+      scale(0.78);
+  }
+
+  14% {
+    opacity: 1;
+
+    transform:
+      translateX(-50%)
+      translateY(0)
+      scale(1);
+  }
+
+  83% {
+    opacity: 1;
+
+    transform:
+      translateX(-50%)
+      translateY(0)
+      scale(1);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      translateY(-1dvh)
+      scale(1.02);
+  }
+}
+
+@keyframes laptop-lid-open {
+  0% {
+    transform:
+      perspective(100rem)
+      rotateX(84deg);
+
+    filter: brightness(0.7);
+  }
+
+  65% {
+    transform:
+      perspective(100rem)
+      rotateX(-4deg);
+
+    filter: brightness(0.96);
+  }
+
+  100% {
+    transform:
+      perspective(100rem)
+      rotateX(0deg);
+
+    filter: brightness(1);
+  }
+}
+
+@keyframes intro-boot-line {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    width: 78%;
+    opacity: 1;
+  }
+
+  100% {
+    width: 90%;
+    opacity: 0;
+  }
+}
+
+@keyframes intro-screen-color {
+  0% {
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.15;
+  }
+
+  25% {
+    opacity: 0.85;
+  }
+
+  32% {
+    opacity: 0.35;
+  }
+
+  46% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-power-core-in {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(0.25);
+  }
+
+  70% {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1.12);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+}
+
+@keyframes intro-power-pulse {
+  from {
+    filter:
+      drop-shadow(
+        0 0 0.45rem rgba(216, 255, 255, 0.65)
+      );
+  }
+
+  to {
+    filter:
+      drop-shadow(
+        0 0 1.3rem rgba(216, 255, 255, 1)
+      );
+  }
+}
+
+
+/* ========================================
+   Keyframes – כניסה למסך Start
+======================================== */
+
+@keyframes start-laptop-settle {
+  from {
+    transform:
+      translateX(-50%)
+      scale(0.985);
+  }
+
+  to {
+    transform:
+      translateX(-50%)
+      scale(1);
+  }
+}
+
+@keyframes start-screen-enter {
+  0% {
+    opacity: 0;
+    filter: brightness(0.25);
+  }
+
+  40% {
+    opacity: 1;
+    filter: brightness(1.18);
+  }
+
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes welcome-bar-enter {
+  from {
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      translateY(-1.25rem);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateX(-50%)
+      translateY(0);
+  }
+}
+
+@keyframes rope-enter {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(-35%)
+      rotate(4deg);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      rotate(0deg);
+  }
+}
+
+@keyframes start-content-enter {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(1rem)
+      scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* ========================================
+   Keyframes – מסלול המטוס
+======================================== */
+
+@keyframes reveal-flight-route {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes show-flight-plane {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* ========================================
+   התאמות למסכים צרים
+======================================== */
+
+@media (max-width: 60rem) {
+  .opening-scene {
+    --laptop-width: min(98vw, 145dvh);
+  }
+
+  .welcome-bar {
+    width: min(72vw, 38rem);
+  }
+
+  .plant {
+    width: clamp(8rem, 19vw, 13rem);
+  }
+}
+
+
+/* ========================================
+   התאמות למסכים נמוכים
+======================================== */
+
+@media (max-height: 44rem) {
+  .opening-scene {
+    --laptop-width: min(92vw, 145dvh);
+  }
+
+  .laptop-wrapper,
+  .intro-laptop {
+    bottom: -10dvh;
+  }
+
+  .welcome-bar {
+    top: 4dvh;
+  }
+
+  .plant {
+    bottom: 7dvh;
+  }
+}
+@media (max-width: 1330px) {
+  .desk {
+  position: absolute;
+
+  left: 0;
+  bottom: -6.5%;
+
+  width: 100%;
+  height: clamp(10rem, 22dvh, 15rem);
+
+
+}
+}
+
+
+/* ========================================
+   התאמות למסך הלפטופ כשהוא קטן
+======================================== */
+
+@container (max-width: 40rem) {
+  .opening-title {
+    max-width: 78%;
+
+    font-size: 5.7cqw;
+
+    white-space: normal;
+  }
+
+  .screen-content {
+    gap: 2.2cqw;
+  }
+
+  .flight-graphic {
+    width: 42%;
+  }
+}
+
+
+/* ========================================
+   הפחתת תנועה
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-laptop,
+  .intro-laptop-lid,
+  .intro-screen-power::after,
+  .intro-boot-line,
+  .intro-power-core,
+  .welcome-bar,
+  .laptop-wrapper,
+  .laptop-screen,
+  .screen-rope,
+  .opening-title,
+  .opening-icon,
+  .start-button,
+  .flight-route-mask,
+  .flight-plane {
+    animation: none;
+  }
+
+  .welcome-bar,
+  .laptop-screen,
+  .screen-rope,
+  .opening-title,
+  .opening-icon,
+  .start-button,
+  .flight-plane {
+    opacity: 1;
+  }
+
+  .flight-route-mask {
+    stroke-dashoffset: 0;
+  }
+}

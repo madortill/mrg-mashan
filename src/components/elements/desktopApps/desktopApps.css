@@ -1,0 +1,258 @@
+.desktop-apps,
+.desktop-apps * {
+  box-sizing: border-box;
+}
+
+
+/*
+  האפליקציות מסודרות ב-Grid במקום
+  מיקומי top/left נפרדים.
+
+  כך הן לא עולות אחת על השנייה
+  כשהמסך משתנה.
+*/
+
+.desktop-apps {
+  position: absolute;
+
+  top: 5%;
+  left: 3.5%;
+
+  width: 28%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap:
+    clamp(0.5rem, 2.8cqw, 1.5rem)
+    clamp(0.4rem, 2cqw, 1.1rem);
+
+  direction: ltr;
+
+  z-index: 5;
+}
+
+
+.desktop-app {
+  position: relative;
+
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: clamp(0.2rem, 0.7cqw, 0.45rem);
+
+  padding:
+    clamp(0.25rem, 0.8cqw, 0.55rem);
+
+  border: none;
+  border-radius: clamp(0.5rem, 1.2cqw, 0.9rem);
+
+  background-color: transparent;
+  color: #111111;
+
+  font-family: ploni;
+
+  cursor: pointer;
+
+  transition:
+    transform 180ms ease,
+    filter 180ms ease,
+    opacity 180ms ease;
+}
+
+.desktop-app:not(:disabled):hover {
+  transform: translateY(-0.2rem) scale(1.04);
+}
+
+
+.desktop-app__icon-wrapper {
+  position: relative;
+
+  width: clamp(2.6rem, 6.5cqw, 4.5rem);
+  aspect-ratio: 1;
+
+  display: grid;
+  place-items: center;
+}
+
+
+.desktop-app__icon {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  pointer-events: none;
+  user-select: none;
+
+  z-index: 2;
+}
+
+
+.desktop-app__label {
+  width: 100%;
+
+  overflow: hidden;
+
+  color: #111111;
+
+  font-size: clamp(0.55rem, 1.35cqw, 0.9rem);
+  line-height: 1.05;
+
+  text-align: center;
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* ========================================
+   האפליקציה הבאה בתור
+======================================== */
+
+.desktop-app__glow {
+  position: absolute;
+
+  top: 45%;
+  left: 50%;
+
+  width: 82%;
+  aspect-ratio: 1;
+
+  transform:
+    translate(-50%, -50%)
+    scale(0.8);
+
+  border-radius: 50%;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+
+.desktop-app--active
+.desktop-app__glow {
+  opacity: 1;
+
+  animation:
+    active-app-glow
+    1.55s
+    ease-in-out
+    infinite;
+}
+
+
+.desktop-app--active {
+  animation:
+    active-app-float
+    1.55s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes active-app-glow {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.85);
+
+    box-shadow:
+      0 0 0 0 rgba(112, 188, 224, 0.55);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.1);
+
+    box-shadow:
+      0 0 1.2rem 0.7rem
+      rgba(112, 188, 224, 0.55);
+  }
+}
+
+
+@keyframes active-app-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-0.25rem);
+  }
+}
+
+
+/* ========================================
+   אפליקציה שהושלמה
+======================================== */
+
+.desktop-app__complete-badge {
+  position: absolute;
+
+  top: -8%;
+  right: -10%;
+
+  width: clamp(1rem, 2.1cqw, 1.45rem);
+  aspect-ratio: 1;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    clamp(0.08rem, 0.18cqw, 0.14rem)
+    solid
+    #ffffff;
+
+  border-radius: 50%;
+
+  background-color: #4a9c71;
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+  font-size: clamp(0.55rem, 1.2cqw, 0.8rem);
+  font-weight: 700;
+
+  z-index: 3;
+}
+
+
+/* ========================================
+   אפליקציה נעולה
+======================================== */
+
+.desktop-app--locked {
+  opacity: 0.42;
+
+  filter: grayscale(1);
+
+  cursor: not-allowed;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop-app,
+  .desktop-app__glow {
+    animation: none;
+  }
+
+  .desktop-app--active
+  .desktop-app__glow {
+    box-shadow:
+      0 0 1rem 0.5rem
+      rgba(112, 188, 224, 0.55);
+  }
+}
