@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Target.css';
-
+import target from "../../../assets/images/target.svg"
+import arrow from "../../../assets/images/arrow.svg"
 /**
  * Target
  * -----------------------------------------------------------------------
@@ -50,10 +51,10 @@ const DEFAULT_BOXES = [
 ];
 
 function Target({
-  headerText = 'מטרת הצעד - הצעד יכיר את התמחוקים העיקריים הדרכי העבודה מול מרכז הגיוס',
+  headerText = 'מטרת העל - הצעד יכיר את הממשקים העיקריים ודרכי העבודה מול מרכז הגיוס',
   boxes = DEFAULT_BOXES,
   buttonText = 'הבנתי',
-  targetImgSrc = '/assets/target/target.svg',
+  targetImgSrc = "../../../assets/images/target.svg",
   arrowImgSrc = '/assets/target/arrow.svg',
   arrowImgSrcs = null, // optional: [srcTL, srcTR, srcBL, srcBR] overrides arrowImgSrc
   onComplete,

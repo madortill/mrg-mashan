@@ -18,8 +18,6 @@ import rope from "../../assets/images/rope.svg";
 import openingIcon from "../../assets/images/BHD11Round.png";
 
 import HomePage from "../../learningCom/homepage/HomePage";
-import LaptopIntro from "./LaptopIntro";
-import StartScreenContent from "./StartScreenContent.jsx"
 const INTRO_DURATION_MS = 3900;
 
 const FLIGHT_PATH =
