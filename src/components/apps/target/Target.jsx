@@ -320,8 +320,8 @@ function Target({ onComplete, page,
   return (
     <>
     <div className="target" dir="rtl">
-           <h1>מטרות הלומדה<h1/>
-      <p>לחצו על המטרה<p/>
+           <h1>מטרות הלומדה</h1>
+      <p>לחצו על המטרה</p>
             <div
         className={`target__header-box ${isRevealed(0) ? "is-revealed" : ""}`}
       >
