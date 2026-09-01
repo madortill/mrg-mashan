@@ -2,96 +2,152 @@ import React from "react";
 
 import "./DesktopHub.css";
 
-import desktopBackground from "./../../../assets/images/home-desktop.svg";
+import {
+  courseApps,
+} from "../../course/CourseApp";
 
-import { courseApps } from "../../course/CourseApp";
-import desk from "../../../assets/images/desk_wide.svg";
-import plant from "../../../assets/images/plant.svg";
-import backgroundDecor from "../../../assets/images/background-decor.svg";
+
+import rope
+  from "../../../assets/images/color_rope.svg";
+
 
 function DesktopHub({
   currentAppId,
-  completedApps,
-  visitedApps,
+  completedApps = [],
+  visitedApps = [],
   onOpenApp,
 }) {
-  return (
-    <main className="desktop-hub">
- 
 
-      {/* כל הגרפיקה של המסך */}
+  return (
+    <div className="desktop-hub">
+
+
+      {/* ==================================
+          החבל הזוהר
+      ================================== */}
+
       <img
-        src={desktopBackground}
+        src={rope}
+        className="desktop-hub__rope"
         alt=""
-        className="desktop-hub__background"
         draggable="false"
       />
 
-      {/* האזור של מסך המחשב */}
-      <div className="desktop-hub__screen">
 
-        {courseApps.map((app) => {
-          const isCurrent =
-            app.id === currentAppId;
+      {/* ==================================
+          האפליקציות
 
-          const isCompleted =
-            completedApps.includes(app.id);
+          האייקונים כבר נמצאים
+          בתמונת home-desktop.
 
-          const isVisited =
-            visitedApps.includes(app.id);
+          לכן כאן אנחנו יוצרים
+          אזורי לחיצה מעליהם.
 
-          const isAvailable =
-            isCurrent ||
-            isCompleted ||
-            isVisited;
+          רק האפליקציה הנוכחית
+          מקבלת SVG נוסף בשביל glow.
+      ================================== */}
 
-          return (
-            <button
-              key={app.id}
-              type="button"
-              className={[
-                "desktop-app",
+      {courseApps.map((app) => {
 
-                isCurrent
-                  ? "desktop-app--current"
-                  : "",
+        /*
+          intro לדוגמה הוא חלק מהניווט,
+          אבל לא אפליקציה על שולחן העבודה
+        */
+        if (
+          app.showOnDesktop === false
+        ) {
+          return null;
+        }
 
-                isCompleted
-                  ? "desktop-app--completed"
-                  : "",
 
-                !isAvailable
-                  ? "desktop-app--locked"
-                  : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-              style={{
-                top: app.position.top,
-                right: app.position.right,
-              }}
-              disabled={!isAvailable}
-              onClick={() =>
-                onOpenApp(app.id)
-              }
-            >
-              <img
-                src={app.icon}
-                alt=""
-                className="desktop-app__icon"
-                draggable="false"
-              />
+        if (!app.position) {
+          return null;
+        }
 
-              <span className="desktop-app__label">
-                {app.label}
-              </span>
-            </button>
+
+        const isCurrent =
+          app.id ===
+          currentAppId;
+
+
+        const isCompleted =
+          completedApps.includes(
+            app.id
           );
-        })}
 
-      </div>
-    </main>
+
+        const isVisited =
+          visitedApps.includes(
+            app.id
+          );
+
+
+        const isAvailable =
+          isCurrent ||
+          isCompleted ||
+          isVisited;
+
+
+        return (
+          <button
+            key={app.id}
+            type="button"
+            className={[
+              "desktop-app-hotspot",
+
+              isCurrent
+                ? "desktop-app-hotspot--current"
+                : "",
+
+              !isAvailable
+                ? "desktop-app-hotspot--locked"
+                : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            style={{
+              top:
+                app.position.top,
+
+              right:
+                app.position.right,
+            }}
+            disabled={
+              !isAvailable
+            }
+            onClick={() =>
+              onOpenApp?.(
+                app.id
+              )
+            }
+            aria-label={
+              app.label
+            }
+          >
+
+            {/* רק האפליקציה הפעילה
+                מצוירת שוב מעל המקור
+                כדי שנוכל לתת לה glow */}
+
+            {isCurrent &&
+              app.icon && (
+
+                <img
+                  src={app.icon}
+                  className="desktop-app-hotspot__active-icon"
+                  alt=""
+                  draggable="false"
+                />
+
+              )}
+
+          </button>
+        );
+      })}
+
+    </div>
   );
 }
+
 
 export default DesktopHub;

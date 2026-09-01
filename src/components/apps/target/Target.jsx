@@ -268,6 +268,7 @@ import "./Target.css";
 
 import targetSvg from "../../../assets/images/target.svg";
 import arrowPng from "./../../../assets/images/arrow.png";
+import pointer from "./../../../assets/images/pointer.png";
 
 const TARGET_IMG_SRC = targetSvg;
 const ARROW_IMG_SRC = arrowPng;
@@ -317,8 +318,11 @@ function Target({ onComplete, page,
   const quadrants = REVEAL_ITEMS.slice(1);
 
   return (
+    <>
     <div className="target" dir="rtl">
-      <div
+           <h1>מטרות הלומדה<h1/>
+      <p>לחצו על המטרה<p/>
+            <div
         className={`target__header-box ${isRevealed(0) ? "is-revealed" : ""}`}
       >
         <span className="target__header-text">{header.text}</span>
@@ -383,6 +387,7 @@ function Target({ onComplete, page,
         </button>
       </div>
     </div>
+    </>
   );
 }
 

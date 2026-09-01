@@ -3,6 +3,7 @@
   box-sizing: border-box;
 }
 
+
 .desktop-hub {
   position: absolute;
 
@@ -12,67 +13,108 @@
   height: 100%;
 
   overflow: hidden;
+
+  direction: rtl;
 }
 
 
-/* ============================
-   כל הגרפיקה
-============================ */
+/* ========================================
+   החבל
+======================================== */
 
-.desktop-hub__background {
+.desktop-hub__rope {
   position: absolute;
-  bottom:-1%;
-  inset: 0;
 
-  width: 100%;
-  height: 100%;
+  /*
+    נכוון לפי ה-SVG האמיתי שלך
+  */
+  top: -1%;
+  left: -1%;
 
-  object-fit: contain;
+  width: 18%;
+  height: auto;
 
-  user-select: none;
   pointer-events: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+
+  z-index: 5;
+
+  animation:
+    desktop-rope-glow
+    1.6s
+    ease-in-out
+    infinite;
 }
 
 
-/* ============================
-   אזור המסך של הלפטופ
-============================ */
+@keyframes desktop-rope-glow {
 
-/*
-  הערכים האלה מתאימים בערך
-  לתמונה ששלחת.
+  0%,
+  100% {
+    filter:
+      drop-shadow(
+        0 0 0.12rem
+        rgba(
+          75,
+          211,
+          255,
+          0.4
+        )
+      )
 
-  אם צריך נזיז אותם בכמה אחוזים
-  אחרי שנראה את ה-SVG שלך.
-*/
+      drop-shadow(
+        0 0 0.25rem
+        rgba(
+          164,
+          105,
+          238,
+          0.3
+        )
+      );
+  }
 
-.desktop-hub__screen {
-  position: absolute;
 
-  top: 20%;
-  left: 19.8%;
+  50% {
+    filter:
+      drop-shadow(
+        0 0 0.35rem
+        rgba(
+          75,
+          211,
+          255,
+          1
+        )
+      )
 
-  width: 64.6%;
-  height: 58.8%;
-
-  overflow: hidden;
+      drop-shadow(
+        0 0 0.7rem
+        rgba(
+          164,
+          105,
+          238,
+          0.85
+        )
+      );
+  }
 }
 
 
-/* ============================
-   אפליקציה
-============================ */
+/* ========================================
+   אזור לחיצה של אפליקציה
+======================================== */
 
-.desktop-app {
+.desktop-app-hotspot {
   position: absolute;
 
-  width: 10.5%;
+  width: 10%;
+
+  aspect-ratio: 1 / 1.25;
 
   display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  gap: 0.25rem;
+  align-items: flex-start;
+  justify-content: center;
 
   padding: 0;
 
@@ -80,126 +122,112 @@
 
   background: transparent;
 
-  color: #2a2a2a;
-
-  font-family: ploni, Arial, sans-serif;
-
   cursor: pointer;
 
-  transition:
-    transform 180ms ease,
-    opacity 180ms ease,
-    filter 180ms ease;
+  z-index: 10;
 }
 
 
-/* ============================
-   SVG
-============================ */
+/* אין שום סימון ויזואלי
+   לאזור הלחיץ */
 
-.desktop-app__icon {
-  display: block;
+.desktop-app-hotspot:not(
+  :disabled
+):hover {
+  cursor: pointer;
+}
 
-  width: 70%;
+
+/* ========================================
+   האייקון הפעיל שמונח בדיוק
+   מעל האייקון שכבר נמצא בתמונה
+======================================== */
+
+.desktop-app-hotspot__active-icon {
+  width: 72%;
   height: auto;
 
   object-fit: contain;
 
   pointer-events: none;
-
   user-select: none;
-}
 
+  -webkit-user-drag: none;
 
-/* ============================
-   שם האפליקציה
-============================ */
-
-.desktop-app__label {
-  width: 140%;
-
-  font-size: clamp(
-    0.45rem,
-    0.85vw,
-    0.85rem
-  );
-
-  line-height: 1.05;
-
-  text-align: center;
-}
-
-
-/* ============================
-   Hover
-============================ */
-
-.desktop-app:not(:disabled):hover {
-  transform: scale(1.07);
-}
-
-
-/* ============================
-   האפליקציה הזוהרת
-============================ */
-
-.desktop-app--current
-.desktop-app__icon {
   animation:
     desktop-app-glow
-    1.6s ease-in-out
+    1.45s
+    ease-in-out
     infinite;
 }
 
+
+/* ========================================
+   זוהר של אפליקציה
+======================================== */
 
 @keyframes desktop-app-glow {
 
   0%,
   100% {
-    transform: scale(1);
+    transform:
+      scale(1);
 
     filter:
       drop-shadow(
-        0 0 0.2rem
-        rgba(0, 187, 255, 0.6)
+        0 0 0.15rem
+        rgba(
+          54,
+          202,
+          255,
+          0.5
+        )
       )
+
       drop-shadow(
-        0 0 0.45rem
-        rgba(0, 187, 255, 0.35)
+        0 0 0.3rem
+        rgba(
+          54,
+          202,
+          255,
+          0.4
+        )
       );
   }
+
 
   50% {
-    transform: scale(1.1);
+    transform:
+      scale(1.08);
 
     filter:
       drop-shadow(
-        0 0 0.45rem
-        rgba(0, 187, 255, 1)
+        0 0 0.3rem
+        rgba(
+          54,
+          202,
+          255,
+          1
+        )
       )
+
       drop-shadow(
-        0 0 0.8rem
-        rgba(0, 187, 255, 0.65)
+        0 0 0.7rem
+        rgba(
+          119,
+          101,
+          240,
+          0.8
+        )
       );
   }
 }
 
 
-/* ============================
-   אפליקציות עתידיות
-============================ */
+/* ========================================
+   אפליקציה נעולה
+======================================== */
 
-.desktop-app--locked {
-  opacity: 0.7;
-      filter: grayscale(100%);
+.desktop-app-hotspot--locked {
   cursor: default;
-}
-
-
-/* ============================
-   אפליקציה שכבר ביקרנו בה
-============================ */
-
-.desktop-app--completed {
-  opacity: 0.8;
 }

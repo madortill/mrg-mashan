@@ -8,8 +8,7 @@
    ========================================================================== */
 
 .target {
-  /* Swap this for the exact brand font once you have it; these are close
-     Hebrew-friendly stand-ins used widely in IL product UI. */
+
   --target-font: "ploni"
 
   --target-red: #c8202c;          /* target rings / accents */
@@ -41,6 +40,7 @@
 /* ---------- header box ("מטרת הצעד ...") ---------- */
 
 .target__header-box {
+  z-index:1; 
   width: 100%;
   max-width: 320px;
   min-height: clamp(48px, 7vw, 60px);

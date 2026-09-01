@@ -6,7 +6,8 @@ import React, {
 
 import "./CoursePlayer.css";
 
-
+import rope
+  from "./../../assets/images/color_rope.svg";
 import Navbar
   from "../elements/navbar/Navbar";
 
@@ -18,13 +19,15 @@ import backgroundDecor from "../../assets/images/background-decor.svg";
 import DesktopHub
   from "./../pages/DesktopHub/DesktopHub";
 
+  import Laptop
+  from "./../elements/laptop/Laptop";
 
 /* =========================================
    שמירה
 ========================================= */
 
 const STORAGE_KEY =
-  "supply-chain-course-progress";
+  "mrg-mashan:course-progress:v1";
 
 
 /* =========================================
@@ -33,11 +36,8 @@ const STORAGE_KEY =
    כאן את שמה בעצמך את הכותרת
    שאת רוצה לראות ב-navbar
 ========================================= */
-
 const HUB_NAVBAR_TITLE =
   "לחצו על האפליקציה הזוהרת";
-
-
 /* =========================================
    סדר האפליקציות בלומדה
 
@@ -46,103 +46,63 @@ const HUB_NAVBAR_TITLE =
 ========================================= */
 
 const COURSE_APPS = [
-
-
-
-
   {
     id: "popUp",
-
     label: "start Popup",
-
-
-    navbarTitle:
-      "מבוא ללומדה",
-
+    navbarTitle: "מבוא ללומדה",
     component: IntroPopUp,
+    laptopVariant: "home",
+    showDesktopBehind: true,
   },
-  
   {
     id: "target",
-
     label: "Target",
-
-    /*
-      הכותרת של ה-navbar
-      כשנמצאים בתוך Target
-    */
-    navbarTitle:
-      "מטרות הלומדה",
-
+    navbarTitle: "מטרות הלומדה",
     component: Target,
+    laptopVariant: "empty",
+    showDesktopBehind: false,
   },
-
-
   {
     id: "chrome",
-
     label: "Google Chrome",
-
-    navbarTitle:
-      "מהו מרכז גיוס? google",
-
+    navbarTitle: "מהו מרכז גיוס? google",
     component: null,
+    laptopVariant: "empty",
+    showDesktopBehind: false,
   },
   {
     id: "excel",
-
     label: "Excel",
-
-    navbarTitle:
-      "כאן תכתבי את הכותרת של Excel",
-
-    /*
-      כשניצור את Excel:
-      component: Excel
-    */
+    navbarTitle: "כאן תכתבי את הכותרת של Excel",
     component: null,
+    laptopVariant: "empty",
+    showDesktopBehind: false,
   },
-
-
-
-
   {
     id: "yanshuf",
-
     label: "ינשוף",
-
-    navbarTitle:
-      "כאן תכתבי את הכותרת של ינשוף",
-
+    navbarTitle: "כאן תכתבי את הכותרת של ינשוף",
     component: null,
+    laptopVariant: "empty",
+    showDesktopBehind: false,
   },
-
-
   {
     id: "outlook",
-
     label: "Outlook",
-
-    navbarTitle:
-      "כאן תכתבי את הכותרת של Outlook",
-
+    navbarTitle: "כאן תכתבי את הכותרת של Outlook",
     component: null,
+    laptopVariant: "empty",
+    showDesktopBehind: false,
   },
-
-
   {
     id: "people",
-
     label: "אנשים",
-
-    navbarTitle:
-      "כאן תכתבי את הכותרת של אנשים",
-
+    navbarTitle: "כאן תכתבי את הכותרת של אנשים",
     component: null,
+    laptopVariant: "empty",
+    showDesktopBehind: false,
   },
-
 ];
-
 
 /* =========================================
    עמוד פנימי התחלתי לכל אפליקציה
@@ -164,13 +124,7 @@ const initialAppPages = {
 
 const defaultProgress = {
 
-  /*
-    hub =
-    מסך המחשב
-  */
   screen: "hub",
-
-
   /*
     האינדקס הכי רחוק
     שהמשתמש פתח.
@@ -179,7 +133,7 @@ const defaultProgress = {
   */
   highestUnlockedIndex: 0,
 
-
+introPopupSeen: false,
   /*
     אפליקציות שנכנסנו אליהן
   */
@@ -280,6 +234,13 @@ function CoursePlayer({
     getInitialProgress
   );
 
+  function closeIntroPopup() {
+  setProgress((previous) => ({
+    ...previous,
+    introPopupSeen: true,
+  }));
+  onComplete();
+}
 
   /* =======================================
      שמירה אוטומטית
@@ -714,88 +675,88 @@ function CoursePlayer({
     );
 
 
-  /* =======================================
-     RENDER של המסך
-  ======================================= */
+ /* =======================================
+   RENDER של המסך
+======================================= */
 
-  function renderScreen() {
+function renderScreen() {
 
-    /* ====================
-       HOME / DESKTOP
-    ==================== */
+  /* ==============================
+     HOME / DESKTOP
+  ============================== */
 
-    if (
-      progress.screen ===
-      "hub"
-    ) {
+  if (progress.screen === "hub") {
+    return (
+      <Laptop variant="home">
 
-      return (
+      <>
+      <DesktopHub
+        currentAppId={highlightedAppId}
+        completedApps={progress.completedApps}
+        visitedApps={progress.visitedApps}
+        onOpenApp={openApp}
+      />
+
+      <IntroPopUp
+        open={!progress.introPopupSeen}
+       onClose={closeIntroPopup}
+      />
+   </>
+
+      </Laptop>
+    );
+  }
+
+
+  /* ==============================
+     APP לא קיימת
+  ============================== */
+
+  if (!activeApp) {
+    return (
+      <Laptop variant="home">
+
         <DesktopHub
-
-          /*
-            זו האפליקציה
-            שצריכה לזהור
-          */
-          currentAppId={
-            highlightedAppId
-          }
-
+          currentAppId={highlightedAppId}
           completedApps={
-            progress
-              .completedApps
+            progress.completedApps
           }
-
           visitedApps={
-            progress
-              .visitedApps
+            progress.visitedApps
           }
-
-          onOpenApp={
-            openApp
-          }
+          onOpenApp={openApp}
         />
-      );
-    }
+
+      </Laptop>
+    );
+  }
 
 
-    /* ====================
-       APP
-    ==================== */
-
-    if (!activeApp) {
-
-      goHome();
-
-      return null;
-    }
+  const AppComponent =
+    activeApp.component;
 
 
-    const AppComponent =
-      activeApp.component;
+  /* ==============================
+     עוד לא חיברנו קומפוננטה
+  ============================== */
 
+  if (!AppComponent) {
+    return (
+      <Laptop
+        variant={
+          activeApp.laptopVariant ??
+          "empty"
+        }
+      >
 
-    /*
-      כרגע עוד לא בנינו
-      את שאר האפליקציות.
-
-      ככה הפרויקט עדיין
-      ירוץ בלי שגיאת import.
-    */
-
-    if (!AppComponent) {
-
-      return (
-        <div className=
-          "course-player__missing-app"
-        >
+        <div className="course-player__missing-app">
 
           <h1>
             {activeApp.label}
           </h1>
 
           <p>
-            הקומפוננטה עדיין
-            לא חוברה.
+            הקומפוננטה עדיין לא חוברה.
           </p>
 
           <button
@@ -806,83 +767,120 @@ function CoursePlayer({
           </button>
 
         </div>
-      );
-    }
 
-
-    /*
-      כל אפליקציה מקבלת
-      את אותם props.
-    */
-
-    return (
-      <AppComponent
-
-        page={
-          progress
-            .appPages[
-              activeApp.id
-            ] ?? 0
-        }
-
-
-        onPageChange={(
-          newPage
-        ) =>
-          setAppPage(
-            activeApp.id,
-            newPage
-          )
-        }
-
-
-        /*
-          חזרה לאפליקציה
-          הקודמת
-        */
-        onBack={() =>
-          goToPreviousApp(
-            activeApp.id
-          )
-        }
-
-
-        /*
-          חזרה למחשב
-          בלי לסמן סיום
-        */
-        onHome={
-          goHome
-        }
-
-
-        /*
-          סיום +
-          חזרה למחשב
-        */
-        onComplete={() =>
-          finishApp(
-            activeApp.id,
-            "home"
-          )
-        }
-
-
-        /*
-          סיום +
-          ישר לאפליקציה הבאה
-        */
-        onNext={() =>
-          finishApp(
-            activeApp.id,
-            "next"
-          )
-        }
-
-      />
+      </Laptop>
     );
   }
 
+
+  /* ==============================
+     PROPS משותפים לכל אפליקציה
+  ============================== */
+
+  const appProps = {
+
+    page:
+      progress.appPages[
+        activeApp.id
+      ] ?? 0,
+
+
+    onPageChange: (
+      newPage
+    ) =>
+      setAppPage(
+        activeApp.id,
+        newPage
+      ),
+
+
+    onBack: () =>
+      goToPreviousApp(
+        activeApp.id
+      ),
+
+
+    onHome:
+      goHome,
+
+
+    onComplete: () =>
+      finishApp(
+        activeApp.id,
+        "home"
+      ),
+
+
+    onNext: () =>
+      finishApp(
+        activeApp.id,
+        "next"
+      ),
+  };
+
+
+  /* ==============================
+     INTRO / קומפוננטה שיושבת
+     מעל שולחן העבודה
+  ============================== */
+
+  if (
+    activeApp.showDesktopBehind
+  ) {
+    return (
+      <Laptop
+        variant={
+          activeApp.laptopVariant ??
+          "home"
+        }
+      >
+
+        <DesktopHub
+          currentAppId={null}
+          completedApps={
+            progress.completedApps
+          }
+          visitedApps={
+            progress.visitedApps
+          }
+
+          /*
+            בזמן הפופאפ לא מאפשרים
+            ללחוץ על אפליקציות
+          */
+          onOpenApp={() => {}}
+        />
+
+
+        <AppComponent
+          {...appProps}
+        />
+
+      </Laptop>
+    );
+  }
+
+
+  /* ==============================
+     APP רגילה
+     Target / Excel / וכו'
+  ============================== */
+
+  return (
+    <Laptop
+      variant={
+        activeApp.laptopVariant ??
+        "empty"
+      }
+    >
+
+      <AppComponent
+        {...appProps}
+      />
+
+    </Laptop>
+  );
+}
 
   return (
     <div className="course-player">
@@ -909,6 +907,12 @@ function CoursePlayer({
       <div className=
         "course-player__stage"
       >
+        {/* <img
+  src={rope}
+  className="desktop-apps__rope"
+  alt=""
+  draggable="false"
+/> */}
 
         {renderScreen()}
 

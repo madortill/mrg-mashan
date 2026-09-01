@@ -7,15 +7,7 @@ import peopleIcon from "./../../assets/images/apps/people.png";
 import targetIcon from "./../../assets/images/apps/target.png";
 
 export const courseApps = [
-  {
-    id: "popUp",
-    label: "popup",
-    icon: rope,
-    position: {
-      top: "1%",
-      left: "2%",
-    },
-  },
+ 
   {
     id: "excel",
     label: "Excel",
