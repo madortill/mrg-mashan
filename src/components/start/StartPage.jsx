@@ -5,7 +5,7 @@
 
 import "./start.css";
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import desk from "../../assets/images/desk_wide.svg";
 import plant from "../../assets/images/plant.svg";
@@ -13,22 +13,17 @@ import backgroundDecor from "../../assets/images/background-decor.svg";
 
 import laptopOpening from "../../assets/images/computerClean.svg";
 
+import logos from "../../assets/images/logo.png";
 import searchIcon from "../../assets/images/search_icon.svg";
 import rope from "../../assets/images/rope.svg";
 import openingIcon from "../../assets/images/BHD11Round.png";
 
-import HomePage from "../../learningCom/homepage/HomePage";
 const INTRO_DURATION_MS = 3900;
 
 const FLIGHT_PATH =
   "M -45 145 C 4 76 71 78 72 119 C 73 158 123 160 150 121 C 173 87 149 57 117 68 C 84 80 91 124 134 132 C 194 142 224 88 253 57 C 285 23 320 44 333 77 C 346 110 375 91 414 27";
 
-/* ========================================
-   צורת המטוס
 
-   המטוס מצויר כאן כ-SVG,
-   לכן אין צורך בתמונת מטוס נוספת.
-======================================== */
 
 function PlaneShape() {
   return (
@@ -52,12 +47,6 @@ function PlaneShape() {
 }
 
 
-/* ========================================
-   המטוס והמסלול
-
-   המסלול נחשף בהדרגה,
-   והמטוס מתקדם בדיוק לאורכו.
-======================================== */
 
 function AnimatedPlane() {
   return (
@@ -109,7 +98,7 @@ function AnimatedPlane() {
       </g>
     </svg>
   );
-}akl
+}
 
 
 /* ========================================
@@ -235,11 +224,11 @@ function StartLaptop({ nextPage }) {
 }
 const nextPage= ()=>{
       const navigate = useNavigate();
-
+    console.log("press");
       navigate("/learning");
 
 }
-function StartPage() {
+function start() {
   const navigate = useNavigate();
 
   const [laptopIsOpen, setLaptopIsOpen] =
@@ -275,7 +264,7 @@ function StartPage() {
         draggable="false"
       />
 
-      <LaptopIntro
+      {/* <LaptopIntro
         onOpened={() =>
           setLaptopIsOpen(true)
         }
@@ -289,7 +278,7 @@ function StartPage() {
             )
           }
         />
-      </LaptopIntro>
+      </LaptopIntro> */}
     </section>
   );
 }
@@ -298,6 +287,12 @@ function StartPage() {
 
 function StartPage({ nextPage }) {
   const [phase, setPhase] = useState("start");
+  const navigate = useNavigate(); // ה-Hook מוגדר כעת בצורה תקינה בתוך הקומפוננטה
+
+   const handleStartClick = () => {
+    console.log("press");
+    navigate("/learning");
+  }; 
 
   useEffect(() => {
     const prefersReducedMotion =
@@ -352,7 +347,7 @@ function StartPage({ nextPage }) {
         {phase === "intro" ? (
           <LaptopIntro />
         ) : (
-          <StartLaptop nextPage={nextPage} />
+          <StartLaptop nextPage={handleStartClick} />
         )}
       </section>
     </main>

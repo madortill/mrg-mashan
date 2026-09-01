@@ -3,54 +3,95 @@
   box-sizing: border-box;
 }
 
+
 .course-navbar {
-  position: relative;
-
-  width: min(
-    calc(100vw - 2rem),
-    42rem
-  );
-
-  margin-inline: auto;
+  width: 100%;
 
   direction: rtl;
 
+  font-family:
+    ploni,
+    Arial,
+    sans-serif;
+
+  border-radius: 2rem;
+
   z-index: 100;
 }
+
+
+/* ============================
+   מצב פתוח
+============================ */
+
+.course-navbar--open {
+  padding-bottom: 0.55rem;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0.35rem 0.55rem
+    rgba(0, 0, 0, 0.22);
+
+  overflow: hidden;
+}
+
+
+/* ============================
+   הכפתור העליון
+============================ */
 
 .course-navbar__trigger {
   position: relative;
 
   width: 100%;
-  min-height: 3.4rem;
+  min-height: clamp(
+    3.2rem,
+    6vw,
+    4.7rem
+  );
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   padding:
-    0.6rem
+    0.5rem
     4rem;
 
   border: none;
+
   border-radius: 999rem;
 
-  background-color: #ffffff;
-  color: #151515;
+  background: #ffffff;
+
+  color: #111111;
 
   box-shadow:
-    0 0.2rem 0.4rem
-    rgba(0, 0, 0, 0.2);
+    0 0.25rem 0.35rem
+    rgba(0, 0, 0, 0.22);
 
-  font-family: ploni;
+  font-family: inherit;
+
   font-size: clamp(
     1rem,
-    1.5vw,
-    1.45rem
+    2vw,
+    1.7rem
   );
 
   cursor: pointer;
 }
+
+
+.course-navbar--open
+.course-navbar__trigger {
+  box-shadow: none;
+}
+
+
+/* ============================
+   כותרת
+============================ */
 
 .course-navbar__title {
   overflow: hidden;
@@ -60,148 +101,238 @@
   white-space: nowrap;
 }
 
-.course-navbar__arrow {
+
+/* ============================
+   זכוכית מגדלת
+============================ */
+
+.course-navbar__search {
   position: absolute;
 
   top: 50%;
   right: 1.4rem;
 
-  width: 1.5rem;
-  height: 1.5rem;
+  width: clamp(
+    1.4rem,
+    2.5vw,
+    2.1rem
+  );
 
-  transform: translateY(-50%);
+  height: clamp(
+    1.4rem,
+    2.5vw,
+    2.1rem
+  );
 
-  transition: transform 180ms ease;
-}
-
-.course-navbar__trigger[aria-expanded="true"]
-.course-navbar__arrow {
   transform:
-    translateY(-50%)
-    rotate(180deg);
+    translateY(-50%);
 }
 
-.course-navbar__arrow svg {
+
+.course-navbar__search svg {
   width: 100%;
   height: 100%;
 
   fill: none;
 
   stroke: currentColor;
-  stroke-width: 2;
+
+  stroke-width: 1.8;
+
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
+
+/* ============================
+   הרשימה
+============================ */
+
 .course-navbar__menu {
-  position: absolute;
-
-  top: calc(100% + 0.35rem);
-  left: 0;
-
-  width: 100%;
-  max-height: min(50vh, 25rem);
-
-  overflow-y: auto;
-
-  padding: 0.55rem;
+  padding:
+    0.25rem
+    0.35rem
+    0.45rem;
 
   display: flex;
   flex-direction: column;
 
-  gap: 0.25rem;
-
-  border-radius: 1.5rem;
-
-  background-color: #ffffff;
-
-  box-shadow:
-    0 0.35rem 0.7rem
-    rgba(0, 0, 0, 0.18);
+  gap: 0.2rem;
 
   animation:
-    navbar-menu-enter
-    160ms
-    ease-out
+    navbar-open
+    160ms ease-out
     both;
 }
 
+
+/* ============================
+   שורה
+============================ */
+
 .course-navbar__item {
   width: 100%;
-  min-height: 2.7rem;
+
+  min-height: clamp(
+    2.7rem,
+    5vw,
+    3.6rem
+  );
+
+  display: grid;
+
+  grid-template-columns:
+    2.7rem
+    1fr
+    2.7rem;
+
+  align-items: center;
+
+  padding:
+    0.25rem
+    0.5rem;
+
+  border: none;
+
+  border-radius: 999rem;
+
+  background: transparent;
+
+  color: #151515;
+
+  font-family: inherit;
+
+  font-size: clamp(
+    0.95rem,
+    1.8vw,
+    1.45rem
+  );
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    transform 150ms ease;
+}
+
+
+/* האייקון בצד ימין */
+
+.course-navbar__status {
+  grid-column: 3;
 
   display: flex;
   align-items: center;
+  justify-content: center;
 
-  gap: 0.75rem;
-
-  padding:
-    0.45rem
-    1rem;
-
-  border: none;
-  border-radius: 999rem;
-
-  background-color: transparent;
-  color: #171717;
-
-  font-family: ploni;
-  font-size: clamp(
-    0.95rem,
-    1.3vw,
-    1.25rem
-  );
-
-  text-align: right;
-
-  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
 }
 
-.course-navbar__status {
-  width: 1.5rem;
+
+.course-navbar__status svg {
+  width: 75%;
+  height: 75%;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* הטקסט */
+
+.course-navbar__label {
+  grid-column: 2;
 
   text-align: center;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
-.course-navbar__item:hover:not(:disabled) {
-  background-color: #eeeeee;
+
+.course-navbar__spacer {
+  grid-column: 1;
 }
+
+
+/* ============================
+   נושא קודם
+============================ */
+
+.course-navbar__item--completed:hover {
+  background: #f2f2f2;
+}
+
+
+/* ============================
+   הנושא הנוכחי
+============================ */
 
 .course-navbar__item--current {
-  background-color: #d2d2d2;
+  background: #d7e8e9;
 
-  font-weight: 700;
+  color: #111111;
 }
+
+
+.course-navbar__item--current:hover {
+  background: #cddfe0;
+}
+
+
+/* ============================
+   הבא
+============================ */
 
 .course-navbar__item--next {
-  background-color: #e5f2f7;
+  background: #f3f3f3;
+
+  color: #999999;
 }
 
-.course-navbar__item--completed {
-  color: #1b5f45;
-}
+
+/* ============================
+   נעול
+============================ */
 
 .course-navbar__item--locked {
-  background-color: #f4f4f4;
-  color: #9b9b9b;
+  color: #b2b2b2;
 
-  cursor: not-allowed;
+  cursor: default;
 }
 
-@keyframes navbar-menu-enter {
+
+.course-navbar__item:disabled {
+  cursor: default;
+}
+
+
+/* ============================
+   אנימציה
+============================ */
+
+@keyframes navbar-open {
   from {
     opacity: 0;
 
     transform:
-      translateY(-0.4rem)
-      scaleY(0.97);
+      translateY(-0.3rem);
   }
 
   to {
     opacity: 1;
 
     transform:
-      translateY(0)
-      scaleY(1);
+      translateY(0);
   }
 }

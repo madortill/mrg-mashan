@@ -30,10 +30,9 @@ function IntroPopup({
         </button>
 
         <div className="intro-popup__bubble">
-          <p>
-            כאן נמצאות כל האפליקציות
-            שעליהן נלמד.
-          </p>
+          <strong>
+            היי! אני דנה הקצינת משא"ן מילואים
+          </strong>
 
           <p>
             בכל פעם חפשו את האפליקציה

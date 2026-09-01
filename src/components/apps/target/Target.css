@@ -1,118 +1,153 @@
 /* ==========================================================================
    Target component styles
-   - Fully responsive: fluid sizing via clamp()/%, grid collapses to a single
-     column on narrow viewports.
-   - Colors/spacing pulled into variables at the top so this can be re-themed
-     without touching the rules below.
+   Matches the supplied mockup: colors, spacing, and type. Fully responsive
+   (fluid sizing via clamp()/%, grid collapses to one column on narrow
+   viewports). Nothing animates on its own — every transition below is
+   triggered by the `is-revealed` / `target__arrow--merged` classes, which
+   only get added in response to a click in Target.jsx.
    ========================================================================== */
 
-.target-screen {
-  --target-accent: #c0202b;      /* red used for the title / target rings */
-  --target-text: #1f1f1f;
-  --target-box-border: #d8d8d8;
-  --target-box-bg: #ffffff;
-  --target-cta-bg: #f3b8bb;
-  --target-cta-text: #7a1a1f;
+.target {
+  /* Swap this for the exact brand font once you have it; these are close
+     Hebrew-friendly stand-ins used widely in IL product UI. */
+  --target-font: "ploni"
 
-  --target-gap: clamp(10px, 2vw, 24px);
-  --target-box-radius: 10px;
-  --target-transition: 550ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  --target-red: #c8202c;          /* target rings / accents */
+  --target-box-bg: #eaf2fc;       /* revealed card fill */
+  --target-box-bg-empty: #f2f6fc; /* empty card fill */
+  --target-box-border: #d7e4f5;
+  --target-text: #2c2f36;
+  --target-cta-bg: #bfdcf6;
+  --target-cta-text: #1c4f75;
+
+  --target-gap: clamp(12px, 1.8vw, 22px);
+  --target-radius: 12px;
+  --target-transition: 480ms cubic-bezier(0.22, 0.61, 0.36, 1);
 
   width: 100%;
-  max-width: 720px;
+  height: 100%;
+  max-width: 620px;
   margin-inline: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(14px, 2.5vw, 22px);
-  padding: clamp(12px, 2vw, 20px);
+  justify-content: center;
+  gap: clamp(14px, 2.2vw, 22px);
   box-sizing: border-box;
-  font-family: inherit;
+  font-family: var(--target-font);
   color: var(--target-text);
 }
 
-/* ---------- header box (top banner text) ---------- */
+/* ---------- header box ("מטרת הצעד ...") ---------- */
 
-.target-header-box {
+.target__header-box {
   width: 100%;
-  max-width: 420px;
+  max-width: 320px;
+  min-height: clamp(48px, 7vw, 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--target-box-border);
-  border-radius: var(--target-box-radius);
-  background: var(--target-box-bg);
-  padding: clamp(10px, 1.6vw, 16px) clamp(12px, 2vw, 20px);
-  text-align: center;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  border-radius: var(--target-radius);
+  background: var(--target-box-bg-empty);
+  padding: clamp(8px, 1.4vw, 14px) clamp(10px, 1.8vw, 16px);
+  box-sizing: border-box;
+  box-shadow: 0 1px 2px rgba(20, 40, 70, 0.05);
+  transition: background var(--target-transition);
 }
 
-.target-header-box__text {
-  font-size: clamp(11px, 1.3vw, 13px);
-  line-height: 1.5;
+.target__header-box.is-revealed {
+  background: var(--target-box-bg);
+}
+
+.target__header-text {
+  font-family: var(--target-font);
+  font-size: clamp(10.5px, 1.15vw, 12.5px);
+  font-weight: 500;
+  line-height: 1.55;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--target-transition), transform var(--target-transition);
+}
+
+.target__header-box.is-revealed .target__header-text {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ---------- grid: 4 quadrant boxes + center target ---------- */
 
-.target-grid {
+.target__grid {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr minmax(140px, 220px) 1fr;
+  grid-template-columns: 1fr minmax(130px, 200px) 1fr;
   grid-template-areas:
-    'tl center tr'
-    'bl center br';
+    "top-left    center top-right"
+    "bottom-left center bottom-right";
   align-items: center;
   gap: var(--target-gap);
 }
 
-.target-box {
+.target__box {
   grid-area: var(--area);
-  min-height: clamp(56px, 8vw, 74px);
+  min-height: clamp(52px, 7.5vw, 68px);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   border: 1px solid var(--target-box-border);
-  border-radius: var(--target-box-radius);
-  background: var(--target-box-bg);
-  padding: clamp(8px, 1.4vw, 14px);
+  border-radius: var(--target-radius);
+  background: var(--target-box-bg-empty);
+  padding: clamp(8px, 1.3vw, 14px);
   box-sizing: border-box;
+  box-shadow: 0 1px 2px rgba(20, 40, 70, 0.05);
+  transition: background var(--target-transition);
+}
+
+.target__box--top-left { --area: top-left; }
+.target__box--top-right { --area: top-right; }
+.target__box--bottom-left { --area: bottom-left; }
+.target__box--bottom-right { --area: bottom-right; }
+
+.target__box.is-revealed {
+  background: var(--target-box-bg);
+}
+
+.target__box-text {
+  font-family: var(--target-font);
+  font-size: clamp(10px, 1.05vw, 12px);
+  font-weight: 500;
+  line-height: 1.55;
   opacity: 0;
-  transform: translateY(6px) scale(0.98);
+  transform: translateY(4px) scale(0.98);
   transition: opacity var(--target-transition), transform var(--target-transition);
 }
 
-.target-box.is-revealed {
+.target__box.is-revealed .target__box-text {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
-.target-box__text {
-  font-size: clamp(10.5px, 1.15vw, 12.5px);
-  line-height: 1.5;
-}
+/* ---------- center: target graphic + the 5 arrows ---------- */
 
-.target-box--top-left { --area: tl; }
-.target-box--top-right { --area: tr; }
-.target-box--bottom-left { --area: bl; }
-.target-box--bottom-right { --area: br; }
-
-/* ---------- center: target graphic + arrows ---------- */
-
-.target-center {
+.target__center {
   grid-area: center;
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  max-width: 220px;
+  max-width: 190px;
   margin-inline: auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.target-hit-area {
+.target__hit-area {
   all: unset;
   cursor: pointer;
-  width: 62%;
-  height: 62%;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,44 +155,45 @@
   z-index: 2;
 }
 
-.target-hit-area:disabled {
+.target__hit-area:disabled {
   cursor: default;
 }
 
-.target-hit-area:focus-visible {
-  outline: 2px solid var(--target-accent);
+.target__hit-area:focus-visible {
+  outline: 2px solid var(--target-red);
   outline-offset: 4px;
 }
 
-.target-image {
+.target__image {
   width: 100%;
   height: 100%;
   object-fit: contain;
   pointer-events: none;
-  transition: transform 200ms ease;
+  transition: transform 180ms ease;
 }
 
-.target-hit-area:not(:disabled):hover .target-image,
-.target-hit-area:not(:disabled):focus-visible .target-image {
+.target__hit-area:not(:disabled):hover .target__image,
+.target__hit-area:not(:disabled):focus-visible .target__image {
   transform: scale(1.04);
 }
 
-/* Arrows: absolutely positioned over the target, each resting outside the
-   ring on its own quadrant side, pointing inward. On reveal they travel to
-   the center and fade out ("absorbed" into the target).
-   Swap --arrow-travel-x/y and rotation per quadrant to match the real
-   artwork once it's available. */
+/* Arrows: one per revealed item (header + 4 quadrants), each resting just
+   outside the ring on the side that matches its box, pointing inward.
+   On reveal it travels to the center and fades out ("absorbed" into the
+   target) at the exact moment its box's text appears.
+   Adjust the resting transforms once the real artwork's proportions are
+   known — these are placeholders sized for a generic arrow icon. */
 
-.target-arrows {
+.target__arrows {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 1;
 }
 
-.target-arrow {
+.target__arrow {
   position: absolute;
-  width: clamp(16px, 3.4vw, 26px);
+  width: clamp(16px, 3.2vw, 24px);
   height: auto;
   left: 50%;
   top: 50%;
@@ -165,107 +201,116 @@
   transition: transform var(--target-transition), opacity var(--target-transition);
 }
 
-.target-arrow--top-left {
-  transform: translate(-135%, -135%) rotate(-45deg);
+.target__arrow--header {
+  transform: translate(-50%, -220%) rotate(180deg);
 }
-.target-arrow--top-left.target-arrow--merged {
+.target__arrow--header.target__arrow--merged {
+  transform: translate(-50%, -50%) rotate(180deg) scale(0.5);
+  opacity: 0;
+}
+
+.target__arrow--top-left {
+  transform: translate(-160%, -160%) rotate(-45deg);
+}
+.target__arrow--top-left.target__arrow--merged {
   transform: translate(-50%, -50%) rotate(-45deg) scale(0.5);
   opacity: 0;
 }
 
-.target-arrow--top-right {
-  transform: translate(35%, -135%) rotate(45deg);
+.target__arrow--top-right {
+  transform: translate(60%, -160%) rotate(45deg);
 }
-.target-arrow--top-right.target-arrow--merged {
+.target__arrow--top-right.target__arrow--merged {
   transform: translate(-50%, -50%) rotate(45deg) scale(0.5);
   opacity: 0;
 }
 
-.target-arrow--bottom-left {
-  transform: translate(-135%, 35%) rotate(-135deg);
+.target__arrow--bottom-left {
+  transform: translate(-160%, 60%) rotate(-135deg);
 }
-.target-arrow--bottom-left.target-arrow--merged {
+.target__arrow--bottom-left.target__arrow--merged {
   transform: translate(-50%, -50%) rotate(-135deg) scale(0.5);
   opacity: 0;
 }
 
-.target-arrow--bottom-right {
-  transform: translate(35%, 35%) rotate(135deg);
+.target__arrow--bottom-right {
+  transform: translate(60%, 60%) rotate(135deg);
 }
-.target-arrow--bottom-right.target-arrow--merged {
+.target__arrow--bottom-right.target__arrow--merged {
   transform: translate(-50%, -50%) rotate(135deg) scale(0.5);
   opacity: 0;
 }
 
-/* ---------- CTA button, revealed after the last click ---------- */
+/* ---------- CTA button, revealed once all 5 texts are shown ---------- */
 
-.target-cta-wrap {
+.target__cta-wrap {
   height: 0;
   overflow: hidden;
   opacity: 0;
   transition: opacity var(--target-transition), height var(--target-transition);
 }
 
-.target-cta-wrap.is-revealed {
+.target__cta-wrap.is-revealed {
   height: auto;
   opacity: 1;
   overflow: visible;
 }
 
-.target-cta {
-  min-width: 140px;
-  padding: 10px 28px;
+.target__cta {
+  min-width: 130px;
+  padding: 9px 26px;
   border: none;
   border-radius: 999px;
   background: var(--target-cta-bg);
   color: var(--target-cta-text);
-  font-size: clamp(12px, 1.4vw, 14px);
+  font-family: var(--target-font);
+  font-size: clamp(11.5px, 1.3vw, 13.5px);
   font-weight: 600;
   cursor: pointer;
   transition: filter 150ms ease, transform 150ms ease;
 }
 
-.target-cta:hover {
+.target__cta:hover {
   filter: brightness(0.97);
   transform: translateY(-1px);
 }
 
-.target-cta:focus-visible {
-  outline: 2px solid var(--target-accent);
+.target__cta:focus-visible {
+  outline: 2px solid var(--target-red);
   outline-offset: 2px;
 }
 
 /* ==========================================================================
-   Responsive: collapse to a single column under 560px so boxes stack
-   above/below the target instead of squeezing sideways.
+   Responsive: collapse to a single column under 480px.
    ========================================================================== */
 
-@media (max-width: 560px) {
-  .target-grid {
+@media (max-width: 480px) {
+  .target__grid {
     grid-template-columns: 1fr;
     grid-template-areas:
-      'tl'
-      'tr'
-      'center'
-      'bl'
-      'br';
+      "top-left"
+      "top-right"
+      "center"
+      "bottom-left"
+      "bottom-right";
   }
 
-  .target-center {
-    max-width: 180px;
-    margin-block: 8px;
+  .target__center {
+    max-width: 160px;
+    margin-block: 6px;
   }
 
-  .target-header-box {
+  .target__header-box {
     max-width: 100%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .target-box,
-  .target-arrow,
-  .target-cta-wrap,
-  .target-image {
+  .target__box-text,
+  .target__header-text,
+  .target__cta-wrap,
+  .target__image,
+  .target__arrow {
     transition-duration: 1ms;
   }
 }

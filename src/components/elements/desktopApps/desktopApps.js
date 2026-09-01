@@ -43,3 +43,4 @@ export const DESKTOP_APPS = [
     icon: targetIcon,
   },
 ];
+

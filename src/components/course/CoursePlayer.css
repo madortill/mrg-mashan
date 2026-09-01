@@ -1,0 +1,134 @@
+.course-player,
+.course-player * {
+  box-sizing: border-box;
+}
+
+
+.course-player {
+  position: relative;
+
+  width: 100vw;
+  height: 100dvh;
+
+  display: grid;
+  place-items: center;
+
+  overflow: hidden;
+
+  direction: rtl;
+
+  background-color: #eef0f4;
+}
+
+
+/* =================================
+   כל הלומדה
+
+   שומרת יחס של 1440 / 1024
+================================= */
+
+.course-player__stage {
+  position: relative;
+
+  width: min(
+    100vw,
+    calc(
+      100dvh *
+      1740 /
+      1024
+    )
+  );
+
+  aspect-ratio: 1440 / 1024;
+
+  overflow: hidden;
+}
+
+
+/* =================================
+   NAVBAR
+
+   הערכים האלה מתאימים בערך
+   למיקום שבתמונה שלך.
+================================= */
+
+.course-player__navbar {
+  position: absolute;
+
+  top: 12.5%;
+  left: 50%;
+
+  width: 49.5%;
+
+  transform:
+    translateX(-50%);
+
+  z-index: 1000;
+}
+
+
+/* =================================
+   APP שעוד לא בנינו
+================================= */
+
+.course-player__missing-app {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  z-index: 10;
+}
+
+
+.course-player__missing-app h1 {
+  margin: 0;
+}
+
+
+.course-player__missing-app button {
+  padding:
+    0.65rem
+    1.5rem;
+
+  border: 0;
+
+  border-radius: 999rem;
+
+  cursor: pointer;
+}
+
+
+/* =================================
+   מסך קטן
+================================= */
+
+@media (
+  max-width: 800px
+) {
+
+  .course-player__navbar {
+    width: 70%;
+  }
+}
+
+
+@media (
+  max-width: 520px
+) {
+
+  .course-player__navbar {
+    width: 90%;
+  }
+}
