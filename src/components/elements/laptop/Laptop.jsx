@@ -3,7 +3,7 @@ import React, {
   useRef,
 } from "react";
 
-import "./laptop.css";
+import "./Laptop.css";
 
 import homeLaptop
   from "../../../assets/images/computerHome.svg";
