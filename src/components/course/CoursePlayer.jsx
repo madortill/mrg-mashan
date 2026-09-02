@@ -5,6 +5,7 @@ import "./CoursePlayer.css";
 
 import Navbar from "../elements/navbar/Navbar";
 import Target from "../apps/target/Target.jsx";
+import GoogleYnet from "../apps/google/GoogleYnet";
 import IntroPopUp from "../elements/introPopUp/IntroPopUp.jsx";
 import Laptop from "../elements/laptop/Laptop";
 import DesktopHub from "../pages/DesktopHub/DesktopHub";
@@ -43,7 +44,7 @@ const APP_CONTENT = {
   chrome: {
     label: "Google Chrome",
     navbarTitle: "מהו מרכז גיוס? google",
-    component: null,
+    component: GoogleYnet,
     laptopVariant: "empty",
   },
   excel: {

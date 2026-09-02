@@ -1,75 +1,115 @@
-/* ==========================================================================
-   Target component styles
-   Matches the supplied mockup: colors, spacing, and type. Fully responsive
-   (fluid sizing via clamp()/%, grid collapses to one column on narrow
-   viewports). Nothing animates on its own — every transition below is
-   triggered by the `is-revealed` / `target__arrow--merged` classes, which
-   only get added in response to a click in Target.jsx.
+/* ========================================================================== 
+   Target
    ========================================================================== */
 
+.target,
+.target * {
+  box-sizing: border-box;
+}
+.target > * {
+  margin-block: 0; 
+}
+
 .target {
-
-  --target-font: "ploni"
-
-  --target-red: #c8202c;          /* target rings / accents */
-  --target-box-bg: #eaf2fc;       /* revealed card fill */
-  --target-box-bg-empty: #f2f6fc; /* empty card fill */
-  --target-box-border: #d7e4f5;
+  --target-font: "ploni";
+  --title-target-font: "rinat";
+  --target-red: #f3473b;
+  --target-box-bg: #dcecff;
+  --target-box-bg-empty: #f2f6fc;
+  --target-box-border: #6d95cf;
   --target-text: #2c2f36;
-  --target-cta-bg: #bfdcf6;
-  --target-cta-text: #1c4f75;
-
   --target-gap: clamp(12px, 1.8vw, 22px);
-  --target-radius: 12px;
+  --target-radius: 18px;
   --target-transition: 480ms cubic-bezier(0.22, 0.61, 0.36, 1);
 
-  width: 100%;
-  height: 100%;
-  max-width: 620px;
+  position: relative;
+  width: min(100%, 720px);
+  
+  /* 1. שינוי גובה מלא לגובה לפי תוכן, כדי שלא יימתח סתם */
+  height: max-content; 
+  
   margin-inline: auto;
+  padding: 0 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  justify-content: flex-start; 
+  
+  color: var(--target-text);
+  
+  gap: clamp(6px, 5vh, 50px); 
+}
+
+/* ---------- כותרות ---------- */
+
+.target__heading {
+  flex: 0 0 auto;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(14px, 2.2vw, 22px);
-  box-sizing: border-box;
-  font-family: var(--target-font);
-  color: var(--target-text);
+  gap: 2px;
+
+  text-align: center;
 }
 
-/* ---------- header box ("מטרת הצעד ...") ---------- */
+.target__title {
+  margin: 0;
 
-.target-title ,.target-semiTitle{
-  position: absolute;
-  left:45%;
-  top:5%;
-  font-family:"rinat";
-  font-size: 2rem;
-  color: #003A87;
+  color: #003a87;
+  font-family: "rinat";
+  
+  font-size: clamp(1.75rem, 4vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1;
 }
-.target-semiTitle{
-  top:14%;
-    left:45%;
-  color: #000000ff;
 
-    font-size: 1.2rem;
-
-}
-.target__header-box {
-  z-index:1; 
-  width: 100%;
-  max-width: 320px;
-  min-height: clamp(48px, 7vw, 60px);
+.target__instruction {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 5px;
+
+  color: #111111;
+  font-family: "rinat"; 
+  font-size: clamp(0.95rem, 1.8vw, 1.8rem);
+  line-height: 1.1;
+}
+
+.target__pointer {
+  display: block;
+
+  width: clamp(13px, 1.5vw, 19px);
+  height: auto;
+
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---------- הקופסה העליונה ---------- */
+
+.target__header-box {
+  z-index: 1;
+
+  width: min(100%, 320px);
+  min-height: clamp(58px, 7vw, 76px);
+  padding: 10px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border: 1px solid var(--target-box-border);
   border-radius: var(--target-radius);
   background: var(--target-box-bg-empty);
-  padding: clamp(8px, 1.4vw, 14px) clamp(10px, 1.8vw, 16px);
-  box-sizing: border-box;
   box-shadow: 0 1px 2px rgba(20, 40, 70, 0.05);
-  transition: background var(--target-transition);
+
+  transition: background-color var(--target-transition);
 }
 
 .target__header-box.is-revealed {
@@ -77,14 +117,23 @@
 }
 
 .target__header-text {
+  color: var(--target-text);
   font-family: var(--target-font);
-  font-size: clamp(10.5px, 1.15vw, 12.5px);
-  font-weight: 500;
-  line-height: 1.55;
+  font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+  font-weight: 400;
+  line-height: 1.3;
   text-align: center;
+
   opacity: 0;
   transform: translateY(-4px);
-  transition: opacity var(--target-transition), transform var(--target-transition);
+
+  transition:
+    opacity var(--target-transition),
+    transform var(--target-transition);
+}
+
+.target__header-text strong {
+  font-weight: 700;
 }
 
 .target__header-box.is-revealed .target__header-text {
@@ -92,39 +141,60 @@
   transform: translateY(0);
 }
 
-/* ---------- grid: 4 quadrant boxes + center target ---------- */
+/* ---------- ארבע הקופסאות והמטרה ---------- */
 
 .target__grid {
+  position: relative;
+
   width: 100%;
+  padding-bottom: clamp(58px, 8vw, 76px);
+
   display: grid;
-  grid-template-columns: 1fr minmax(130px, 200px) 1fr;
+  grid-template-columns: minmax(150px, 1fr) minmax(150px, 190px) minmax(150px, 1fr);
   grid-template-areas:
-    "top-left    center top-right"
+    "top-left center top-right"
     "bottom-left center bottom-right";
   align-items: center;
   gap: var(--target-gap);
+
+  overflow: visible;
 }
 
 .target__box {
   grid-area: var(--area);
-  min-height: clamp(52px, 7.5vw, 68px);
+
+  min-height: clamp(64px, 7.5vw, 82px);
+  padding: 10px 14px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+
   border: 1px solid var(--target-box-border);
   border-radius: var(--target-radius);
   background: var(--target-box-bg-empty);
-  padding: clamp(8px, 1.3vw, 14px);
-  box-sizing: border-box;
   box-shadow: 0 1px 2px rgba(20, 40, 70, 0.05);
-  transition: background var(--target-transition);
+
+  text-align: center;
+
+  transition: background-color var(--target-transition);
 }
 
-.target__box--top-left { --area: top-left; }
-.target__box--top-right { --area: top-right; }
-.target__box--bottom-left { --area: bottom-left; }
-.target__box--bottom-right { --area: bottom-right; }
+.target__box--top-left {
+  --area: top-left;
+}
+
+.target__box--top-right {
+  --area: top-right;
+}
+
+.target__box--bottom-left {
+  --area: bottom-left;
+}
+
+.target__box--bottom-right {
+  --area: bottom-right;
+}
 
 .target__box.is-revealed {
   background: var(--target-box-bg);
@@ -132,12 +202,16 @@
 
 .target__box-text {
   font-family: var(--target-font);
-  font-size: clamp(16px, 1.10vw, 18px);
+  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
   font-weight: 500;
-  line-height: 1.55;
+  line-height: 1.3;
+
   opacity: 0;
   transform: translateY(4px) scale(0.98);
-  transition: opacity var(--target-transition), transform var(--target-transition);
+
+  transition:
+    opacity var(--target-transition),
+    transform var(--target-transition);
 }
 
 .target__box.is-revealed .target__box-text {
@@ -145,30 +219,40 @@
   transform: translateY(0) scale(1);
 }
 
-/* ---------- center: target graphic + the 5 arrows ---------- */
+/* ---------- המטרה ---------- */
 
 .target__center {
   grid-area: center;
+
   position: relative;
+
   width: 100%;
-  aspect-ratio: 1 / 1;
   max-width: 190px;
+  aspect-ratio: 1;
   margin-inline: auto;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  overflow: visible;
 }
 
 .target__hit-area {
   all: unset;
-  cursor: pointer;
+
+  position: relative;
+  z-index: 2;
+
   width: 100%;
   height: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border-radius: 50%;
-  z-index: 2;
+  cursor: pointer;
 }
 
 .target__hit-area:disabled {
@@ -177,14 +261,20 @@
 
 .target__hit-area:focus-visible {
   outline: 2px solid var(--target-red);
-  outline-offset: 4px;
+  outline-offset: 5px;
 }
 
 .target__image {
+  display: block;
+
   width: 100%;
   height: 100%;
+
   object-fit: contain;
   pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+
   transition: transform 180ms ease;
 }
 
@@ -193,156 +283,182 @@
   transform: scale(1.04);
 }
 
-/* Arrows: one per revealed item (header + 4 quadrants), each resting just
-   outside the ring on the side that matches its box, pointing inward.
-   On reveal it travels to the center and fades out ("absorbed" into the
-   target) at the exact moment its box's text appears.
-   Adjust the resting transforms once the real artwork's proportions are
-   known — these are placeholders sized for a generic arrow icon. */
+/* ---------- חמשת החצים שמתחת למטרה ---------- */
 
 .target__arrows {
   position: absolute;
   inset: 0;
+  z-index: 3;
+
+  overflow: visible;
   pointer-events: none;
-  z-index: 1;
 }
 
 .target__arrow {
+  --arrow-x: 0px;
+  --arrow-angle: 0deg;
+
   position: absolute;
-  width: clamp(16px, 3.2vw, 24px);
-  height: auto;
   left: 50%;
   top: 50%;
+
+  display: block;
+
+  width: clamp(17px, 11.1vw, 90px);
+  height: auto;
+
   opacity: 1;
-  transition: transform var(--target-transition), opacity var(--target-transition);
+  object-fit: contain;
+  transform-origin: center;
+
+  transform:
+    translate(
+      calc(-50% + var(--arrow-x)),
+      clamp(105px, 12vw, 126px)
+    )
+    rotate(var(--arrow-angle));
+
+  transition:
+    transform var(--target-transition),
+    opacity 180ms ease 300ms;
 }
 
 .target__arrow--header {
-  transform: translate(-50%, -220%) rotate(180deg);
-}
-.target__arrow--header.target__arrow--merged {
-  transform: translate(-50%, -50%) rotate(180deg) scale(0.5);
-  opacity: 0;
+  --arrow-x: -58px;
+  --arrow-angle: 22deg;
 }
 
 .target__arrow--top-left {
-  transform: translate(-160%, -160%) rotate(-45deg);
-}
-.target__arrow--top-left.target__arrow--merged {
-  transform: translate(-50%, -50%) rotate(-45deg) scale(0.5);
-  opacity: 0;
+  --arrow-x: -29px;
+  --arrow-angle: 12deg;
 }
 
 .target__arrow--top-right {
-  transform: translate(60%, -160%) rotate(45deg);
-}
-.target__arrow--top-right.target__arrow--merged {
-  transform: translate(-50%, -50%) rotate(45deg) scale(0.5);
-  opacity: 0;
+  --arrow-x: 0px;
+  --arrow-angle: 7deg;
 }
 
 .target__arrow--bottom-left {
-  transform: translate(-160%, 60%) rotate(-135deg);
-}
-.target__arrow--bottom-left.target__arrow--merged {
-  transform: translate(-50%, -50%) rotate(-135deg) scale(0.5);
-  opacity: 0;
+  --arrow-x: 29px;
+  --arrow-angle: -6deg;
 }
 
 .target__arrow--bottom-right {
-  transform: translate(60%, 60%) rotate(135deg);
+  --arrow-x: 58px;
+  --arrow-angle: -10deg;
 }
-.target__arrow--bottom-right.target__arrow--merged {
-  transform: translate(-50%, -50%) rotate(135deg) scale(0.5);
+
+.target__arrow.target__arrow--merged {
+  transform:
+    translate(-50%, -50%)
+    rotate(0deg)
+    scale(0.35);
+
   opacity: 0;
 }
 
-/* ---------- CTA button, revealed once all 5 texts are shown ---------- */
+/* ---------- כפתור הבנתי ---------- */
 
 .target__cta-wrap {
-  height: 0;
-  overflow: hidden;
+  flex: 0 0 2.6rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   opacity: 0;
-  transition: opacity var(--target-transition), height var(--target-transition);
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity var(--target-transition),
+    visibility 0s linear var(--target-transition);
 }
 
 .target__cta-wrap.is-revealed {
-  height: auto;
   opacity: 1;
-  overflow: visible;
+  visibility: visible;
+  pointer-events: auto;
+
+  transition-delay: 0s;
 }
 
 .target__cta {
-  min-width: 130px;
-  padding: 9px 26px;
-  border: none;
-  border-radius: 999px;
-  background: var(--target-cta-bg);
-  color: var(--target-cta-text);
-  font-family: var(--target-font);
-  font-size: clamp(11.5px, 1.3vw, 13.5px);
-  font-weight: 600;
-  cursor: pointer;
-  transition: filter 150ms ease, transform 150ms ease;
-
+  width: 11.125rem;
+  height: 2.1875rem;
+  padding: 0.3125rem 0.8125rem;
 
   display: flex;
-width: 11.125rem;
-height: 2.1875rem;
-padding: 0.3125rem 0.8125rem;
-justify-content: center;
-align-items: center;
-gap: 0.625rem;
-border-radius: 1.1875rem;
-background: linear-gradient(90deg, #3B8ED2 0%, #3CBCEA 100%);
-color: #FFF;
-text-align: center;
-font-family: "Ploni ML v2 AAA";
-font-size: 1.20rem;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
 
+  border: none;
+  border-radius: 1.1875rem;
+  background: linear-gradient(90deg, #3b8ed2 0%, #3cbcea 100%);
+
+  color: #ffffff;
+  font-family: var(--target-font);
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    filter 150ms ease,
+    transform 150ms ease;
 }
-.dina-arrow {
+
+.target__cta:disabled {
+  cursor: default;
+}
+
+.target__cta-arrow {
+  display: block;
+  flex: 0 0 auto;
+
   width: 1.6875rem;
-height: 0.75rem;
-z-index:2;
+  height: 0.75rem;
+
+  color: #ffffff;
 }
 
-
-.target__cta:hover {
+.target__cta:hover:not(:disabled) {
   filter: brightness(0.97);
   transform: translateY(-1px);
 }
 
 .target__cta:focus-visible {
   outline: 2px solid var(--target-red);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
-/* ==========================================================================
-   Responsive: collapse to a single column under 480px.
-   ========================================================================== */
+@media (max-height: 720px) {
+  .target {
+    gap: 8px;
+    padding-top: 8px;
+  }
 
-@media (max-width: 480px) {
   .target__grid {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "top-left"
-      "top-right"
-      "center"
-      "bottom-left"
-      "bottom-right";
+    padding-bottom: 52px;
   }
 
-  .target__center {
-    max-width: 160px;
-    margin-block: 6px;
+  .target__arrow {
+    transform:
+      translate(
+        calc(-50% + var(--arrow-x)),
+        104px
+      )
+      rotate(var(--arrow-angle));
   }
 
-  .target__header-box {
-    max-width: 100%;
+  .target__arrow.target__arrow--merged {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg)
+      scale(0.35);
   }
 }
 
@@ -353,5 +469,6 @@ z-index:2;
   .target__image,
   .target__arrow {
     transition-duration: 1ms;
+    transition-delay: 0ms;
   }
 }

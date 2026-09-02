@@ -93,3 +93,6 @@ position: fix;
     container-type: inline-size;
     z-index: 2;
 }
+.laptop__screen_target {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.60) 100%), linear-gradient(180deg, #E4F4FF 0%, #B7D8FF 100%);
+}
