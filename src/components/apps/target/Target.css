@@ -39,6 +39,22 @@
 
 /* ---------- header box ("מטרת הצעד ...") ---------- */
 
+.target-title ,.target-semiTitle{
+  position: absolute;
+  left:45%;
+  top:5%;
+  font-family:"rinat";
+  font-size: 2rem;
+  color: #003A87;
+}
+.target-semiTitle{
+  top:14%;
+    left:45%;
+  color: #000000ff;
+
+    font-size: 1.2rem;
+
+}
 .target__header-box {
   z-index:1; 
   width: 100%;
@@ -116,7 +132,7 @@
 
 .target__box-text {
   font-family: var(--target-font);
-  font-size: clamp(10px, 1.05vw, 12px);
+  font-size: clamp(16px, 1.10vw, 18px);
   font-weight: 500;
   line-height: 1.55;
   opacity: 0;

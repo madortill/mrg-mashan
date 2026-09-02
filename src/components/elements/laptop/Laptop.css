@@ -4,116 +4,92 @@
 }
 
 
-.laptop {
-  position: absolute;
+/* ========================================
+   אזור הדפדפן
+======================================== */
 
+.laptop {
+  --laptop-scale: 1;
+
+  position: absolute;
   inset: 0;
+  bottom:-10%;
 
   width: 100%;
   height: 100%;
-    z-index:1;
+
   overflow: hidden;
+position:fixed;
+  /*
+    הצבע שיופיע בשוליים במסכים רחבים.
+    הוא תואם בערך לרקע של תיק המסכים.
+  */
+
+  z-index: 1;
 }
 
 
 /* ========================================
-   כל הגרפיקה:
+   תיק המסכים המקורי
+
+   כל העמוד בנוי תמיד ב-1440×1024,
+   ורק לאחר מכן מוקטן כמקשה אחת.
+======================================== */
+
+.laptop__stage {
+  position: absolute;
+position: fix;
+  left: 50%;
+  bottom: -13%;
+
+  width: 1440px;
+  height: 1024px;
+
+  overflow: hidden;
+
+  transform:
+    translateX(-50%)
+    scale(var(--laptop-scale));
+
+  transform-origin: center bottom;
+}
+
+/* ========================================
    חדר + שולחן + לפטופ
 ======================================== */
 
-.laptop__background {
+.laptop__image {
   position: absolute;
-
   inset: 0;
 
-  width: 100%;
-  height: 100%;
+  display: block;
+
+  width: 1480px;
+  height: 1024px;
 
   object-fit: fill;
 
   pointer-events: none;
   user-select: none;
-
   -webkit-user-drag: none;
+
+  z-index: 0;
+  position:fix;
+
 }
 
 
 /* ========================================
-   המסך שבתוך הלפטופ
-
-   כל Target / Popup / DesktopHub
-   נכנסים רק לכאן.
+   מסך המחשב
 ======================================== */
 
 .laptop__screen {
-  position: absolute;
-
-  /*
-    אלה הערכים היחידים שנכוון
-    אם המסך לא יושב בול.
-  */
-
-  top: 20.2%;
-  left: 19.8%;
-
-  width: 64.6%;
-  height: 58.8%;
-
-  overflow: hidden;
-
-  container-type: inline-size;
-
-  z-index: 2;
-}
-.laptop__rope {
-  position: absolute;
-
-  top: -2%;
-  left: -1%;
-
-  width: 21%;
-  height: auto;
-
-  pointer-events: none;
-  user-select: none;
-
-  z-index: 5;
-
-  animation:
-    rope-glow
-    1.6s
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes rope-glow {
-
-  0%,
-  100% {
-    filter:
-      drop-shadow(
-        0 0 0.15rem
-        rgba(108, 214, 255, 0.4)
-      )
-
-      drop-shadow(
-        0 0 0.3rem
-        rgba(140, 105, 255, 0.3)
-      );
-  }
-
-
-  50% {
-    filter:
-      drop-shadow(
-        0 0 0.35rem
-        rgba(108, 214, 255, 0.95)
-      )
-
-      drop-shadow(
-        0 0 0.75rem
-        rgba(140, 105, 255, 0.75)
-      );
-  }
+    position: absolute;
+    top: 6.6%;
+    left: 11.8%;
+    width: 73.6%;
+    height: 64.8%;
+    overflow: hidden;
+    container-type: inline-size;
+    z-index: 2;
 }

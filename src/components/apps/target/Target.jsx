@@ -269,6 +269,7 @@ import "./Target.css";
 import targetSvg from "../../../assets/images/target.svg";
 import arrowPng from "./../../../assets/images/arrow.png";
 import pointer from "./../../../assets/images/pointer.png";
+import btn from "./../../../assets/images/understand.png";
 
 const TARGET_IMG_SRC = targetSvg;
 const ARROW_IMG_SRC = arrowPng;
@@ -319,9 +320,9 @@ function Target({ onComplete, page,
 
   return (
     <>
+           <h1 className="target-title">מטרות הלומדה</h1>
+      <p className="target-semiTitle">לחצו על המטרה</p>
     <div className="target" dir="rtl">
-           <h1>מטרות הלומדה</h1>
-      <p>לחצו על המטרה</p>
             <div
         className={`target__header-box ${isRevealed(0) ? "is-revealed" : ""}`}
       >
@@ -378,6 +379,7 @@ function Target({ onComplete, page,
       <div className={`target__cta-wrap ${isDone ? "is-revealed" : ""}`}>
         <button
           type="button"
+          src={btn}
           className="target__cta"
           onClick={onComplete}
           tabIndex={isDone ? 0 : -1}

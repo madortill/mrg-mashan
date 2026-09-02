@@ -13,9 +13,9 @@ import backgroundDecor from "../../assets/images/background-decor.svg";
 
 import laptopOpening from "../../assets/images/computerClean.svg";
 
-import logos from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.png";
 import searchIcon from "../../assets/images/search_icon.svg";
-import rope from "../../assets/images/rope.svg";
+import rope from "../../assets/images/rope2.svg";
 import openingIcon from "../../assets/images/BHD11Round.png";
 
 const INTRO_DURATION_MS = 3900;

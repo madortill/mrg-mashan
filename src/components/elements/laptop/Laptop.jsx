@@ -1,4 +1,7 @@
-import React from "react";
+import React, {
+  useLayoutEffect,
+  useRef,
+} from "react";
 
 import "./laptop.css";
 
@@ -8,49 +11,98 @@ import homeLaptop
 import emptyLaptop
   from "../../../assets/images/emptyLaptop.svg";
 
-import rope
-  from "../../../assets/images/color_rope.svg";
+
+const DESIGN_WIDTH = 1440;
+const DESIGN_HEIGHT = 1024;
+
 
 function Laptop({
   variant = "empty",
   children,
 }) {
-  const isHome =
-    variant === "home";
+  const wrapperRef = useRef(null);
 
   const laptopImage =
-    isHome
+    variant === "home"
       ? homeLaptop
       : emptyLaptop;
 
 
+  useLayoutEffect(() => {
+    const wrapper =
+      wrapperRef.current;
+
+    if (!wrapper) {
+      return undefined;
+    }
+
+
+    function updateScale() {
+      const availableWidth =
+        wrapper.clientWidth;
+
+      const availableHeight =
+        wrapper.clientHeight;
+
+      const scale = Math.min(
+        availableWidth / DESIGN_WIDTH,
+        availableHeight / DESIGN_HEIGHT
+      );
+
+      wrapper.style.setProperty(
+        "--laptop-scale",
+        scale
+      );
+    }
+
+
+    updateScale();
+
+    const resizeObserver =
+      new ResizeObserver(updateScale);
+
+    resizeObserver.observe(wrapper);
+
+    window.addEventListener(
+      "resize",
+      updateScale
+    );
+
+
+    return () => {
+      resizeObserver.disconnect();
+
+      window.removeEventListener(
+        "resize",
+        updateScale
+      );
+    };
+  }, []);
+
+
   return (
-    <div className="laptop">
+    <div
+      ref={wrapperRef}
+      className="laptop"
+    >
+      <div className="laptop__stage">
 
-      <img
-        src={laptopImage}
-        className="laptop__image"
-        alt=""
-        draggable="false"
-      />
+        <img
+          src={laptopImage}
+          className="laptop__image"
+          alt=""
+          draggable="false"
+        />
 
 
-      <div className="laptop__screen">
-
-        {/* {isHome && (
-          <img
-            src={rope}
-            className="laptop__rope"
-            alt=""
-            draggable="false"
-          />
-        )} */}
-
-        {children}
+        <div className="laptop__screen">
+          {children}
+        </div>
 
       </div>
-
     </div>
   );
 }
+
+
 export default Laptop;

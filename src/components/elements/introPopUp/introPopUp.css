@@ -142,10 +142,8 @@ h3{
   direction: rtl;
 
   font-family:
-    ploni,
-    Arial,
-    sans-serif;
-
+    ploni;
+    
   font-size:
     clamp(
       0.62rem,
@@ -186,7 +184,7 @@ h3{
 
   position: absolute;
 
-  right: -9%;
+  right: -7.1%;
   bottom: 4%;
 
   width: 19%;
@@ -203,9 +201,9 @@ h3{
     );
 
   transform:
-    rotate(2deg);
+    rotate(40deg);
 
-  z-index: -2;
+  z-index: -3;
 }
 
 
@@ -218,7 +216,7 @@ h3{
 
   position: absolute;
 
-  right: -8.1%;
+  right: -6.1%;
   bottom: 5.2%;
 
   width: 18%;
@@ -235,9 +233,9 @@ h3{
     );
 
   transform:
-    rotate(2deg);
+    rotate(42deg);
 
-  z-index: -1;
+  z-index: -2;
 }
 
 

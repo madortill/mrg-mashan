@@ -10,40 +10,25 @@
   width: 100vw;
   height: 100dvh;
 
-  display: grid;
-  place-items: center;
-
   overflow: hidden;
 
   direction: rtl;
-
   background-color: #eef0f4;
 }
 
 
-/* =================================
-   כל הלומדה
-
-   שומרת יחס של 1440 / 1024
-================================= */
-
 .course-player__stage {
-  position: relative;
+  position: absolute;
+  inset: 0;
 
-  width: min(
-    100vw,
-    calc(
-      100dvh *
-      1740 /
-      1024
-    )
-  );
-
-  aspect-ratio: 1440 / 1024;
+  width: 100%;
+  height: 100%;
 
   overflow: hidden;
-}
 
+  /* חשוב: לא לשמור כאן aspect-ratio */
+  aspect-ratio: auto;
+}
 
 /* =================================
    NAVBAR
@@ -174,3 +159,4 @@
       );
   }
 }
+

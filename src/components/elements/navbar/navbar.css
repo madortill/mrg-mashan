@@ -6,13 +6,12 @@
 
 .course-navbar {
   width: 100%;
-
+  position: fixed;
+top:-20px; 
   direction: rtl;
 
   font-family:
-    ploni,
-    Arial,
-    sans-serif;
+    ploni;
 
   border-radius: 2rem;
 
