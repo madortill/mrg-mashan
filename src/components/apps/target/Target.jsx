@@ -277,9 +277,9 @@ const ARROW_IMG_SRC = arrowPng;
 // Reveal order: header first, then the 4 quadrants.
 const REVEAL_ITEMS = [
   {
-    id: "header",
-    text: "מטרת העל - הצוער יכיר את הממשקים העיקריים ודרכי העבודה מול מרכז הגיוס",
-  },
+  id: "header",
+  text: "<strong>מטרת העל</strong> - הצוער יכיר את הממשקים העיקריים ודרכי העבודה מול מרכז הגיוס",
+},
   {
     id: "top-left",
     text: "הצוער יפרט כיצד מוציאים חייגן ומפיצים sms",
@@ -326,7 +326,12 @@ function Target({ onComplete, page,
             <div
         className={`target__header-box ${isRevealed(0) ? "is-revealed" : ""}`}
       >
-        <span className="target__header-text">{header.text}</span>
+        <span 
+  className="target__header-text" 
+  dangerouslySetInnerHTML={{ __html: header.text }} 
+/>
+
+        
       </div>
 
       <div className="target__grid">
@@ -387,6 +392,10 @@ function Target({ onComplete, page,
         >
           הבנתי
         </button>
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="12" viewBox="0 0 28 12" fill="none" className="dina-arrow">
+        <path d="M27 6H4" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M1.5 6.86603C0.833333 6.48113 0.833333 5.51888 1.5 5.13398L7.5 1.66987C8.16667 1.28497 9 1.7661 9 2.5359L9 9.4641C9 10.2339 8.16667 10.715 7.5 10.3301L1.5 6.86603Z" fill="white"/>
+        </svg>
       </div>
     </div>
     </>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./IntroPopup.css";
+import "./IntroPopUp.css";
 
 
 import character
@@ -20,8 +20,7 @@ function IntroPopup({
       className="intro-popup-backdrop"
       role="dialog"
       aria-modal="true"
-      aria-label="מבוא ללומדה"
-    >
+      aria-label="מבוא ללומדה">
       <div className="intro-popup">
 
         <button

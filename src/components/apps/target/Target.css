@@ -284,7 +284,32 @@
   font-weight: 600;
   cursor: pointer;
   transition: filter 150ms ease, transform 150ms ease;
+
+
+  display: flex;
+width: 11.125rem;
+height: 2.1875rem;
+padding: 0.3125rem 0.8125rem;
+justify-content: center;
+align-items: center;
+gap: 0.625rem;
+border-radius: 1.1875rem;
+background: linear-gradient(90deg, #3B8ED2 0%, #3CBCEA 100%);
+color: #FFF;
+text-align: center;
+font-family: "Ploni ML v2 AAA";
+font-size: 1.20rem;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+
 }
+.dina-arrow {
+  width: 1.6875rem;
+height: 0.75rem;
+z-index:2;
+}
+
 
 .target__cta:hover {
   filter: brightness(0.97);
