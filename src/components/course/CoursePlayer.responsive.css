@@ -1,5 +1,4 @@
-/* יש לייבא את הקובץ הזה אחרי CoursePlayer.css */
-
+/* 
 .course-player {
   position: relative;
   width: 100vw;
@@ -22,7 +21,6 @@
   padding: clamp(8px, 1.4vmin, 22px);
 }
 
-/* יחס תיק המסכים: 1440x1024. הרוחב נקבע גם לפי גובה המסך. */
 .course-player__stage > .laptop {
   width: min(96vw, calc(96dvh * 1.40625), 1440px) !important;
   height: auto !important;
@@ -117,4 +115,4 @@
     transform: scale(0.9);
     transform-origin: bottom right;
   }
-}
+} */

@@ -72,9 +72,7 @@ const APP_CONTENT = {
   },
 };
 
-/*
-  CourseApp נשאר המקור של icon ו-position.
-  כך CoursePlayer ו-DesktopHub עובדים מול אותו מערך ולא מול שני מערכים סותרים.
+/*  כך CoursePlayer ו-DesktopHub עובדים מול אותו מערך ולא מול שני מערכים סותרים.
 */
 const desktopAppsById = new Map(
   desktopCourseApps.map((app) => [app.id, app])
