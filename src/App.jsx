@@ -1,13 +1,31 @@
 import React from "react";
-import { useState } from "react";
 import "./css/App.css";
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import StartPage from "./components/start/StartPage"
 import CoursePlayer from "./components/course/CoursePlayer"
 import logos from "./assets/images/logo.png";
+import { useEffect, useState } from "react";
+import { preloadAssets } from "./preloadAssets";
 
 function App() {
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
+
+  useEffect(() => {
+    preloadAssets().then(() => {
+      setAssetsLoaded(true);
+    });
+  }, []);
+
+  if (!assetsLoaded) {
+    return (
+      <div className="app-loading">
+        <div className="app-loading-spinner" />
+
+        <p>טוענים את הלומדה...</p>
+      </div>
+    );
+  }
 
   return (
     <>
