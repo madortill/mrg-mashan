@@ -6,6 +6,8 @@ import "./CoursePlayer.css";
 import Navbar from "../elements/navbar/Navbar";
 import Target from "../apps/target/Target.jsx";
 import GoogleYnet from "../apps/google/GoogleYnet";
+import Excel from "../apps/excel/Excel.jsx";
+import Outlook from "../apps/outlock/Outlook";
 import Padlet from "../apps/padlet/Padlet.jsx";
 import IntroPopUp from "../elements/introPopUp/IntroPopUp.jsx";
 import Laptop from "../elements/laptop/Laptop";
@@ -29,9 +31,9 @@ const INTRO_NAVBAR_TITLE = "לחצו על השרוך הזוהר";
 const APP_ORDER = [
   "target",
   "chrome",
-  "excel",
-  "yanshuf",
+  "padlet",
   "outlook",
+  "excel",
   "people",
 ];
 
@@ -48,7 +50,7 @@ const APP_CONTENT = {
     component: GoogleYnet,
     laptopVariant: "empty",
   },
-  yanshuf: {
+  padlet: {
     label: "padlet",
     navbarTitle: " דוחות מרג",
     component: Padlet,
@@ -56,14 +58,14 @@ const APP_CONTENT = {
   },
   outlook: {
     label: "Outlook",
-    navbarTitle: "כאן תכתבי את הכותרת של Outlook",
-    component: null,
+    navbarTitle: "דוחות יומיים-פניות קודוד",
+    component: Outlook,
     laptopVariant: "empty",
   },
   excel: {
     label: "Excel",
     navbarTitle: "כאן תכתבי את הכותרת של Excel",
-    component: null,
+    component: Excel,
     laptopVariant: "empty",
   },
   people: {

@@ -1,0 +1,293 @@
+/* ============================================================
+   Outlook mini-app — inbox list + opened-email screen
+   ============================================================ */
+
+.outlook-page {
+  --header-bg: #dfe9f2;
+  --search-bg: #ffffff;
+  --text-dark: #2c2620;
+  --outlook-blue: #0a5dc2;
+  --outlook-blue-dark: #084a99;
+  --unread-red: #d64545;
+  --row-border: #e7e2d8;
+
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-dark);
+  overflow: hidden;
+}
+
+/* ---------------- Header ---------------- */
+
+.outlook-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: var(--header-bg);
+  padding: 14px clamp(16px, 4vw, 48px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  z-index: 5;
+}
+
+.outlook-header__logo {
+  height: clamp(36px, 5vw, 56px);
+  width: auto;
+  display: block;
+}
+
+.outlook-header__search {
+  position: relative;
+  flex: 1;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+}
+
+.outlook-header__search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 999px;
+  padding: 12px 48px 12px 20px;
+  font-size: clamp(13px, 1.5vw, 16px);
+  text-align: right;
+  background: var(--search-bg);
+  color: var(--text-dark);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.outlook-header__search-icon {
+  position: absolute;
+  left: 16px;
+  color: #8a94a6;
+  display: flex;
+  pointer-events: none;
+}
+
+/* ---------------- Scene (desk + laptop) ---------------- */
+
+.outlook-scene {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1px, 1vh, 40px) clamp(1px, 1vw, 80px);
+}
+
+.outlook-scene__frame {
+  position: relative;
+  width: min(1100px, 100%);
+  aspect-ratio: 1035 / 747;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ---------------- Outlook "window" overlay on the laptop screen ----------- */
+
+/* Lines up with the visible screen area of BGPadlet.png — adjust the %
+   values below if your image crops the bezel differently. */
+.outlook-window {
+  position: absolute;
+  top: 8%;
+  left: 8%;
+  right: 8%;
+  bottom: 20%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.outlook-window--in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.outlook-titlebar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, var(--outlook-blue) 0%, var(--outlook-blue-dark) 100%);
+  padding: 8px clamp(10px, 2vw, 18px);
+}
+
+.outlook-titlebar__label {
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  font-size: clamp(16px, 2.2vw, 22px);
+  direction: ltr;
+}
+
+.outlook-titlebar__logo {
+  height: clamp(18px, 2.4vw, 28px);
+  width: auto;
+  display: block;
+}
+
+.outlook-body {
+  flex: 1 1 auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------- Inbox list ---------------- */
+
+.outlook-inbox {
+  list-style: none;
+  margin: 0;
+  padding: clamp(6px, 1.2vw, 12px);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.outlook-inbox__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: clamp(6px, 1.2vw, 12px) clamp(8px, 1.6vw, 14px);
+  border-bottom: 1px solid var(--row-border);
+  cursor: default;
+}
+
+.outlook-inbox__row--unread {
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+
+.outlook-inbox__row--unread:hover,
+.outlook-inbox__row--unread:focus-visible {
+  background: #f2f6fc;
+  outline: none;
+}
+
+.outlook-inbox__dot {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--unread-red);
+}
+
+.outlook-inbox__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.outlook-inbox__subject {
+  font-size: clamp(16px, 1.7vw, 22px);
+  color: var(--text-dark);
+}
+
+.outlook-inbox__row--unread .outlook-inbox__subject {
+  font-weight: 700;
+}
+
+.outlook-inbox__preview {
+  font-size: clamp(16px, 1.25vw, 18px);
+  color: #9a938a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------------- Opened email ---------------- */
+
+.outlook-email {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(10px, 2vw, 24px) clamp(14px, 3vw, 32px);
+  overflow-y: auto;
+}
+
+.outlook-email__meta {
+  border-bottom: 1px solid var(--row-border);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.outlook-email__subject {
+  font-weight: 700;
+  font-size: clamp(16px, 1.9vw, 24px);
+}
+
+.outlook-email__content {
+  flex: 1;
+}
+
+.outlook-email__line {
+  margin: 0 0 10px;
+  font-size: clamp(18px, 1.45vw, 22px);
+  line-height: 1.6;
+  color: var(--text-dark);
+  text-align: right;
+}
+
+.outlook-email__btn {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 8px clamp(16px, 2.6vw, 26px);
+  border: 1px solid var(--row-border);
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--text-dark);
+  font-size: clamp(16px, 1.7vw, 22px);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.outlook-email__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.14);
+}
+
+.outlook-email__btn:active {
+  transform: translateY(0);
+}
+
+/* ---------------- Responsiveness ---------------- */
+
+@media (max-width: 720px) {
+  .outlook-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .outlook-header__search {
+    order: 3;
+    max-width: 100%;
+  }
+  .outlook-inbox__preview {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .outlook-window {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

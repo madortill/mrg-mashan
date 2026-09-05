@@ -36,8 +36,8 @@ html {
 }
 
 ::selection {
-  color: #b3d6ffff;
-    background: rgba(28, 3, 77, 1);
+  color: rgb(207, 229, 255);
+    background: rgb(64, 27, 138);
 }
 .symbols {
   position: absolute;

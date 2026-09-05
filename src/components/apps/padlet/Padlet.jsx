@@ -29,7 +29,7 @@ const INITIAL_NOTES = [
   {
     id: "note-3",
     title: null,
-    text: `דו"חות יומיים (שמ"פ, מוקפאים, חו"ל) - יופקו כל יום ממערכת הינשוף ע"י קציני משאן מילואים וישמרו בתיקיית רשת. יודפסו בשעת חירום בלבד. יש לשמור את הדוח של היום.`,
+    text: `דו”חות יומיים (שמ”פ , מוקפאים, חו”ל)- יופקו כל יום ממענרכת הינשוף על ידי ק' משאן מילואים ויישמרו בתיקיית רשת. יודפסו בשת חירום בלבד. יש לשמור את הדוח של אותו היום. `,
     top: 54,
     left: 6,
     width: 40,
@@ -158,36 +158,23 @@ const Padlet = ({ onComplete }) => {
     });
   };
 
-  return (
+   return (
     <section className="padlet-page" dir="rtl">
       <header className="padlet-header">
         <div className="padlet-header__brand">
           <img src={Padletfull} alt="מדור טכ״ל — קריית ההדרכה" className="padlet-header__logo" />
         </div>
-        <div className="padlet-header__search">
-          <input
-            type="text"
-            className="padlet-header__search-input"
-            defaultValue={'דו"חות מר"ג'}
-            readOnly
-          />
-          <span className="padlet-header__search-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-              <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </span>
-        </div>
       </header>
-
-      <div
-        className="padlet-scene"
-        style={{ backgroundImage: `url(${BGPadlet})` }}
-      >
-        <div className={`padlet-laptop ${mounted ? "padlet-laptop--in" : ""}`}>
-          <div className="padlet-laptop__screen" ref={screenRef}>
-            <div className="padlet-board-tag">padlet</div>
-
+ 
+      <div className="padlet-scene">
+        <div
+          className="padlet-scene__frame"
+          style={{ backgroundImage: `url(${BGPadlet})` }}
+        >
+          <div
+            className={`padlet-laptop ${mounted ? "padlet-laptop--in" : ""}`}
+            ref={screenRef}
+          >
             {notes.map((note, index) => (
               <div
                 key={note.id}
@@ -236,26 +223,19 @@ const Padlet = ({ onComplete }) => {
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="padlet-laptop__taskbar">
-            <span className="taskbar-icon taskbar-icon--win" aria-hidden="true" />
-            <span className="taskbar-search" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="none">
-                <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-                <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-              Search
-            </span>
+ 
+            {typeof onComplete === "function" && (
+              <button
+                type="button"
+                className="padlet-complete-btn"
+                onClick={onComplete}
+              >
+                המשך
+              </button>
+            )}
           </div>
         </div>
       </div>
-
-      {typeof onComplete === "function" && (
-        <button type="button" className="padlet-complete-btn" onClick={onComplete}>
-          המשך
-        </button>
-      )}
     </section>
   );
 };
