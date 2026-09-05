@@ -1,8 +1,7 @@
 import chromeIcon from "./../../assets/images/apps/google.png";
 import excelIcon from "./../../assets/images/apps/exel.png";
-import rope from "./../../assets/images/rope.svg";
 import outlookIcon from "./../../assets/images/apps/outlook.png";
-import yanshufIcon from "./../../assets/images/apps/oul.png";
+import padletIcon from "./../../assets/images/apps/padlet.png";
 import peopleIcon from "./../../assets/images/apps/people.png";
 import targetIcon from "./../../assets/images/apps/target.png";
 
@@ -27,9 +26,9 @@ export const courseApps = [
     },
   },
   {
-    id: "yanshuf",
-    label: "ינשוף",
-    icon: yanshufIcon,
+    id: "padlet",
+    label: "Padlet",
+    icon: padletIcon,
     position: {
       top: "29%",
       right: "12.5%",

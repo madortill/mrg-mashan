@@ -1,0 +1,299 @@
+/* ============================================================
+   Padlet page — matches the corkboard / sticky-note mockup
+   ============================================================ */
+
+.padlet-page {
+  --header-bg: #dfe9f2;
+  --search-bg: #ffffff;
+  --note-bg: #f6ecc9;
+  --note-bg-dark: #efe0ad;
+  --note-border: #e2d19a;
+  --board-tag-bg: #e8d9c4;
+  --text-dark: #2c2620;
+  --accent-blue: #1c4e91;
+
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", "Heebo", "Arial Hebrew", sans-serif;
+  color: var(--text-dark);
+  overflow: hidden;
+}
+
+/* ---------------- Header ---------------- */
+
+.padlet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: var(--header-bg);
+  padding: 14px clamp(16px, 4vw, 48px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  z-index: 5;
+}
+
+.padlet-header__logo {
+  height: clamp(36px, 5vw, 56px);
+  width: auto;
+  display: block;
+}
+
+.padlet-header__search {
+  position: relative;
+  flex: 1;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+}
+
+.padlet-header__search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 999px;
+  padding: 12px 48px 12px 20px;
+  font-size: clamp(14px, 1.6vw, 17px);
+  text-align: right;
+  background: var(--search-bg);
+  color: var(--text-dark);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.padlet-header__search-icon {
+  position: absolute;
+  left: 16px;
+  color: #8a94a6;
+  display: flex;
+  pointer-events: none;
+}
+
+/* ---------------- Scene (desk + laptop) ---------------- */
+
+.padlet-scene {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  padding: clamp(20px, 5vh, 60px) clamp(16px, 6vw, 80px);
+}
+
+/* ---------------- Laptop + screen overlay ---------------- */
+
+.padlet-laptop {
+  position: relative;
+  width: min(880px, 92vw);
+  aspect-ratio: 16 / 10.2;
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.padlet-laptop--in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* This region should line up with the visible screen area of your
+   laptop background image. Adjust the % values if your BGPadlet.png
+   crops the bezel differently. */
+.padlet-laptop__screen {
+  position: absolute;
+  top: 8%;
+  left: 8%;
+  right: 8%;
+  bottom: 14%;
+  background: #a9835a;
+  background-image: linear-gradient(135deg, #b28a5f 0%, #9c7449 100%);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 6px #2b2b2b;
+}
+
+.padlet-board-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--board-tag-bg);
+  color: var(--text-dark);
+  font-weight: 700;
+  font-size: clamp(12px, 1.4vw, 15px);
+  padding: 4px 14px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.padlet-laptop__taskbar {
+  position: absolute;
+  bottom: 4%;
+  left: 8%;
+  right: 8%;
+  height: 6%;
+  background: #1f2430;
+  border-radius: 0 0 4px 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+}
+
+.taskbar-icon--win {
+  width: 14px;
+  height: 14px;
+  background: #4cb3ff;
+  border-radius: 2px;
+}
+
+.taskbar-search {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #cfd6e2;
+  font-size: 10px;
+}
+
+/* ---------------- Sticky notes ---------------- */
+
+.sticky-note {
+  position: absolute;
+  background: var(--note-bg);
+  border: 1px solid var(--note-border);
+  border-radius: 2px;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  user-select: none;
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  transition: opacity 0.45s ease, transform 0.45s ease, box-shadow 0.15s ease;
+  z-index: 1;
+}
+
+.sticky-note--in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.sticky-note--dragging {
+  cursor: grabbing;
+  box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+  transition: none;
+}
+
+.sticky-note--small {
+  background: var(--note-bg);
+}
+
+.sticky-note__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.sticky-note__btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 1;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.sticky-note__btn--close {
+  background: #e8a0a0;
+  color: #7a1f1f;
+}
+
+.sticky-note__btn--dup {
+  background: #a9c6e8;
+  color: #1c3a5e;
+  font-size: 9px;
+}
+
+.sticky-note__btn--minus {
+  color: #8a7f5f;
+  font-weight: 700;
+  cursor: default;
+}
+
+.sticky-note__grip {
+  margin-right: auto;
+  color: #b8ac82;
+  font-size: 10px;
+  letter-spacing: -2px;
+}
+
+.sticky-note__body {
+  padding: 10px 12px 14px;
+  font-size: clamp(10px, 1.15vw, 13.5px);
+  line-height: 1.5;
+  text-align: right;
+  color: var(--text-dark);
+}
+
+.sticky-note--small .sticky-note__body {
+  font-size: clamp(10px, 1.1vw, 13px);
+}
+
+.sticky-note__title {
+  font-weight: 700;
+}
+
+/* ---------------- Optional continue button ---------------- */
+
+.padlet-complete-btn {
+  align-self: center;
+  margin: 20px auto 32px;
+  padding: 10px 32px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent-blue);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.padlet-complete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(28, 78, 145, 0.3);
+}
+
+/* ---------------- Responsiveness ---------------- */
+
+@media (max-width: 720px) {
+  .padlet-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .padlet-header__search {
+    order: 3;
+    max-width: 100%;
+  }
+  .sticky-note__body {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .padlet-laptop,
+  .sticky-note {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

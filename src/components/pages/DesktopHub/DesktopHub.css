@@ -230,4 +230,5 @@
 
 .desktop-app-hotspot--locked {
   cursor: default;
+  filter: grayscale(1);
 }

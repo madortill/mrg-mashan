@@ -6,6 +6,7 @@ import "./CoursePlayer.css";
 import Navbar from "../elements/navbar/Navbar";
 import Target from "../apps/target/Target.jsx";
 import GoogleYnet from "../apps/google/GoogleYnet";
+import Padlet from "../apps/padlet/Padlet.jsx";
 import IntroPopUp from "../elements/introPopUp/IntroPopUp.jsx";
 import Laptop from "../elements/laptop/Laptop";
 import DesktopHub from "../pages/DesktopHub/DesktopHub";
@@ -47,21 +48,21 @@ const APP_CONTENT = {
     component: GoogleYnet,
     laptopVariant: "empty",
   },
-  excel: {
-    label: "Excel",
-    navbarTitle: "כאן תכתבי את הכותרת של Excel",
-    component: null,
-    laptopVariant: "empty",
-  },
   yanshuf: {
-    label: "ינשוף",
-    navbarTitle: "כאן תכתבי את הכותרת של ינשוף",
-    component: null,
+    label: "padlet",
+    navbarTitle: " דוחות מרג",
+    component: Padlet,
     laptopVariant: "empty",
   },
   outlook: {
     label: "Outlook",
     navbarTitle: "כאן תכתבי את הכותרת של Outlook",
+    component: null,
+    laptopVariant: "empty",
+  },
+  excel: {
+    label: "Excel",
+    navbarTitle: "כאן תכתבי את הכותרת של Excel",
     component: null,
     laptopVariant: "empty",
   },

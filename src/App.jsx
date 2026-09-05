@@ -1,6 +1,5 @@
 import React from "react";
 import "./css/App.css";
-import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import StartPage from "./components/start/StartPage"
 import CoursePlayer from "./components/course/CoursePlayer"
@@ -22,7 +21,7 @@ function App() {
       <div className="app-loading">
         <div className="app-loading-spinner" />
 
-        <p>טוענים את הלומדה...</p>
+        <p>טוענים בשבילך את הלומדה...</p>
       </div>
     );
   }
