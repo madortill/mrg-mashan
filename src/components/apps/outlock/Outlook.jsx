@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Padletfull from "../../../assets/images/padletLogoFull.png";
+import Padletfull from "../../../assets/images/padletLogofull.png";
 import BGPadlet from "../../../assets/images/BGPadlet.png";
 import OutlookLogo from "../../../assets/images/apps/outlook.png";
 import "./Outlook.css";
@@ -15,7 +15,7 @@ const INBOX_ITEMS = [
     preview: "עדכון לגבי דוחות ימי המילואים השבועיים ",
     unread: true,
   },
-  { id: "msg-2", subject: 'דו"ח ימים - מטה', preview: "עוקב לרשימות / עדיין היום", unread: false },
+  { id: "msg-2", subject: 'דו"ח ימים - מטה', preview: "דוח יומיים אתמול ישן", unread: false },
   { id: "msg-3", subject: 'דו"ח ימים - מטה', preview: "עוקב לרשימות / עדיין היום", unread: false },
   { id: "msg-4", subject: 'דו"ח ימים - מטה', preview: "עוקב לרשימות / עדיין היום", unread: false },
   { id: "msg-5", subject: 'דו"ח ימים - מטה', preview: "עוקב לרשימות / עדיין היום", unread: false },
