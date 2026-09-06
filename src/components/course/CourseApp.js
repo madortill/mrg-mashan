@@ -3,7 +3,7 @@ import excelIcon from "./../../assets/images/apps/exel.png";
 import outlookIcon from "./../../assets/images/apps/outlook.png";
 import padletIcon from "./../../assets/images/apps/padlet.png";
 import chatgpt from "./../../assets/images/apps/chatgpt.png";
-import settingIcon from "./../../assets/images/apps/chatgpt.png";
+import settingIcon from "./../../assets/images/apps/setting.svg";
 import targetIcon from "./../../assets/images/apps/target.png";
 
 export const courseApps = [
