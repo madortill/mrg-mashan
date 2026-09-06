@@ -1,0 +1,180 @@
+.setting-page {
+  --row-bg: #eaf3f7;
+  --row-bg-open: #e2eef4;
+  --accent-blue: #5fa8c9;
+  --accent-blue-dark: #3d87ab;
+  --text-dark: #26221c;
+  --text-muted: #6b6b6b;
+  --border-light: #e4e0d8;
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(10px, 2vw, 24px);
+  direction: rtl;
+  font-family: "Assistant", "Segoe UI", Arial, sans-serif;
+  color: var(--text-dark);
+}
+
+/* ---------------- כרטיס ---------------- */
+
+.setting-card {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.6vw, 16px);
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  padding: clamp(14px, 2.4vw, 22px);
+}
+
+.setting-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: clamp(8px, 1.4vw, 14px);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.setting-card__title {
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: clamp(15px, 1.9vw, 19px);
+}
+
+.setting-card__icon {
+  width: clamp(20px, 2.2vw, 26px);
+  height: clamp(20px, 2.2vw, 26px);
+}
+
+.setting-card__subtitle {
+  margin: 0;
+  font-size: clamp(11px, 1.25vw, 13px);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ---------------- שורות ---------------- */
+
+.setting-card__rows {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.4vw, 12px);
+}
+
+.setting-row {
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--row-bg);
+  transition: background 0.2s ease;
+}
+
+.setting-row--open {
+  cursor: default;
+  background: var(--row-bg-open);
+}
+
+.setting-row__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(10px, 1.6vw, 14px) clamp(14px, 2.2vw, 20px);
+  overflow: hidden;
+}
+
+.setting-row__title {
+  font-size: clamp(12px, 1.4vw, 14px);
+  font-weight: 600;
+  z-index: 1;
+}
+
+.setting-row__chevron {
+  display: flex;
+  color: var(--accent-blue-dark);
+  z-index: 1;
+  transform: scaleX(-1); /* חץ פונה שמאלה ב-RTL */
+  transition: transform 0.25s ease;
+}
+
+.setting-row--open .setting-row__chevron {
+  transform: scaleX(-1) rotate(90deg);
+}
+
+/* אנימציית "טעינה" - פס שממלא את הרקע משמאל לימין */
+.setting-row__loading-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--accent-blue) 0%,
+    var(--accent-blue) 50%,
+    transparent 50%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  animation: loadingSweep 0.9s ease forwards;
+  opacity: 0.35;
+}
+
+@keyframes loadingSweep {
+  from { background-position: 100% 0; }
+  to { background-position: 0% 0; }
+}
+
+.setting-row--loading .setting-row__title,
+.setting-row--loading .setting-row__chevron {
+  opacity: 0.6;
+}
+
+/* טקסט חשוף אחרי פתיחה */
+.setting-row__text {
+  margin: 0;
+  padding: 0 clamp(14px, 2.2vw, 20px) clamp(10px, 1.6vw, 14px);
+  font-size: clamp(11px, 1.3vw, 13px);
+  line-height: 1.7;
+  color: var(--text-dark);
+  animation: textReveal 0.3s ease;
+}
+
+@keyframes textReveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------- כפתור אישור ---------------- */
+
+.setting-confirm-pill {
+  align-self: center;
+  margin-top: 4px;
+  padding: 8px 32px;
+  border: none;
+  border-radius: 999px;
+  background: #d8e6ec;
+  color: #9fb4bd;
+  font-weight: 700;
+  font-size: clamp(12px, 1.4vw, 14px);
+  cursor: not-allowed;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.setting-confirm-pill.is-active {
+  background: var(--accent-blue);
+  color: #fff;
+  cursor: pointer;
+}
+
+.setting-confirm-pill.is-active:hover {
+  background: var(--accent-blue-dark);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+  .setting-card { gap: 8px; }
+}

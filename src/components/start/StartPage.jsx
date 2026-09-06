@@ -258,7 +258,7 @@ function start() {
       />
 
       <img
-        src={logos}
+        src={logo}
         className="start-page__logos"
         alt="לוגואים"
         draggable="false"

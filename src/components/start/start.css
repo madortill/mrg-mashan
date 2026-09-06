@@ -26,7 +26,6 @@
   --screen-left: 13.8%;
   --screen-width: 72.4%;
   --screen-height: 79.2%;
-
   z-index: 3;
 }
 
@@ -617,9 +616,9 @@ body {
   position: absolute;
 
   top: -2%;
-  left: -0.5%;
+  left: -5%;
 
-  width: 15%;
+  width: 19%;
   height: auto;
 
   transform: translateY(-35%);

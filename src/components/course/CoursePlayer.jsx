@@ -3,8 +3,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./CoursePlayer.css";
 // import "./CoursePlayer.responsive.css";
 
+import SpeechBubble from "../apps/excel/SpeechBubble";
 import Navbar from "../elements/navbar/Navbar";
 import Target from "../apps/target/Target.jsx";
+import Setting from "../apps/setting/Setting.jsx";
 import GoogleYnet from "../apps/google/GoogleYnet";
 import Excel from "../apps/excel/Excel.jsx";
 import Outlook from "../apps/outlock/Outlook";
@@ -36,6 +38,7 @@ const APP_ORDER = [
   "outlook",
   "excel",
   "chatgpt",
+  "setting",
 ];
 
 const APP_CONTENT = {
@@ -69,10 +72,16 @@ const APP_CONTENT = {
     component: Excel,
     laptopVariant: "empty",
   },
-  people: {
-    label: "צאט",
+   chatgpt: { 
+    label: "chatgpt",
     navbarTitle: "שינוי איוש בחיילי מילואים",
     component: Chatgpt,
+    laptopVariant: "empty",
+  },
+   setting: { 
+    label: "setting",
+    navbarTitle: "שינוי איוש בחיילי מילואים",
+    component: Setting,
     laptopVariant: "empty",
   },
 };
@@ -163,7 +172,20 @@ function getInitialProgress() {
 
 function CoursePlayer({ onExit }) {
   const [progress, setProgress] = useState(getInitialProgress);
+const [speechText, setSpeechText] = useState("");
+function openApp(appId) {
+  if (!canOpenApp(appId)) {
+    return;
+  }
 
+  setSpeechText(""); // ⭐ מאפסים טקסט ישן בכל מעבר אפליקציה
+
+  setProgress((previous) => ({
+    ...previous,
+    screen: appId,
+    visitedApps: Array.from(new Set([...previous.visitedApps, appId])),
+  }));
+}
   /*
     זהו מצב תצוגה מקומי בלבד: רענון לא פותח את הפופ-אפ מעצמו.
     introPopupSeen נשמר רק אחרי שהמשתמש סגר אותו.
@@ -231,18 +253,6 @@ function CoursePlayer({ onExit }) {
       progress.visitedApps.includes(appId) ||
       progress.completedApps.includes(appId)
     );
-  }
-
-  function openApp(appId) {
-    if (!canOpenApp(appId)) {
-      return;
-    }
-
-    setProgress((previous) => ({
-      ...previous,
-      screen: appId,
-      visitedApps: Array.from(new Set([...previous.visitedApps, appId])),
-    }));
   }
 
   function goHome() {
@@ -398,13 +408,15 @@ function CoursePlayer({ onExit }) {
     }
 
     const appProps = {
-      page: progress.appPages[activeApp.id] ?? 0,
-      onPageChange: (newPage) => setAppPage(activeApp.id, newPage),
-      onBack: () => goToPreviousApp(activeApp.id),
-      onHome: goHome,
-      onComplete: () => finishApp(activeApp.id, "home"),
-      onNext: () => finishApp(activeApp.id, "next"),
-    };
+    page: progress.appPages[activeApp.id] ?? 0,
+    onPageChange: (newPage) => setAppPage(activeApp.id, newPage),
+    onBack: () => goToPreviousApp(activeApp.id),
+    onHome: goHome,
+    onComplete: () => finishApp(activeApp.id, "home"),
+    onNext: () => finishApp(activeApp.id, "next"),
+    onSpeechChange: setSpeechText, // ⭐ חדש - כל אפליקציה יכולה "לצעוק" טקסט למעלה
+  };
+
 
     if (activeApp.showDesktopBehind) {
       return (
@@ -424,25 +436,17 @@ function CoursePlayer({ onExit }) {
 
   return (
     <div className="course-player">
-      <img
-        src={backgroundDecor}
-        className="background-decoration"
-        alt=""
-        draggable="false"
-      />
+      <img src={backgroundDecor} className="background-decoration" alt="" draggable="false" />
       <img src={desk} className="desk" alt="" draggable="false" />
       <img src={plant} className="plant" alt="" draggable="false" />
 
+      {/* ⭐ מוצג רק כשיש טקסט בפועל - כללי, לא קשור ל-activeApp ספציפי */}
+      {speechText && <SpeechBubble speechText={speechText} />}
+
       <div className="course-player__stage">
         {renderScreen()}
-
         <div className="course-player__navbar">
-          <Navbar
-            title={navbarTitle}
-            items={navbarItems}
-            onSelect={openApp}
-            onExit={onExit}
-          />
+          <Navbar title={navbarTitle} items={navbarItems} onSelect={openApp} onExit={onExit} />
         </div>
       </div>
     </div>

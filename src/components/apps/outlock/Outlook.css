@@ -12,7 +12,6 @@
   --row-border: #e7e2d8;
 
   width: 100%;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   color: var(--text-dark);
@@ -93,10 +92,10 @@
    values below if your image crops the bezel differently. */
 .outlook-window {
   position: absolute;
-  top: 8%;
-  left: 8%;
-  right: 8%;
-  bottom: 20%;
+  top: 0%;
+  left: 2%;
+  right: 2%;
+  bottom: 10%;
   display: flex;
   flex-direction: column;
   background: #ffffff;
@@ -234,7 +233,7 @@
 }
 
 .outlook-email__line {
-  margin: 0 0 10px;
+  margin: 0 0 2px;
   font-size: clamp(18px, 1.45vw, 22px);
   line-height: 1.6;
   color: var(--text-dark);
@@ -255,10 +254,29 @@
   font-size: clamp(16px, 1.7vw, 22px);
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.08);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
+   box-shadow: 0 0 0.7rem rgba(15, 108, 189, 0.22);
+  animation: outlook-back-pulse 2s ease-in-out infinite;
+}
+@keyframes outlook-back-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0.5rem rgba(15, 108, 189, 0.16);
+  }
+
+  50% {
+    transform: scale(1.025);
+    box-shadow: 0 0 0.9rem rgba(15, 108, 189, 0.3);
+  }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .outlook-email__back {
+    animation: none;
+  }
+}
 .outlook-email__btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.14);
@@ -267,7 +285,58 @@
 .outlook-email__btn:active {
   transform: translateY(0);
 }
+.outlook-email__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
 
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.outlook-email__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  padding: 0.35rem 0.55rem;
+
+  color: #0f6cbd;
+  background: transparent;
+  border: none;
+  border-radius: 0.25rem;
+
+  font: inherit;
+  font-size: 0.9rem;
+
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.outlook-email__back:hover {
+  color: #0c3b5e;
+  background-color: #f0f6fc;
+}
+
+.outlook-email__back:focus-visible {
+  outline: 2px solid #0f6cbd;
+  outline-offset: 2px;
+}
+
+.outlook-email__back-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.outlook-email__subject {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #242424;
+}
 /* ---------------- Responsiveness ---------------- */
 
 @media (max-width: 720px) {

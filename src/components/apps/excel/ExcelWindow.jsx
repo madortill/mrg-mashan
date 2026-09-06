@@ -1,12 +1,13 @@
 import "./ExcelWindow.css";
+import excelIcon from "../../../assets/images/apps/exel.png";
 
 const ExcelWindow = ({ children }) => (
   <div className="excel-window">
     <div className="excel-window__titlebar">
-      <span className="excel-window__title">EXCEL</span>
       <div className="excel-window__icon">
-        <span className="excel-window__icon-x">X</span>
+        <img className="excel-window__icon-x" src={excelIcon}></img>
       </div>
+      <span className="excel-window__title">EXCEL</span>
     </div>
     <div className="excel-window__menu">
       {["קובץ", "בית", "הוספה", "עיצוב עמוד", "נוסחאות", "נתונים", "סקירה", "עזרה"].map((item, i) => (

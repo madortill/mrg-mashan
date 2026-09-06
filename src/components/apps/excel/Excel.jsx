@@ -1,12 +1,12 @@
+import { useEffect } from "react";
 import "./Excel.css";
 import ExcelWindow from "./ExcelWindow";
 import ExcelTable from "./ExcelTable";
 import InfoPopup from "./InfoPopup";
-import SpeechBubble from "./SpeechBubble";
 import BackButton from "../../elements/backButton/BackButton";
 import { screens } from "./excelData";
 
-const Excel = ({ page = 0, onPageChange, onBack, onComplete }) => {
+const Excel = ({ page = 0, onPageChange, onBack, onComplete, onSpeechChange }) => {
   const currentScreen = screens[page];
   const isPopupActive = currentScreen.type === "popup";
 
@@ -14,6 +14,17 @@ const Excel = ({ page = 0, onPageChange, onBack, onComplete }) => {
     .slice(0, page + 1)
     .reverse()
     .find((s) => s.type === "table");
+
+  // ⭐ חדש - בכל שינוי מסך, מעדכנים את הטקסט למעלה
+  useEffect(() => {
+    const text = !isPopupActive ? lastTableScreen?.bubbleText ?? "" : "";
+    onSpeechChange?.(text);
+  }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ⭐ חדש - כשעוזבים את הרכיב (unmount), מנקים כדי שהבועה לא תישאר תלויה
+  useEffect(() => {
+    return () => onSpeechChange?.("");
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const goNext = () => {
     if (page + 1 >= screens.length) onComplete();
@@ -52,8 +63,6 @@ const Excel = ({ page = 0, onPageChange, onBack, onComplete }) => {
           />
         )}
       </ExcelWindow>
-
-      <SpeechBubble speechText={!isPopupActive ? lastTableScreen?.bubbleText : null} />
     </div>
   );
 };

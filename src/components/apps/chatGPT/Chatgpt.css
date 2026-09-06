@@ -1,0 +1,181 @@
+.chatgpt-page {
+  --bubble-teal: #1fa6a1;
+  --text-dark: #26221c;
+  --text-muted: #6b6b6b;
+  --border-light: #e4e0d8;
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(10px, 2vw, 24px);
+  direction: rtl;
+  color: var(--text-dark);
+}
+
+/* ---------------- הכרטיס הלבן ---------------- */
+
+.chatgpt-card {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+/* ---------------- כותרת ---------------- */
+
+.chatgpt-card__header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(10px, 1.6vw, 16px) clamp(14px, 2.4vw, 22px);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.chatgpt-card__title {
+  font-weight: 800;
+  font-size: clamp(22px, 2.2vw, 24px);
+}
+
+.chatgpt-card__icon {
+  width: clamp(24px, 2.6vw, 32px);
+  height: clamp(24px, 2.6vw, 32px);
+  border-radius: 50%;
+}
+
+/* ---------------- גוף גלילה ---------------- */
+
+.chatgpt-card__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: clamp(12px, 2vw, 22px) clamp(14px, 2.6vw, 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.chatgpt-message {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chatgpt-message__heading {
+  margin: 6px 0 2px;
+  font-size: clamp(18px, 1.8vw, 20px);
+  font-family: "ploni-bold";
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.chatgpt-message__text {
+  margin: 0;
+  font-size: clamp(16px, 1.75vw, 20px);
+  line-height: 1.8;
+  color: var(--text-dark);
+  text-align: right;
+}
+
+/* הודעת המשתמש - בועה טורקיז, מיושרת לשמאל (כמו בתמונה השלישית) */
+.chatgpt-message--user {
+  align-items: flex-end;
+  animation: bubbleIn 0.28s ease forwards;
+}
+
+.chatgpt-bubble {
+  background: var(--bubble-teal);
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(12px, 1.35vw, 15px);
+  padding: 8px 18px;
+  border-radius: 20px;
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ---------------- שורת תחתית (composer) ---------------- */
+
+.chatgpt-card__footer {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: clamp(8px, 1.4vw, 14px) clamp(14px, 2.4vw, 22px);
+  border-top: 1px solid var(--border-light);
+}
+
+.chatgpt-icon-btn {
+  flex-shrink: 0;
+  width: clamp(24px, 2.6vw, 30px);
+  height: clamp(24px, 2.6vw, 30px);
+  border-radius: 50%;
+  border: 1px solid var(--border-light);
+  background: #fff;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* כפתור "הוספה" ה"+" צף בקצה, לא באמצע */
+.chatgpt-card__footer .chatgpt-icon-btn:last-child {
+  margin-right: auto;
+}
+
+.chatgpt-confirm-pill {
+  flex: 1;
+  max-width: 220px;
+  padding: 8px 16px;
+  border: 1px solid var(--bubble-teal);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--bubble-teal);
+  font-weight: 700;
+  font-size: clamp(12px, 1.4vw, 14px);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  animation: pillIn 0.25s ease;
+}
+
+.chatgpt-confirm-pill:hover {
+  background: var(--bubble-teal);
+  color: #fff;
+}
+
+@keyframes pillIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .chatgpt-card {
+    height: 88%;
+  }
+}

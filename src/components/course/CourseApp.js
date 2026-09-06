@@ -3,6 +3,7 @@ import excelIcon from "./../../assets/images/apps/exel.png";
 import outlookIcon from "./../../assets/images/apps/outlook.png";
 import padletIcon from "./../../assets/images/apps/padlet.png";
 import chatgpt from "./../../assets/images/apps/chatgpt.png";
+import settingIcon from "./../../assets/images/apps/chatgpt.png";
 import targetIcon from "./../../assets/images/apps/target.png";
 
 export const courseApps = [
@@ -10,7 +11,7 @@ export const courseApps = [
   {
         id: "target",
     label: "Target",
-    icon: excelIcon,
+        icon: targetIcon,
     position: {
       top: "6%",
       right: "12.5%",
@@ -46,7 +47,7 @@ export const courseApps = [
   {
     id: "excel",
     label: "Excel",
-    icon: targetIcon,
+    icon: excelIcon,
     position: {
       top: "52%",
       right: "12.5%",
@@ -58,6 +59,15 @@ export const courseApps = [
     icon: chatgpt,
     position: {
       top: "52%",
+      right: "1.5%",
+    },
+  },
+  {
+    id: "setting",
+    label: "הגדרות",
+    icon: settingIcon,
+    position: {
+      top: "92%",
       right: "1.5%",
     },
   },

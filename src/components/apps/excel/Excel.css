@@ -6,11 +6,12 @@
   overflow: visible; 
   display: flex;
   flex-direction: column;
+  
 }
 .excel-app__gili-corner {
   position: absolute;
   bottom: -10px;
-  left: 30px;
+  right: -20%;
   width: clamp(90px, 12vw, 130px);
   z-index: 14;
 }

@@ -69,8 +69,25 @@ export const screens = [
     rows: [
       // להכניס כאן את הערכים בפועל
     ],
+    confirmLabel: "לדוח נוסף",
+    bubbleText: "דוגמא לאיך נראים שתי הדוחות האלו ",
+  },
+  {
+    type: "table",
+    columns: [
+      { key: "unit", label: "אגודה" },
+      { key: "team", label: "חטיבה \\ יח'" },
+      { key: "division", label: "יחידה" },
+      { key: "openDate", label: "תאריך פתיחת פנייה" },
+      { key: "personalId", label: "מ.א" },
+      { key: "soldierName", label: "שם חייל" },
+      { key: "reason", label: "סיבת בגיר" },
+    ],
+    rows: [
+      // להכניס כאן את הערכים בפועל
+    ],
     confirmLabel: "הבנתי",
-    bubbleText: "",
+    bubbleText: "הטיפול שלי בדו”ח הזה הוא קליטת החיילים, וכתיבת מכתב הסבר על אי קליטת החייל בזמן ",
   },
 
   // -- להוסיף עוד טבלאות: להעתיק את התבנית של מסך 2+3+4 ולהדביק בסוף --

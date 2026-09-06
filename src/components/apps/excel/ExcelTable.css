@@ -4,7 +4,7 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: clamp(8px, 2vw, 16px);
+  padding: clamp(1px, 0.5vw, 2px);
   display: flex;
   flex-direction: column;
 }
@@ -19,21 +19,23 @@
   width: 100%;
   border-collapse: collapse;
   min-width: 600px;
-  font-size: clamp(11px, 1.3vw, 13px);
+  font-size: clamp(14px, 1.5vw, 18px);
 }
 
 .excel-table th {
   background: var(--excel-green-mid);
   color: #fff;
-  font-weight: 600;
-  padding: 8px 6px;
+  font-weight: 500;
+  font-family: "ploni-bold";
+  letter-spacing: 1%;
+  padding: 10px 6px;
   border: 1px solid var(--excel-border);
   text-align: center;
   white-space: nowrap;
 }
 
 .excel-table td {
-  padding: 8px 6px;
+  padding: 10px 6px;
   border: 1px solid var(--excel-border);
   text-align: center;
   color: #333;
@@ -55,7 +57,7 @@
   border: 2px solid var(--excel-green-mid);
   color: var(--excel-green-mid);
   font-weight: 700;
-  font-size: clamp(12px, 1.5vw, 14px);
+  font-size: clamp(16px, 1.8vw, 18px);
   padding: 6px 26px;
   border-radius: 2px; /* פינות ישרות, כמו תא אמיתי */
   cursor: pointer;

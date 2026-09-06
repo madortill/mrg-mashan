@@ -7,7 +7,7 @@
 .course-navbar {
   width: 100%;
   position: fixed;
-top:-20px; 
+top:-60px; 
   direction: rtl;
 
   font-family:
@@ -45,9 +45,9 @@ top:-20px;
 
   width: 100%;
   min-height: clamp(
-    3.2rem,
-    6vw,
-    4.7rem
+    2.2rem,
+    4vw,
+    3.7rem
   );
 
   display: flex;
@@ -65,12 +65,9 @@ top:-20px;
   background: #ffffff;
 
   color: #111111;
-
   box-shadow:
     0 0.25rem 0.35rem
     rgba(0, 0, 0, 0.22);
-
-  font-family: inherit;
 
   font-size: clamp(
     1rem,
@@ -80,7 +77,6 @@ top:-20px;
 
   cursor: pointer;
 }
-
 
 .course-navbar--open
 .course-navbar__trigger {
@@ -94,12 +90,9 @@ top:-20px;
 
 .course-navbar__title {
   overflow: hidden;
-
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
-
 
 /* ============================
    זכוכית מגדלת
@@ -107,10 +100,8 @@ top:-20px;
 
 .course-navbar__search {
   position: absolute;
-
   top: 50%;
   right: 1.4rem;
-
   width: clamp(
     1.4rem,
     2.5vw,
@@ -149,9 +140,9 @@ top:-20px;
 
 .course-navbar__menu {
   padding:
+    0.15rem
     0.25rem
-    0.35rem
-    0.45rem;
+    0.35rem;
 
   display: flex;
   flex-direction: column;
@@ -171,26 +162,15 @@ top:-20px;
 
 .course-navbar__item {
   width: 100%;
-
-  min-height: clamp(
-    2.7rem,
-    5vw,
-    3.6rem
-  );
-
+  min-height: clamp(1.7rem,3vw,2.6rem);
   display: grid;
-
   grid-template-columns:
     2.7rem
-    1fr
-    2.7rem;
-
+    1fr 2.7rem;
   align-items: center;
-
   padding:
-    0.25rem
-    0.5rem;
-
+    0.15rem
+    0.3rem;
   border: none;
 
   border-radius: 999rem;
@@ -206,9 +186,7 @@ top:-20px;
     1.8vw,
     1.45rem
   );
-
   cursor: pointer;
-
   transition:
     background-color 150ms ease,
     transform 150ms ease;
@@ -248,13 +226,9 @@ top:-20px;
 
 .course-navbar__label {
   grid-column: 2;
-
   text-align: center;
-
   white-space: nowrap;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
 }
 

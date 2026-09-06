@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import BGPadlet from "../../../assets/images/BGPadlet.png";
 import OutlookLogo from "../../../assets/images/apps/outlook.png";
 import "./Outlook.css";
+import BackButton from "../../elements/backButton/BackButton";
 
 // ---------------------------------------------------------------------------
 // Placeholder inbox rows. The first one is the unread message that opens the
@@ -74,141 +75,108 @@ const Outlook = ({
     if (!item.unread) return; // only the flagged message opens the email view
     if (typeof onPageChange === "function") onPageChange(1);
   };
-
+const goBackToInbox = () => {
+  if (typeof onPageChange === "function") {
+    onPageChange(0);
+  }
+};
   const goToExcel = () => {
     if (typeof onNext === "function") onNext();
     else if (typeof onComplete === "function") onComplete();
   };
 
-  return (
-    <section className="outlook-page" dir="rtl">
-      {/* <header className="outlook-header">
-        <div className="outlook-header__brand">
-          <img
-            src={Padletfull}
-            alt="מדור טכ״ל — קריית ההדרכה"
-            className="outlook-header__logo"
-          />
-        </div>
-        <div className="outlook-header__search">
-          <input
-            type="text"
-            className="outlook-header__search-input"
-            defaultValue="הנושא שאנחנו לומדים"
-            readOnly
-          />
-          <span className="outlook-header__search-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-              <line
-                x1="16.5"
-                y1="16.5"
-                x2="21"
-                y2="21"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
-        </div>
-      </header> */}
-
-      <div className="outlook-scene">
-        <div
-          className="outlook-scene__frame"        >
-          <div
-            className={`outlook-window ${mounted ? "outlook-window--in" : ""}`}
-          >
-            <div className="outlook-titlebar">
-              <span className="outlook-titlebar__label">OUTLOOK</span>
-              <img
-                src={OutlookLogo}
-                alt="Outlook"
-                className="outlook-titlebar__logo"
-              />
-            </div>
-
-            <div className="outlook-body">
-              {!isOpened ? (
-                <ul className="outlook-inbox">
-                  {INBOX_ITEMS.map((item) => (
-                    <li
-                      key={item.id}
-                      className={[
-                        "outlook-inbox__row",
-                        item.unread ? "outlook-inbox__row--unread" : "",
-                      ].join(" ").trim()}
-                      onClick={() => openFirstMessage(item)}
-                      role={item.unread ? "button" : undefined}
-                      tabIndex={item.unread ? 0 : undefined}
-                      onKeyDown={(e) => {
-                        if (item.unread && (e.key === "Enter" || e.key === " ")) {
-                          e.preventDefault();
-                          openFirstMessage(item);
-                        }
-                      }}
-                    >
-                      {item.unread && (
-                        <span className="outlook-inbox__dot" aria-hidden="true" />
-                      )}
-                      <div className="outlook-inbox__text">
-                        <span className="outlook-inbox__subject">
-                          {item.subject}
-                        </span>
-                        <span className="outlook-inbox__preview">
-                          {item.preview}
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <div className="outlook-email">
-                  <div className="outlook-email__meta">
-                    <span className="outlook-email__subject">
-                      {INBOX_ITEMS[0].subject}
-                    </span>
-                  </div>
-                  <div className="outlook-email__content">
-                    {EMAIL_BODY_LINES.map((line, i) => {
-                        // בודק אם השורה היא סעיף ממוספר שמכיל מקף
-                        const isNumberedSection = /^\d+\./.test(line) && line.includes('-');
-
-                        return (
-                        <p key={i} className="outlook-email__line">
-                            {isNumberedSection ? (
-                            <>
-                                {/* מדגיש את החלק שלפני המקף הראשון */}
-                                <strong>{line.substring(0, line.indexOf('-'))}</strong>
-                                {/* מציג את שאר המשפט כולל המקף */}
-                                {line.substring(line.indexOf('-'))}
-                            </>
-                            ) : (
-                            // שורה רגילה ללא שינוי
-                            line
-                            )}
-                        </p>
-                        );
-                    })}
-                    </div>
-
-                  <button
-                    type="button"
-                    className="outlook-email__btn"
-                    onClick={goToExcel}
-                  >
-                    <ExcelIcon />
-                    <span>עוקב לרשימות / עדיין-היום</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+return (
+  <section className="outlook-page" dir="rtl">
+    <div className={`outlook-window ${mounted ? "outlook-window--in" : ""}`}>
+      <div className="outlook-titlebar">
+        <img src={OutlookLogo} alt="Outlook" className="outlook-titlebar__logo" />
+        <span className="outlook-titlebar__label">OUTLOOK</span>
       </div>
-    </section>
-  );
+
+      <div className="outlook-body">
+        {!isOpened ? (
+          <ul className="outlook-inbox">
+            {INBOX_ITEMS.map((item) => (
+              <li
+                key={item.id}
+                className={["outlook-inbox__row", item.unread ? "outlook-inbox__row--unread" : ""].join(" ").trim()}
+                onClick={() => openFirstMessage(item)}
+                role={item.unread ? "button" : undefined}
+                tabIndex={item.unread ? 0 : undefined}
+                onKeyDown={(e) => {
+                  if (item.unread && (e.key === "Enter" || e.key === " ")) {
+                    e.preventDefault();
+                    openFirstMessage(item);
+                  }
+                }}
+              >
+                {item.unread && <span className="outlook-inbox__dot" aria-hidden="true" />}
+                <div className="outlook-inbox__text">
+                  <span className="outlook-inbox__subject">{item.subject}</span>
+                  <span className="outlook-inbox__preview">{item.preview}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="outlook-email">
+            <div className="outlook-email__meta">
+  <button
+    type="button"
+    className="outlook-email__back"
+    onClick={goBackToInbox}
+    aria-label="חזרה לתיבת המיילים"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="outlook-email__back-icon"
+    >
+      <path
+        d="M9 5L16 12L9 19"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+
+    <span>חזרה לתיבת הדואר</span>
+  </button>
+
+  <span className="outlook-email__subject">
+    {INBOX_ITEMS[0].subject}
+  </span>
+</div>
+            <div className="outlook-email__content">
+              {EMAIL_BODY_LINES.map((line, i) => {
+                const isNumberedSection = /^\d+\./.test(line) && line.includes("-");
+                return (
+                  <p key={i} className="outlook-email__line">
+                    {isNumberedSection ? (
+                      <>
+                        <strong>{line.substring(0, line.indexOf("-"))}</strong>
+                        {line.substring(line.indexOf("-"))}
+                      </>
+                    ) : (
+                      line
+                    )}
+                  </p>
+                );
+              })}
+            </div>
+
+            <button type="button" className="outlook-email__btn" onClick={goToExcel}>
+              <ExcelIcon />
+              <span>עותק דוחות מרג- היום</span>
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+);
 };
 
 export default Outlook;

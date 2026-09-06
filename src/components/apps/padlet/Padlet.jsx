@@ -36,8 +36,8 @@ const INITIAL_NOTES = [
   },
   {
     id: "note-4",
-    title: "בעצרת הדוחות -",
-    text: `הצח לאוגנדה, הצח מהאוגנדה הצח לפטור ושיבוץ חזוי נוכל לראות מהן תנועות כ"א שעתידות לקרות ביחידות שלנו והלהיערך לקראת בהתאם.`,
+    title: "בעזרת הדוחות -",
+    text: `הצח לאוגנדה, הצח מהאוגדה והצח לפטור ושיבוץ חזוי, נוכל לראות מהן תנועות כ"א שעתידות לקרות ביחידות שלנו והלהיערך לקראת בהתאם.`,
     top: 54,
     left: 52,
     width: 40,
@@ -157,87 +157,78 @@ const Padlet = ({ onComplete }) => {
       return [...prev, copy];
     });
   };
+return (
+  <section className="padlet-page" dir="rtl">
+    <header className="padlet-header">
+      <div className="padlet-header__brand">
+        <img
+          src={Padletfull}
+          alt="מדור טכ״ל — קריית ההדרכה"
+          className="padlet-header__logo"
+        />
+      </div>
+    </header>
 
-   return (
-    <section className="padlet-page" dir="rtl">
-      <header className="padlet-header">
-        <div className="padlet-header__brand">
-          <img src={Padletfull} alt="מדור טכ״ל — קריית ההדרכה" className="padlet-header__logo" />
-        </div>
-      </header>
- 
-      <div className="padlet-scene">
-        <div
-          className="padlet-scene__frame"
-          style={{ backgroundImage: `url(${BGPadlet})` }}
-        >
+    <div className="padlet-body">
+      <div
+        className={`padlet-laptop ${mounted ? "padlet-laptop--in" : ""}`}
+        ref={screenRef}
+        style={{ backgroundImage: `url(${BGPadlet})` }}
+      >
+        {notes.map((note, index) => (
           <div
-            className={`padlet-laptop ${mounted ? "padlet-laptop--in" : ""}`}
-            ref={screenRef}
+            key={note.id}
+            className={[
+              "sticky-note",
+              note.small ? "sticky-note--small" : "",
+              activeId === note.id ? "sticky-note--dragging" : "",
+              mounted ? "sticky-note--in" : "",
+            ].join(" ").trim()}
+            style={{
+              top: `${note.top}%`,
+              left: `${note.left}%`,
+              width: `${note.width}%`,
+              transitionDelay: mounted ? `${index * 80}ms` : "0ms",
+            }}
+            onMouseDown={(e) => handlePointerDown(e, note.id)}
+            onTouchStart={(e) => handlePointerDown(e, note.id)}
           >
-            {notes.map((note, index) => (
-              <div
-                key={note.id}
-                className={[
-                  "sticky-note",
-                  note.small ? "sticky-note--small" : "",
-                  activeId === note.id ? "sticky-note--dragging" : "",
-                  mounted ? "sticky-note--in" : "",
-                ].join(" ").trim()}
-                style={{
-                  top: `${note.top}%`,
-                  left: `${note.left}%`,
-                  width: `${note.width}%`,
-                  transitionDelay: mounted ? `${index * 80}ms` : "0ms",
-                }}
-                onMouseDown={(e) => handlePointerDown(e, note.id)}
-                onTouchStart={(e) => handlePointerDown(e, note.id)}
-              >
-                <div className="sticky-note__bar">
-                  <button
-                    type="button"
-                    className="sticky-note__btn sticky-note__btn--close"
-                    onClick={() => closeNote(note.id)}
-                    aria-label="סגור פתק"
-                  >
-                    ✕
-                  </button>
-                  <button
-                    type="button"
-                    className="sticky-note__btn sticky-note__btn--dup"
-                    onClick={() => duplicateNote(note.id)}
-                    aria-label="שכפל פתק"
-                  >
-                    ⧉
-                  </button>
-                  <span className="sticky-note__btn sticky-note__btn--minus" aria-hidden="true">
-                    −
-                  </span>
-                  <span className="sticky-note__grip" aria-hidden="true">
-                    ⋮⋮
-                  </span>
-                </div>
-                <div className="sticky-note__body">
-                  {note.title && <strong className="sticky-note__title">{note.title} </strong>}
-                  {note.text}
-                </div>
-              </div>
-            ))}
- 
-            {typeof onComplete === "function" && (
+            <div className="sticky-note__bar">
               <button
                 type="button"
-                className="padlet-complete-btn"
-                onClick={onComplete}
+                className="sticky-note__btn sticky-note__btn--close"
+                onClick={() => closeNote(note.id)}
+                aria-label="סגור פתק"
               >
-                המשך
+                ✕
               </button>
-            )}
+              <button
+                type="button"
+                className="sticky-note__btn sticky-note__btn--dup"
+                onClick={() => duplicateNote(note.id)}
+                aria-label="שכפל פתק"
+              >
+                ⧉
+              </button>
+              <span className="sticky-note__btn sticky-note__btn--minus" aria-hidden="true">−</span>
+              <span className="sticky-note__grip" aria-hidden="true">⋮⋮</span>
+            </div>
+            <div className="sticky-note__body">
+              {note.title && <strong className="sticky-note__title">{note.title} </strong>}
+              {note.text}
+            </div>
           </div>
-        </div>
+        ))}
+
+        {typeof onComplete === "function" && (
+          <button type="button" className="padlet-complete-btn" onClick={onComplete}>
+            המשך
+          </button>
+        )}
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 };
 
 export default Padlet;
