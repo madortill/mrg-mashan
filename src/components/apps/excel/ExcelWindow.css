@@ -1,0 +1,89 @@
+.excel-window {
+  --excel-green-dark: #1b5e3a;
+  --excel-green-mid: #217346;
+  --excel-border: #c7d6ce;
+
+  position: relative;
+  width: 100%;
+    height: 100%;   
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden; /* חשוב: מבטיח שהפופאפ לא "יבצבץ" מעבר לפינות המסך */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  font-family: "Assistant", Arial, sans-serif;
+  direction: rtl;
+}
+
+.excel-window__titlebar {
+  background: var(--excel-green-dark);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(6px, 1.5vw, 12px) clamp(10px, 3vw, 20px);
+}
+
+.excel-window__title {
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: clamp(14px, 2vw, 18px);
+}
+.excel-window__titlebar,
+.excel-window__menu {
+  flex-shrink: 0; /* לא נמעכים כשה-body גדל */
+}
+
+.excel-window__body {
+  position: relative;
+  flex: 1;         /* ⭐ תופס את כל מה שנשאר אחרי titlebar+menu */
+  min-height: 0;   /* ⭐ קריטי - מונע מ-flex "להתעקש" על גודל התוכן */
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  overflow: hidden;
+}
+
+.excel-window__icon {
+  width: clamp(20px, 3vw, 28px);
+  height: clamp(20px, 3vw, 28px);
+  background: #fff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.excel-window__icon-x {
+  color: var(--excel-green-dark);
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.excel-window__menu {
+  background: var(--excel-green-mid);
+  display: flex;
+  gap: clamp(10px, 2vw, 22px);
+  padding: 6px clamp(10px, 3vw, 20px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.excel-window__menu::-webkit-scrollbar { display: none; }
+
+.excel-window__menu-item {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: clamp(11px, 1.4vw, 13px);
+  white-space: nowrap;
+  padding-bottom: 4px;
+}
+
+.excel-window__menu-item.is-active {
+  color: #fff;
+  font-weight: 700;
+  border-bottom: 2px solid #fff;
+}
+
+.excel-window__body {
+  position: relative; /* container עבור הפופאפ המוחלט */
+  background: #fff;
+}

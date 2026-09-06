@@ -1,0 +1,29 @@
+.back-button {
+  position: absolute;
+  top: 12px;
+  right: 16px; /* RTL - חזור בפינה הימנית העליונה, לשנות ל-left אם צריך */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 30; /* מעל הפופאפ (25) כדי שתמיד יהיה נגיש */
+  color: #fff;
+}
+
+.back-button__icon {
+  width: 20px;
+  height: 20px;
+  transform: rotate(180deg); /* חץ פונה ימינה = "אחורה" ב-RTL */
+}
+
+.back-button__label {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.back-button:hover {
+  opacity: 0.8;
+}

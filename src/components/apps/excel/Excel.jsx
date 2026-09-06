@@ -1,13 +1,61 @@
+import "./Excel.css";
+import ExcelWindow from "./ExcelWindow";
+import ExcelTable from "./ExcelTable";
+import InfoPopup from "./InfoPopup";
+import SpeechBubble from "./SpeechBubble";
+import BackButton from "../../elements/backButton/BackButton";
+import { screens } from "./excelData";
 
-import "./Exel.css";
-import gili from "../../../assets/images/gili.svg";
-const Excel = () => {
+const Excel = ({ page = 0, onPageChange, onBack, onComplete }) => {
+  const currentScreen = screens[page];
+  const isPopupActive = currentScreen.type === "popup";
+
+  const lastTableScreen = screens
+    .slice(0, page + 1)
+    .reverse()
+    .find((s) => s.type === "table");
+
+  const goNext = () => {
+    if (page + 1 >= screens.length) onComplete();
+    else onPageChange(page + 1);
+  };
+
+  const goBack = () => {
+    if (page === 0) onBack();
+    else onPageChange(page - 1);
+  };
+
   return (
-    <>
-    <div className="excel-app">אקסל וייב שיט</div>
-    <img src={gili} alt="Gili" />
+    <div className="excel-app">
+      <BackButton onClick={goBack} />
 
-    </>
+      <ExcelWindow>
+        {lastTableScreen && (
+          <ExcelTable
+            columns={lastTableScreen.columns}
+            rows={lastTableScreen.rows}
+            dimmed={isPopupActive}
+            showConfirmButton={currentScreen.type === "table"}
+            confirmLabel={currentScreen.confirmLabel}
+            onConfirm={goNext}
+          />
+        )}
+
+        {isPopupActive && (
+          <InfoPopup
+            key="popup"
+            title={currentScreen.title}
+            text={currentScreen.text}
+            highlightText={currentScreen.highlightText}
+            buttonType={currentScreen.buttonType}
+            onButtonClick={goNext}
+          />
+        )}
+      </ExcelWindow>
+
+      <SpeechBubble speechText={!isPopupActive ? lastTableScreen?.bubbleText : null} />
+    </div>
   );
 };
+
 export default Excel;

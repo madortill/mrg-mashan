@@ -1,0 +1,106 @@
+.popup-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(55, 55, 55, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 25;
+  padding: 24px;
+}
+
+.popup-card {
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+  direction: rtl;
+}
+
+.popup-card__content {
+  padding: clamp(20px, 4vw, 30px) clamp(24px, 5vw, 40px);
+  text-align: center;
+}
+
+.popup-card__title {
+  color: #1b5e3a;
+  font-size: clamp(15px, 2vw, 18px);
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.popup-card__text {
+  color: #333;
+  font-size: clamp(12px, 1.6vw, 14px);
+  line-height: 1.8;
+  margin: 0 0 14px;
+  /* מעבר חלק כשהטקסט מתחלף בלי סגירה */
+  animation: fadeText 0.25s ease;
+}
+
+@keyframes fadeText {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-card__highlight {
+  display: block;
+  background: #d8ecdf;
+  color: #1b5e3a;
+  font-weight: 700;
+  font-size: clamp(11px, 1.5vw, 13px);
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+/* כפתור ריבועי ירוק, צמוד/בולט לקצה השמאלי של הכרטיס */
+.popup-card__side-btn {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-45%, -50%);
+  width: clamp(34px, 4.5vw, 44px);
+  height: clamp(34px, 4.5vw, 44px);
+  background: #1b5e3a;
+  border: none;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s;
+}
+.popup-card__side-btn:hover { transform: translate(-45%, -50%) scale(1.05); }
+
+.popup-card__side-btn img {
+  width: 50%;
+  height: 50%;
+  filter: brightness(0) invert(1); /* אייקון לבן על רקע ירוק */
+}
+
+/* אם קובץ ה-SVG של החץ פונה ימינה כברירת מחדל, הופכים כיוון עבור RTL */
+.popup-card__side-btn--arrow img { transform: scaleX(-1); }
+
+
+
+/* גילי חופפת לפינה של הפופאפ */
+.info-popup__gili {
+  position: absolute;
+  bottom: -10px;
+  left: clamp(-10px, -3vw, 10px);
+  width: clamp(90px, 14vw, 140px);
+  height: auto;
+  z-index: 21;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .info-popup__gili {
+    width: 80px;
+    left: -6px;
+    bottom: -6px;
+  }
+}

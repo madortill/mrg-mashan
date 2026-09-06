@@ -1,0 +1,83 @@
+.excel-table-wrapper {
+  overflow-x: auto;
+  transition: filter 0.2s;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: clamp(8px, 2vw, 16px);
+  display: flex;
+  flex-direction: column;
+}
+
+
+.excel-table-wrapper.is-dimmed {
+  filter: brightness(0.55) grayscale(0.3);
+  pointer-events: none;
+}
+
+.excel-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+  font-size: clamp(11px, 1.3vw, 13px);
+}
+
+.excel-table th {
+  background: var(--excel-green-mid);
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 6px;
+  border: 1px solid var(--excel-border);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.excel-table td {
+  padding: 8px 6px;
+  border: 1px solid var(--excel-border);
+  text-align: center;
+  color: #333;
+}
+
+.excel-table tbody tr:nth-child(even) { background: #f4f8f6; }
+.excel-table__empty-row td { height: 26px; }
+
+/* --- כפתור שנראה כמו תא אקסל לחוץ/מסומן --- */
+.excel-cell-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 14px 0 18px;
+}
+
+.excel-cell-btn {
+  position: relative;
+  background: #fff;
+  border: 2px solid var(--excel-green-mid);
+  color: var(--excel-green-mid);
+  font-weight: 700;
+  font-size: clamp(12px, 1.5vw, 14px);
+  padding: 6px 26px;
+  border-radius: 2px; /* פינות ישרות, כמו תא אמיתי */
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.excel-cell-btn:hover {
+  background: var(--excel-green-mid);
+  color: #fff;
+}
+
+/* ה"ידית" הירוקה הקטנה בפינה - בדיוק כמו סימון תא נבחר באקסל */
+.excel-cell-btn__handle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: var(--excel-green-mid);
+  bottom: -4px;
+  left: -4px;
+  border: 1px solid #fff;
+}
+.excel-cell-btn:hover .excel-cell-btn__handle {
+  background: #fff;
+  border-color: var(--excel-green-mid);
+}

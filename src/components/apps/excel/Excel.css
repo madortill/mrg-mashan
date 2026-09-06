@@ -1,0 +1,16 @@
+/* Excel.css */
+.excel-app {
+  position: relative;
+  width: 100%;
+  height: 100%;   
+  overflow: visible; 
+  display: flex;
+  flex-direction: column;
+}
+.excel-app__gili-corner {
+  position: absolute;
+  bottom: -10px;
+  left: 30px;
+  width: clamp(90px, 12vw, 130px);
+  z-index: 14;
+}

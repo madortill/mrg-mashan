@@ -9,6 +9,7 @@ import GoogleYnet from "../apps/google/GoogleYnet";
 import Excel from "../apps/excel/Excel.jsx";
 import Outlook from "../apps/outlock/Outlook";
 import Padlet from "../apps/padlet/Padlet.jsx";
+import Chatgpt from "../apps/chatGPT/Chatgpt.jsx";
 import IntroPopUp from "../elements/introPopUp/IntroPopUp.jsx";
 import Laptop from "../elements/laptop/Laptop";
 import DesktopHub from "../pages/DesktopHub/DesktopHub";
@@ -34,7 +35,7 @@ const APP_ORDER = [
   "padlet",
   "outlook",
   "excel",
-  "people",
+  "chatgpt",
 ];
 
 const APP_CONTENT = {
@@ -64,14 +65,14 @@ const APP_CONTENT = {
   },
   excel: {
     label: "Excel",
-    navbarTitle: "כאן תכתבי את הכותרת של Excel",
+    navbarTitle: "דוחות ",
     component: Excel,
     laptopVariant: "empty",
   },
   people: {
-    label: "אנשים",
-    navbarTitle: "כאן תכתבי את הכותרת של אנשים",
-    component: null,
+    label: "צאט",
+    navbarTitle: "שינוי איוש בחיילי מילואים",
+    component: Chatgpt,
     laptopVariant: "empty",
   },
 };

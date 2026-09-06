@@ -1,6 +1,6 @@
 
 import "./Chatgpt.css";
-import chatIcon from "../../../assets/images/apps/chatgpt.svg";
+import chatIcon from "../../../assets/images/apps/chatgpt.png";
 const Chatgpt = () => {
   return (
     <>

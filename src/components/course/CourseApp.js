@@ -2,14 +2,14 @@ import chromeIcon from "./../../assets/images/apps/google.png";
 import excelIcon from "./../../assets/images/apps/exel.png";
 import outlookIcon from "./../../assets/images/apps/outlook.png";
 import padletIcon from "./../../assets/images/apps/padlet.png";
-import peopleIcon from "./../../assets/images/apps/people.png";
+import chatgpt from "./../../assets/images/apps/chatgpt.png";
 import targetIcon from "./../../assets/images/apps/target.png";
 
 export const courseApps = [
  
   {
-    id: "excel",
-    label: "Excel",
+        id: "target",
+    label: "Target",
     icon: excelIcon,
     position: {
       top: "6%",
@@ -44,8 +44,8 @@ export const courseApps = [
     },
   },
   {
-    id: "target",
-    label: "Target",
+    id: "excel",
+    label: "Excel",
     icon: targetIcon,
     position: {
       top: "52%",
@@ -53,9 +53,9 @@ export const courseApps = [
     },
   },
   {
-    id: "people",
-    label: "אנשים",
-    icon: peopleIcon,
+    id: "chatgpt",
+    label: "צאט",
+    icon: chatgpt,
     position: {
       top: "52%",
       right: "1.5%",
