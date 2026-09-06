@@ -2,7 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import Padletfull from "../../../assets/images/padletLogofull.png";
 import PadletImg from "../../../assets/images/apps/padlet.png";
 import BGPadlet from "../../../assets/images/BGPadlet.png";
-import "./Padlet.css";
+import "./padlet.css";
 
 // ---------------------------------------------------------------------------
 // Initial note data — positions are percentages of the "screen" overlay area,
