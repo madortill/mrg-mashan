@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Padletfull from "../../../assets/images/padletLogofull.png";
 import BGPadlet from "../../../assets/images/BGPadlet.png";
 import OutlookLogo from "../../../assets/images/apps/outlook.png";
 import "./Outlook.css";
