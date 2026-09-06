@@ -58,8 +58,8 @@ const ExcelIcon = () => (
 const Outlook = ({
   page = 0,
   onPageChange,
-  onBack,
-  onHome,
+//   onBack,
+//   onHome,
   onComplete,
   onNext,
 }) => {

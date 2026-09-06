@@ -1,6 +1,6 @@
 
 import "./Exel.css";
-import gili from "../../../assets/images/Gili.svg";
+import gili from "../../../assets/images/gili.svg";
 const Excel = () => {
   return (
     <>
