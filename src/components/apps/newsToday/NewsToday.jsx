@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import IsraelHayomLogo from "../../../assets/images/israel_Hayom.svg";
+import IsraelHayomLogo from "../../../assets/images/Israel_Hayom.svg";
 import HayomIcon from "../../../assets/images/apps/todayLogo.png";
 import guidingImg from "../../../assets/images/guidingImg.svg";
 import guidingImgLeft from "../../../assets/images/leftNews.svg";
