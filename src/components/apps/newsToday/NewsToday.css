@@ -347,8 +347,8 @@
   align-items: center;
   gap: 6px;
   padding: clamp(8px, 1.6vw, 14px);
-  border: 1px solid var(--row-border);
-  border-radius: 6px;
+  border: 3px solid var(--row-border);
+  border-radius: 30px;
   background: #fafafa;
   text-align: center;
 }
@@ -384,7 +384,7 @@
 
 .nt-card__desc {
   margin: 0;
-  font-size: clamp(16px, 1.35vw, 20px);
+  font-size: clamp(18px, 1.35vw, 20px);
   line-height: 1.5;
   color: #444;
 }
@@ -420,7 +420,7 @@
 }
 
 .nt-card__schedule {
-  font-size: clamp(8px, 1vw, 10.5px);
+  font-size: clamp(12px, 1.4vw, 14.5px);
   color: #8a8a8a;
 }
 

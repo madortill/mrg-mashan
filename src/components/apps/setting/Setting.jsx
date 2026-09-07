@@ -8,20 +8,16 @@ const ROWS = [
     text: `כל תקופת זמן, עפ"י הגדרת המר"ג, ק' משא"ן מילואים צריך לבצע בדיקת תקינות נק' הקליטה ולהעביר דו"ח למר"ג ואחריות המר"ג לטפל בתקלות במידה ויש.`,
   },
   {
-    title: "כוננות חגים",
-    text: ' כגון: דרכ"ש אוגדתי/פיקודי, סד"פ למש"ק ולקצין משא"ן מיל, פורמט מעקב רשתות קריאה וכו',
+    title: "תיקוף מסמכים לשעת חירום", // תוקן: התוכן הותאם לכותרת הנכונה מהתמונה
+    text: `כגון: דרכ"ש אוגדתי/פיקודי, סד"פ למש"ק ולקצין משא"ן מיל, פורמט מעקב רשתות קריאה וכו'`,
   },
   {
-    title: "תיקוף מסמכים לשעת חירום",
-    text: 'בתקופת חגי ישראל, כגון: סוכות, פסח וכו, מרכז הגיוס דורש מהיחידות לבצע בדיקה עם אנשי רשתות הקריאה המהירות, מפקדים ורקמה, האם נוכחים בארץ בתקופה זו ובמידה ולא מי המחליף שלהם. בנוסף על מסמך זה צריך להיות חתום מפקד בדרגת סא"ל ומעלה.',
+    title: "כוננות חגים", // תוקן: התוכן הותאם לכותרת הנכונה מהתמונה
+    text: `בתקופת חגי ישראל, כגון: סוכות, פסח וכו, מרכז הגיוס דורש מהיחידות לבצע בדיקה עם אנשי רשתות הקריאה המהירות, מפקדים ורקמה, האם נוכחים בארץ בתקופה זו ובמידה ולא מי המחליף שלהם. בנוסף על מסמך זה צריך להיות חתום מפקד בדרגת סא"ל ומעלה.`,
   },
 ];
 
-// How many diagonal bars sit on each side once a row is fully open.
 const BAR_COUNT = 4;
-
-// How long the reveal / collapse animation runs before the open/closed
-// state is actually persisted via onPageChange.
 const ANIMATION_DURATION_MS = 900;
 
 const Bars = ({ count }) =>
@@ -30,22 +26,38 @@ const Bars = ({ count }) =>
   ));
 
 const Setting = ({ page = 0, onPageChange, onComplete, onNext }) => {
-  const openedMask = page; // page itself is the bitmask of which rows are open
-  // Only visual/local: which row is mid-animation, and in which direction.
-  const [pending, setPending] = useState(null); // { index, action: 'opening' | 'closing' }
+  const openedMask = page; 
+  
+  // State חדש שעוקב אחרי כל השורות שאי פעם נפתחו במהלך הסיבוב הזה
+  const [historyMask, setHistoryMask] = useState(page);
+  
+  const [pending, setPending] = useState(null); 
   const timeoutRef = useRef(null);
 
   useEffect(() => () => clearTimeout(timeoutRef.current), []);
 
+  // מעדכן את היסטוריית הפתיחות במידה וערך ה-page מגיע מבחוץ עם שורות פתוחות
+  useEffect(() => {
+    setHistoryMask((prev) => prev | page);
+  }, [page]);
+
   const isOpen = (i) => (openedMask & (1 << i)) !== 0;
-  const allOpen = openedMask === (1 << ROWS.length) - 1;
+  
+  // התנאי החדש: הכפתור יופעל אם כל השורות קיימות בביטמאסק של ההיסטוריה
+  const targetMask = (1 << ROWS.length) - 1;
+  const wasEverythingOpened = historyMask === targetMask;
 
   const handleRowClick = (i) => {
-    if (pending) return; // only one row animates at a time
+    if (pending) return; 
 
     const currentlyOpen = isOpen(i);
     const action = currentlyOpen ? "closing" : "opening";
     setPending({ index: i, action });
+
+    // אם השורה נפתחת כעת, נעדכן מיד את ההיסטוריה כדי שהחיווי של ה-100% יוכל להגיב מהר
+    if (action === "opening") {
+      setHistoryMask((prev) => prev | (1 << i));
+    }
 
     timeoutRef.current = setTimeout(() => {
       setPending(null);
@@ -57,9 +69,7 @@ const Setting = ({ page = 0, onPageChange, onComplete, onNext }) => {
   };
 
   const handleConfirm = () => {
-    if (!allOpen) return;
-    // Prefer onNext so finishing Setting chains straight into the next
-    // app (e.g. NewsToday) instead of forcing a return to the hub.
+    if (!wasEverythingOpened) return;
     if (typeof onNext === "function") onNext();
     else onComplete?.();
   };
@@ -73,15 +83,13 @@ const Setting = ({ page = 0, onPageChange, onComplete, onNext }) => {
         </div>
 
         <p className="setting-card__subtitle">
-          לחצו כדי לקבל את הנתונים שנתעדכנו לאחרונה
+          -לחצו כדי לטעון את הנושאים שנתקעו-
         </p>
 
         <div className="setting-card__rows">
           {ROWS.map((row, i) => {
             const persistedOpen = isOpen(i);
             const isPendingThis = pending?.index === i;
-            // While mid-animation the visual state leads the persisted
-            // state; otherwise it just reflects what's been saved.
             const visible = isPendingThis
               ? pending.action === "opening"
               : persistedOpen;
@@ -128,9 +136,9 @@ const Setting = ({ page = 0, onPageChange, onComplete, onNext }) => {
 
         <button
           type="button"
-          className={`setting-confirm-pill ${allOpen ? "is-active" : ""}`}
+          className={`setting-confirm-pill ${wasEverythingOpened ? "is-active" : ""}`}
           onClick={handleConfirm}
-          disabled={!allOpen}
+          disabled={!wasEverythingOpened}
         >
           100%
         </button>

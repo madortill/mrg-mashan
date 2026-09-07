@@ -5,7 +5,7 @@
   --accent-blue-dark: #3d87ab;
   --icon-idle: #d9a15c; /* muted/warm "not opened yet" color, distinct from the accent blue used once open */
   --text-dark: #26221c;
-  --text-muted: #6b6b6b;
+  --text-muted: #303030;
   --border-light: #e4e0d8;
 
   width: 100%;
@@ -60,7 +60,7 @@
 .setting-card__subtitle {
   flex: 0 0 auto;
   margin: 0;
-  font-size: clamp(11px, 1.25vw, 13px);
+  font-size: clamp(16px, 1.45vw, 18px);
   color: var(--text-muted);
   text-align: center;
 }
@@ -70,13 +70,13 @@
    vertical space, matching the reference instead of hugging the top. */
 
 .setting-card__rows {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: clamp(8px, 1.6vw, 14px);
-  min-height: 0;
-  overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(17px, 11.6vw, 59px);
+    min-height: 0;
+    overflow-y: auto;
 }
 
 .setting-row {
@@ -101,33 +101,35 @@
 }
 
 /* ---------------- Bars ---------------- */
-
 .setting-row__bars {
   display: flex;
   align-items: center;
   gap: 4px;
-  max-width: 26px; /* just enough to show the single idle bar */
+  max-width: 0; /* ברירת מחדל: חבוי לחלוטין */
   overflow: hidden;
   transition: max-width 0.4s ease;
 }
 
+/* שונה: צד ימין הוא כעת הבר שנשאר גלוי במצב סגור (Idle) */
 .setting-row__bars--right {
-  max-width: 0; /* fully hidden until open — nothing sits here at rest */
-  transition-delay: 0ms;
+  max-width: 30px; /* מספיק בדיוק כדי להציג את הבר הבודד */
+  transition-delay: 500ms; /* נפתח אחרון, אחרי שהטקסט נחשף */
 }
 
 .setting-row--open .setting-row__bars--right {
   max-width: 150px;
-  transition-delay: 0ms;
+  transition-delay: 500ms;
 }
 
+/* שונה: צד שמאל כעת חבוי לחלוטין עד לפתיחה — שום דבר לא יושב כאן במנוחה */
 .setting-row__bars--left {
-  transition-delay: 500ms; /* grows in last, after the text has revealed */
+  max-width: 0; 
+  transition-delay: 0ms;
 }
 
 .setting-row--open .setting-row__bars--left {
   max-width: 150px;
-  transition-delay: 500ms;
+  transition-delay: 0ms;
 }
 
 .setting-row__bar-item {
@@ -148,14 +150,13 @@
   opacity: 1;
 }
 
-/* The first bar in the left group is always at least partly visible —
-   it's the "idle" indicator shown before the row has ever been opened. */
-.setting-row__bars--left .setting-row__bar-item:first-child {
+/* שונה: הבר הראשון בקבוצה הימנית הוא זה שתמיד גלוי חלקית במצב סגור */
+.setting-row__bars--right .setting-row__bar-item:first-child {
   opacity: 0.9;
   transform: skewX(-18deg) scaleY(0.7);
 }
 
-.setting-row--open .setting-row__bars--left .setting-row__bar-item:first-child {
+.setting-row--open .setting-row__bars--right .setting-row__bar-item:first-child {
   transform: skewX(-18deg) scaleY(1);
 }
 
@@ -165,7 +166,7 @@
   flex: 1;
   min-width: 0;
   text-align: center;
-  font-size: clamp(11px, 1.3vw, 13.5px);
+  font-size: clamp(16px, 1.6vw, 18px);
   line-height: 1.6;
   animation: setting-label-in 0.3s ease;
   animation-delay: 300ms;
