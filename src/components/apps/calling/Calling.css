@@ -1,0 +1,123 @@
+/* Calling.css */
+.calling-root {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.calling-root--in {
+  opacity: 1;
+}
+
+.calling-popup-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.calling-popup-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 24, 30, 0.15);
+}
+
+.calling-modal {
+  position: relative;
+  z-index: 1;
+  margin-top: 8%;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  padding: 22px 26px;
+  text-align: center;
+  overflow: hidden;
+  transition: width 0.3s ease, height 0.3s ease, padding 0.3s ease,
+    min-height 0.3s ease;
+}
+
+.calling-modal--small {
+  width: 250px;
+}
+
+.calling-modal--expanded {
+  width: 300px;
+  min-height: 210px;
+  padding-top: 34px;
+}
+
+.calling-modal__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2430;
+  margin: 0 0 16px;
+}
+
+.calling-modal__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.calling-modal__actions--row {
+  gap: 36px;
+}
+
+.calling-modal__icon-btn {
+  border: none;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.calling-modal__icon-btn:hover {
+  transform: scale(1.06);
+}
+
+.calling-modal__icon-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.calling-modal__icon-btn--decline {
+  background: #e5484d;
+}
+
+.calling-modal__icon-btn--answer {
+  background: #30a46c;
+}
+
+.calling-modal__sound-toggle {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.calling-modal__sound-toggle img {
+  width: 16px;
+  height: 16px;
+}
+
+.calling-modal__timer {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1f2430;
+  margin: 0 0 14px;
+}
+
+.calling-modal__body-text {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #333c46;
+  margin: 0 0 20px;
+}

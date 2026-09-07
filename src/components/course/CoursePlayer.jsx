@@ -13,6 +13,7 @@ import Outlook from "../apps/outlock/Outlook";
 import Padlet from "../apps/padlet/Padlet.jsx";
 import Chatgpt from "../apps/chatGPT/Chatgpt.jsx";
 import NewsToday from "../apps/newsToday/NewsToday.jsx";
+import Calling from "../apps/calling/Calling.jsx";
 import IntroPopUp from "../elements/introPopUp/IntroPopUp.jsx";
 import Laptop from "../elements/laptop/Laptop";
 import DesktopHub from "../pages/DesktopHub/DesktopHub";
@@ -41,6 +42,7 @@ const APP_ORDER = [
   "chatgpt",
   "setting",
   "newsToday",
+  "calling",
 ];
 
 const APP_CONTENT = {
@@ -90,6 +92,12 @@ const APP_CONTENT = {
   label: "NewsToday",
   navbarTitle: 'תורנויות מר"ג',
   component: NewsToday,
+  laptopVariant: "empty",
+},
+  calling: {
+  label: "Calling",
+  navbarTitle: 'תורנויות מר"ג',
+  component: Calling,
   laptopVariant: "empty",
 },
 };
