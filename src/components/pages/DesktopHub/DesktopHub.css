@@ -5,16 +5,21 @@
 
 
 .desktop-hub {
-  position: absolute;
 
+   position: absolute;
   inset: 0;
-
   width: 100%;
   height: 100%;
-
   overflow: hidden;
-
+  container-type: inline-size;
+  isolation: isolate;
+  user-select: none;
+  -webkit-user-select: none;
   direction: rtl;
+}
+
+.desktop-hub--blocked .desktop-app-hotspot {
+  pointer-events: none;
 }
 
 
@@ -46,6 +51,48 @@
     1.6s
     ease-in-out
     infinite;
+}
+
+
+
+.desktop-hub__rope-button {
+  position: absolute;
+  z-index: 50;
+  top: 2%;
+  left: -2.7%;
+  width: clamp(102px, 18.2cqw, 168px);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.desktop-hub__rope-button:disabled {
+  cursor: default;
+}
+
+.desktop-hub__rope {
+  position: static;
+  inset: auto;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.desktop-hub__rope-button--glowing .desktop-hub__rope {
+  animation: desktop-rope-glow 1.35s ease-in-out infinite;
+}
+
+.desktop-hub__rope-button:focus-visible {
+  border-radius: 999px;
+  outline: clamp(2px, 0.24cqw, 4px) solid #ffffff;
+  outline-offset: clamp(2px, 0.3cqw, 5px);
 }
 
 
@@ -124,7 +171,7 @@
 
   cursor: pointer;
 
-  z-index: 10;
+  z-index: 10000;
 }
 
 
@@ -143,92 +190,47 @@
    מעל האייקון שכבר נמצא בתמונה
 ======================================== */
 
+/* ========================================
+   האייקון הפעיל (מצב רגיל/פתוח)
+======================================== */
 .desktop-app-hotspot__active-icon {
   width: 72%;
   height: auto;
-
   object-fit: contain;
-
   pointer-events: none;
   user-select: none;
-
   -webkit-user-drag: none;
-
-  animation:
-    desktop-app-glow
-    1.45s
-    ease-in-out
-    infinite;
+  animation: desktop-app-glow 1.45s ease-in-out infinite;
 }
 
-
 /* ========================================
-   זוהר של אפליקציה
+   זוהר של אפליקציה פתוחה
 ======================================== */
-
 @keyframes desktop-app-glow {
-
-  0%,
-  100% {
-    transform:
-      scale(1);
-
-    filter:
-      drop-shadow(
-        0 0 0.15rem
-        rgba(
-          54,
-          202,
-          255,
-          0.5
-        )
-      )
-
-      drop-shadow(
-        0 0 0.3rem
-        rgba(
-          54,
-          202,
-          255,
-          0.4
-        )
-      );
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0.15rem rgba(54, 202, 255, 0.5))
+            drop-shadow(0 0 0.3rem rgba(54, 202, 255, 0.4));
   }
-
 
   50% {
-    transform:
-      scale(1.08);
-
-    filter:
-      drop-shadow(
-        0 0 0.3rem
-        rgba(
-          54,
-          202,
-          255,
-          1
-        )
-      )
-
-      drop-shadow(
-        0 0 0.7rem
-        rgba(
-          119,
-          101,
-          240,
-          0.8
-        )
-      );
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 0.3rem rgba(54, 202, 255, 1))
+            drop-shadow(0 0 0.7rem rgba(119, 101, 240, 0.8));
   }
 }
 
-
 /* ========================================
-   אפליקציה נעולה
+   אפליקציה נעולה (אפורה וללא אנימציה)
 ======================================== */
-
 .desktop-app-hotspot--locked {
-  cursor: default;
-  filter: grayscale(1);
+  cursor: not-allowed !important;
+  pointer-events: none; /* מונע אפשרות לחיצה */
+}
+
+/* פוגע ישירות בתמונת האייקון שבתוך האלמנט הנעול */
+.desktop-app-hotspot--locked .desktop-app-hotspot__active-icon {
+  animation: none !important; /* עצירת האנימציה והזוהר */
+  filter: grayscale(100%) opacity(0.5) !important; /* הפיכה לאפור + שקיפות קלה */
+  transform: scale(1) !important;
 }

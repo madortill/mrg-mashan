@@ -11,11 +11,14 @@ function DesktopHub({
   completedApps = [],
   visitedApps = [],
   introCompleted = false,
-  showRopeGlow = false,
   isInteractionBlocked = false,
   onRopeClick,
   onOpenApp,
 }) {
+  const shouldRopeGlow =
+    !introCompleted &&
+    !isInteractionBlocked;
+
   return (
     <div
       className={[
@@ -29,12 +32,14 @@ function DesktopHub({
         type="button"
         className={[
           "desktop-hub__rope-button",
-          showRopeGlow ? "desktop-hub__rope-button--glowing" : "",
+          shouldRopeGlow
+            ? "desktop-hub__rope-button--glowing"
+            : "",
         ]
           .filter(Boolean)
           .join(" ")}
         onClick={onRopeClick}
-        disabled={introCompleted || isInteractionBlocked}
+        disabled={isInteractionBlocked}
         aria-label="פתיחת המבוא ללומדה"
       >
         <img
@@ -53,8 +58,10 @@ function DesktopHub({
         const isCurrent = app.id === currentAppId;
         const isCompleted = completedApps.includes(app.id);
         const isVisited = visitedApps.includes(app.id);
+
         const isAvailable =
-          introCompleted && (isCurrent || isCompleted || isVisited);
+          introCompleted &&
+          (isCurrent || isCompleted || isVisited);
 
         return (
           <button
@@ -67,17 +74,12 @@ function DesktopHub({
             ]
               .filter(Boolean)
               .join(" ")}
-            /*
-              לא מעתיקים רק top/right. כך גם left, bottom, width ו-height
-              שמוגדרים ב-CourseApp מגיעים למסך ולא הולכים לאיבוד.
-            */
             style={{ ...app.position }}
             disabled={!isAvailable || isInteractionBlocked}
             onClick={() => onOpenApp?.(app.id)}
             aria-label={app.label}
             aria-current={isCurrent ? "step" : undefined}
           >
-            {/* כל האפליקציות מצוירות מיד; רק הזוהר תלוי בהתקדמות. */}
             {app.icon && (
               <img
                 src={app.icon}

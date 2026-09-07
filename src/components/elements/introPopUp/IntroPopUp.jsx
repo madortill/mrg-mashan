@@ -2,65 +2,58 @@ import React from "react";
 
 import "./IntroPopUp.css";
 
+import character from "../../../assets/images/gili.svg";
 
-import character
-  from "../../../assets/images/gili.svg";
-
+import speechBubble from "../../../assets/images/bubbleText.svg";
 
 function IntroPopup({
-  onComplete,
+  title = "היי! אני דנה קצינת המשא״ן מילואים.",
+  text = "אני אלווה אתכם במהלך הלומדה, ואהיה איתכם בכל דוח.",
+  onClose,
 }) {
-  function handleClose() {
-    onComplete();
-  }
-
-
   return (
     <div
       className="intro-popup-backdrop"
       role="dialog"
       aria-modal="true"
-      aria-label="מבוא ללומדה">
+      aria-labelledby="intro-popup-title"
+    >
       <div className="intro-popup">
-
         <button
           type="button"
           className="intro-popup__close"
-          onClick={handleClose}
-          aria-label="סיום המבוא"
+          onClick={onClose}
+          aria-label="סגירת המבוא"
         >
           ×
         </button>
 
-
         <div className="intro-popup__content">
-
           <div className="intro-popup__bubble">
+            <img
+              src={speechBubble}
+              className="intro-popup__bubble-image"
+              alt=""
+              draggable="false"
+            />
 
-            <h3>
-              היי! אני דנה הקצינת משא״ן מילואים
-            </h3>
+            <div className="intro-popup__text">
+              <h3 id="intro-popup-title">{title}</h3>
 
-            <p>
-               אני אלווה אתכם במהלך הלומדה, ואהיה איתכם בכל דוח. נעבור על כל המידע שתצטרכו כדי להיות גם כמוני :)
-            </p>
-
+              <p>{text}</p>
+            </div>
           </div>
-
 
           <img
             src={character}
             className="intro-popup__character"
-            alt=""
+            alt="דנה, קצינת משא״ן מילואים"
             draggable="false"
           />
-
         </div>
-
       </div>
     </div>
   );
 }
-
 
 export default IntroPopup;

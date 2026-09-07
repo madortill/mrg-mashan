@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-
-import "./NewsToday.css"
+import IsraelHayomLogo from "../../../assets/images/israel_Hayom.svg";
 import HayomIcon from "../../../assets/images/apps/todayLogo.png";
-import IsraelHayomLogo from "../../../assets/images/apps/Israel_Hayom.svg";
-import guidingImg from "../../../assets/images/guidingImg.png";
-import guidingImgLeft from "../../../assets/images/leftNews.png" ;
-
+import guidingImg from "../../../assets/images/guidingImg.svg";
+import guidingImgLeft from "../../../assets/images/leftNews.svg";
+import gili from "../../../assets/images/gili.svg";
+import eye from "../../../assets/images/icon-eye.svg";
+import "./NewsToday.css";
 
 // ---------------------------------------------------------------------------
 // Article copy — exactly as provided.
@@ -42,6 +42,7 @@ const DAILY_CARDS = [
     description:
       "עם תחילת ההיערכות, יוצא המפקד לתדרוך צוותי הגיוס בדרג ראשון (מטה), ומעביר לבעלי התפקידים את דרכי התפקוד הנדרשים לשעת חירום.",
     schedule: "כל יום | 08:00",
+    image: guidingImg, // right-hand card
   },
   {
     id: "card-2",
@@ -49,6 +50,7 @@ const DAILY_CARDS = [
     description:
       "מדי יום, מתקיים תדרוך קצר של מפקד מרכז הגיוס עם צוותי המשמרת, בו מועברים העדכונים הנדרשים לשמירה על תפקוד תקין של המרכז.",
     schedule: "כל יום | 08:00",
+    image: guidingImgLeft, // left-hand card
   },
 ];
 
@@ -71,30 +73,6 @@ const saveRevealedState = (state) => {
   }
 };
 
-const EyeSlashIcon = () => (
-  <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true">
-    <path
-      d="M2 12s3.5-6 10-6c2 0 3.7.5 5.1 1.3M22 12s-3.5 6-10 6c-2 0-3.7-.5-5.1-1.3"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-    />
-    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="1.6" />
-    <line x1="3" y1="3" x2="21" y2="21" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-  </svg>
-);
-
-const PlaceholderPhoto = () => (
-  <svg viewBox="0 0 120 80" width="100%" height="100%" aria-hidden="true">
-    <rect width="120" height="80" fill="#dfe3e8" />
-    <circle cx="30" cy="30" r="10" fill="#b9c0c9" />
-    <circle cx="50" cy="34" r="10" fill="#b9c0c9" />
-    <circle cx="70" cy="30" r="10" fill="#b9c0c9" />
-    <rect x="14" y="46" width="92" height="24" rx="3" fill="#c7ccd3" />
-  </svg>
-);
-
 const RevealCard = ({ card, revealed, onReveal }) => (
   <div className="nt-card">
     <h3 className="nt-card__title">{card.title}</h3>
@@ -106,7 +84,7 @@ const RevealCard = ({ card, revealed, onReveal }) => (
       aria-pressed={revealed}
       aria-label={revealed ? card.title : `הצג את ${card.title}`}
     >
-      <PlaceholderPhoto />
+      <img src={card.image} alt={card.title} className="nt-card__photo" />
     </button>
 
     <p className={`nt-card__desc ${revealed ? "" : "nt-card__desc--blurred"}`}>
@@ -115,7 +93,7 @@ const RevealCard = ({ card, revealed, onReveal }) => (
 
     {!revealed && (
       <div className="nt-card__lock-overlay" aria-hidden="true">
-        <EyeSlashIcon />
+        <img src={eye} alt="" className="nt-card__lock-icon" />
         <span className="nt-card__lock-label">לחצו לצפייה</span>
       </div>
     )}
@@ -176,8 +154,8 @@ const NewsToday = ({
   const backToArticle = () => setStep(1);
 
   const finishApp = () => {
-    if (typeof onComplete === "function") onComplete();
-    else if (typeof onNext === "function") onNext();
+    if (typeof onNext === "function") onNext();
+    else if (typeof onComplete === "function") onComplete();
   };
 
   return (
@@ -215,15 +193,12 @@ const NewsToday = ({
               <img src={IsraelHayomLogo} alt="ישראל היום" className="nt-article__logo-img" />
             </div>
             <nav className="nt-article__menu" aria-hidden="true">
-              <span>ראשי</span>
-              <span>חדשות</span>
-              <span>דעות+</span>
-              <span>פודקאסטים</span>
-              <span>תרבות</span>
-              <span>בריאות</span>
-              <span>רכב</span>
-              <span>דיגיטל</span>
-              <span>אוכל</span>
+              <span className="nav-item">ראשי</span>
+              <span className="nav-item">מרכז</span>
+              <span className="nav-item">מילואים+</span>
+              <span className="nav-item">סדיר</span>
+              <span className="nav-item">תרבות</span>
+              <span className="nav-item">בריאות</span>
             </nav>
           </div>
 
@@ -238,6 +213,7 @@ const NewsToday = ({
                 >
                   ✕
                 </button>
+                <img src={gili} alt="" className="nt-ad-card__icon" />
                 <p className="nt-ad-card__text">היה מוכן! תרגול מוביל לשלמות</p>
               </aside>
             )}
@@ -251,8 +227,10 @@ const NewsToday = ({
             ))}
 
             <button type="button" className="nt-article__continue" onClick={openDailyCards}>
-              <span>להמשך קריאה</span>
-              <span className="nt-article__chevron" aria-hidden="true">⌄</span>
+              <button class="nt-article__continue">
+  <span>להמשך קריאה</span>
+  <span class="nt-article__chevron">&lt;&lt;</span>
+</button>
             </button>
           </div>
         </div>

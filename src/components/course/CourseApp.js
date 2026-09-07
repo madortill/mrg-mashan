@@ -67,8 +67,9 @@ export const courseApps = [
     label: "הגדרות",
     icon: settingIcon,
     position: {
-      top: "92%",
+      top: "90%",
       right: "1.5%",
     },
   },
+  
 ];

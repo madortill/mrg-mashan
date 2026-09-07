@@ -117,48 +117,6 @@
     width: 90%;
   }
 }
-.desktop-apps__rope {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 20%;
-  height: auto;
-
-  pointer-events: none;
-
-  animation:
-    ropeGlow
-    1.6s ease-in-out
-    infinite;
-}
-
-
-@keyframes ropeGlow {
-
-  0%,
-  100% {
-    filter:
-      drop-shadow(
-        0 0 0.15rem
-        rgba(105, 205, 255, 0.4)
-      );
-  }
-
-  50% {
-    filter:
-      drop-shadow(
-        0 0 0.45rem
-        rgba(105, 205, 255, 1)
-      )
-
-      drop-shadow(
-        0 0 0.75rem
-        rgba(156, 113, 255, 0.75)
-      );
-  }
-}
 
 /* course-player.css - להוסיף */
 

@@ -15,7 +15,10 @@
     display: flex;              
   flex-direction: column; 
 }
-
+.excel-window ::selection {
+  background-color: var(--excel-green-dark); /* או צבע אדום בפורמט Hex כמו #e8352f */
+  color: #000000; /* צבע הטקסט בזמן המסומן */
+}
 .excel-window__titlebar {
   background: var(--excel-green-dark);
   color: #fff;

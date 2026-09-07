@@ -12,6 +12,7 @@ import Excel from "../apps/excel/Excel.jsx";
 import Outlook from "../apps/outlock/Outlook";
 import Padlet from "../apps/padlet/Padlet.jsx";
 import Chatgpt from "../apps/chatGPT/Chatgpt.jsx";
+import NewsToday from "../apps/newsToday/NewsToday.jsx";
 import IntroPopUp from "../elements/introPopUp/IntroPopUp.jsx";
 import Laptop from "../elements/laptop/Laptop";
 import DesktopHub from "../pages/DesktopHub/DesktopHub";
@@ -39,6 +40,7 @@ const APP_ORDER = [
   "excel",
   "chatgpt",
   "setting",
+  "newsToday",
 ];
 
 const APP_CONTENT = {
@@ -80,11 +82,18 @@ const APP_CONTENT = {
   },
    setting: { 
     label: "setting",
-    navbarTitle: "שינוי איוש בחיילי מילואים",
+    navbarTitle: "מעקב ובקרה על נתונים",
     component: Setting,
     laptopVariant: "empty",
   },
+  newsToday: {
+  label: "NewsToday",
+  navbarTitle: 'תורנויות מר"ג',
+  component: NewsToday,
+  laptopVariant: "empty",
+},
 };
+
 
 /*  כך CoursePlayer ו-DesktopHub עובדים מול אותו מערך ולא מול שני מערכים סותרים.
 */
@@ -196,24 +205,23 @@ function openApp(appId) {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
   }, [progress]);
 
-  useEffect(() => {
-    if (!isIntroOpen) {
-      return undefined;
-    }
+ useEffect(() => {
+  if (!isIntroOpen) {
+    return undefined;
+  }
 
-    function closeOnEscape(event) {
-      if (event.key === "Escape") {
-        setIsIntroOpen(false);
-        setProgress((previous) => ({
-          ...previous,
-          introPopupSeen: true,
-        }));
-      }
+  function closeOnEscape(event) {
+    if (event.key === "Escape") {
+      setIsIntroOpen(false);
     }
+  }
 
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [isIntroOpen]);
+  window.addEventListener("keydown", closeOnEscape);
+
+  return () => {
+    window.removeEventListener("keydown", closeOnEscape);
+  };
+}, [isIntroOpen]);
 
   const highlightedAppId = useMemo(() => {
     if (!progress.introPopupSeen) {
@@ -223,19 +231,27 @@ function openApp(appId) {
     return COURSE_APPS[progress.highestUnlockedIndex]?.id ?? null;
   }, [progress.highestUnlockedIndex, progress.introPopupSeen]);
 
-  function openIntroPopup() {
-    if (!progress.introPopupSeen) {
-      setIsIntroOpen(true);
-    }
-  }
+function openIntroPopup() {
+  // תמיד מאפשר לפתוח את הפופ־אפ
+  setIsIntroOpen(true);
 
-  function closeIntroPopup() {
-    setIsIntroOpen(false);
-    setProgress((previous) => ({
+  // כבר בלחיצה הראשונה מפסיקים לצמיתות את הזוהר של החבל
+  setProgress((previous) => {
+    if (previous.introPopupSeen) {
+      return previous;
+    }
+
+    return {
       ...previous,
       introPopupSeen: true,
-    }));
-  }
+    };
+  });
+}
+
+function closeIntroPopup() {
+  // הסגירה לא משנה את מצב ההתקדמות
+  setIsIntroOpen(false);
+}
 
   function canOpenApp(appId) {
     if (!progress.introPopupSeen || isIntroOpen) {
@@ -379,7 +395,8 @@ function openApp(appId) {
 
           {isIntroOpen && (
             <IntroPopUp
-              onComplete={closeIntroPopup}
+              title={introPopupContent.title}
+              text={introPopupContent.text}
               onClose={closeIntroPopup}
             />
           )}
@@ -433,6 +450,27 @@ function openApp(appId) {
       </Laptop>
     );
   }
+  const introPopupContent = useMemo(() => {
+  if (progress.highestUnlockedIndex >= 3) {
+    return {
+      title: "חזרתם אליי!",
+      text: "כבר התקדמתם בלומדה. תוכלו לחזור לכל אפליקציה שכבר פתחתם ולהמשיך מהמקום שבו עצרתם.",
+    };
+  }
+
+  if (progress.highestUnlockedIndex >= 1) {
+    return {
+      title: "כל הכבוד, אתם מתקדמים!",
+      text: "כבר פתחתם את האפליקציה הראשונה. המשיכו לפי האפליקציה הזוהרת שעל המסך.",
+    };
+  }
+
+  return {
+    title: "היי! אני דנה קצינת המשא״ן מילואים.",
+    text: "אני אלווה אתכם במהלך הלומדה, ואהיה איתכם בכל דוח. נעבור יחד על כל המידע שתצטרכו כדי להיות גם כמוני :)",
+  };
+}, [progress.highestUnlockedIndex]);
+
 
   return (
     <div className="course-player">

@@ -23,7 +23,10 @@
 .nt-root--in {
   opacity: 1;
 }
-
+.nt-root ::selection {
+  background-color: var(--highlight-pink); /* או צבע אדום בפורמט Hex כמו #e8352f */
+  color: var(--text-dark); /* צבע הטקסט בזמן המסומן */
+}
 /* ================================================================
    Popup step
    ================================================================ */
@@ -178,8 +181,11 @@
   gap: clamp(6px, 1.4vw, 16px);
   overflow: hidden;
   color: #3a3a3a;
-  font-size: clamp(8px, 1vw, 12px);
+  font-size: clamp(10px, 1vw, 14px);
   white-space: nowrap;
+}
+.nav-item:hover{
+  color: #920000;
 }
 
 .nt-article__body {
@@ -187,21 +193,21 @@
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  padding: clamp(10px, 2vw, 26px) clamp(14px, 3vw, 40px);
+  padding: clamp(19px, 3vw, 29px) clamp(20px, 5vw, 60px);
 }
 
 .nt-article__title {
   margin: clamp(4px, 1vw, 10px) 0 clamp(10px, 1.6vw, 16px);
-  font-size: clamp(13px, 1.9vw, 22px);
-  font-weight: 800;
+  font-size: clamp(18px, 2.4vw, 26px);
+  font-family: "ploni-bold";
   line-height: 1.5;
-  text-align: center;
+  text-align: start;
   color: #111;
 }
 
 .nt-article__paragraph {
-  margin: 0 0 clamp(8px, 1.2vw, 14px);
-  font-size: clamp(10px, 1.15vw, 14px);
+  margin: 0 0 clamp(12px, 1.2vw, 14px);
+  font-size: clamp(16px, 1.35vw, 20px);
   line-height: 1.7;
   text-align: right;
   color: #222;
@@ -223,27 +229,34 @@
   border: none;
   background: none;
   color: #3a3a3a;
-  font-size: clamp(10px, 1.15vw, 13px);
+  font-size: clamp(16px, 1.35vw, 19px);
   font-weight: 600;
   cursor: pointer;
 }
 
+/* החיצים שהופכים ביחד למטה */
 .nt-article__chevron {
-  font-size: clamp(14px, 1.8vw, 20px);
+  display: inline-block;
+  font-size: clamp(16px, 2vw, 22px);
   line-height: 1;
+  font-weight: bold;
+  transform: rotate(90deg); /* היפוך החצים כלפי מטה */
   animation: nt-chevron-bounce 1.6s ease-in-out infinite;
 }
 
 @keyframes nt-chevron-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(4px); }
+  0%, 100% { 
+    transform: rotate(90deg) translateX(0); 
+  }
+  50% { 
+    transform: rotate(90deg) translateX(5px); 
+  }
 }
-
 .nt-ad-card {
   float: left;
   width: clamp(70px, 14%, 110px);
   margin: 0 clamp(8px, 1.5vw, 16px) 8px 0;
-  padding: clamp(6px, 1vw, 10px);
+  padding: clamp(0px, 1vw, 10px);
   background: #fbe9ea;
   border-radius: 4px;
   position: relative;
@@ -260,6 +273,13 @@
   font-size: 9px;
   cursor: pointer;
   padding: 0;
+}
+
+.nt-ad-card__icon {
+  display: block;
+  width: 70%;
+  height: auto;
+  margin: 0 auto 4px;
 }
 
 .nt-ad-card__text {
@@ -300,7 +320,7 @@
 
 .nt-daily__title {
   font-weight: 800;
-  font-size: clamp(13px, 2vw, 20px);
+  font-size: clamp(18px, 4vw, 26px);
   color: #111;
 }
 
@@ -335,7 +355,7 @@
 
 .nt-card__title {
   margin: 0;
-  font-size: clamp(11px, 1.5vw, 15px);
+  font-size: clamp(18px, 3vw, 25px);
   font-weight: 700;
 }
 
@@ -350,6 +370,13 @@
   background: none;
 }
 
+.nt-card__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .nt-card__media--blurred {
   cursor: pointer;
   filter: blur(4px);
@@ -357,7 +384,7 @@
 
 .nt-card__desc {
   margin: 0;
-  font-size: clamp(9px, 1.05vw, 12px);
+  font-size: clamp(16px, 1.35vw, 20px);
   line-height: 1.5;
   color: #444;
 }
@@ -380,6 +407,11 @@
   gap: 4px;
   color: #6a6a6a;
   pointer-events: none;
+}
+
+.nt-card__lock-icon {
+  width: clamp(24px, 3.4vw, 34px);
+  height: auto;
 }
 
 .nt-card__lock-label {

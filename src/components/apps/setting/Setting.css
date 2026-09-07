@@ -3,6 +3,7 @@
   --row-bg-open: #e2eef4;
   --accent-blue: #5fa8c9;
   --accent-blue-dark: #3d87ab;
+  --icon-idle: #d9a15c; /* muted/warm "not opened yet" color, distinct from the accent blue used once open */
   --text-dark: #26221c;
   --text-muted: #6b6b6b;
   --border-light: #e4e0d8;
@@ -11,29 +12,33 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: clamp(10px, 2vw, 24px);
+  padding: clamp(14px, 2.4vw, 28px);
   direction: rtl;
-  font-family: "Assistant", "Segoe UI", Arial, sans-serif;
   color: var(--text-dark);
+  box-sizing: border-box;
 }
 
-/* ---------------- כרטיס ---------------- */
+/* ---------------- כרטיס ----------------
+   flex:1 so the card fills the available height instead of being
+   vertically centered with empty space above/below it. */
 
 .setting-card {
-  width: 100%;
-  max-width: 640px;
-  margin: 0 auto;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: clamp(10px, 1.6vw, 16px);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
   background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
-  padding: clamp(14px, 2.4vw, 22px);
+  border-radius: 12px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.1);
+  padding: clamp(14px, 2.4vw, 24px);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .setting-card__header {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,18 +58,25 @@
 }
 
 .setting-card__subtitle {
+  flex: 0 0 auto;
   margin: 0;
   font-size: clamp(11px, 1.25vw, 13px);
   color: var(--text-muted);
   text-align: center;
 }
 
-/* ---------------- שורות ---------------- */
+/* ---------------- שורות ----------------
+   flex:1 + centered content: rows sit nicely centered in the remaining
+   vertical space, matching the reference instead of hugging the top. */
 
 .setting-card__rows {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: clamp(8px, 1.4vw, 12px);
+  justify-content: center;
+  gap: clamp(8px, 1.6vw, 14px);
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .setting-row {
@@ -76,81 +88,113 @@
 }
 
 .setting-row--open {
-  cursor: default;
   background: var(--row-bg-open);
 }
 
 .setting-row__bar {
-  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: clamp(10px, 1.6vw, 14px) clamp(14px, 2.2vw, 20px);
-  overflow: hidden;
+  justify-content: center;
+  gap: clamp(6px, 1vw, 10px);
+  padding: clamp(10px, 1.6vw, 14px) clamp(12px, 2vw, 18px);
+  min-height: clamp(38px, 5vw, 46px);
 }
 
-.setting-row__title {
-  font-size: clamp(12px, 1.4vw, 14px);
-  font-weight: 600;
-  z-index: 1;
-}
+/* ---------------- Bars ---------------- */
 
-.setting-row__chevron {
+.setting-row__bars {
   display: flex;
-  color: var(--accent-blue-dark);
-  z-index: 1;
-  transform: scaleX(-1); /* חץ פונה שמאלה ב-RTL */
-  transition: transform 0.25s ease;
+  align-items: center;
+  gap: 4px;
+  max-width: 26px; /* just enough to show the single idle bar */
+  overflow: hidden;
+  transition: max-width 0.4s ease;
 }
 
-.setting-row--open .setting-row__chevron {
-  transform: scaleX(-1) rotate(90deg);
+.setting-row__bars--right {
+  max-width: 0; /* fully hidden until open — nothing sits here at rest */
+  transition-delay: 0ms;
 }
 
-/* אנימציית "טעינה" - פס שממלא את הרקע משמאל לימין */
-.setting-row__loading-fill {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    var(--accent-blue) 0%,
-    var(--accent-blue) 50%,
-    transparent 50%
-  );
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  animation: loadingSweep 0.9s ease forwards;
-  opacity: 0.35;
+.setting-row--open .setting-row__bars--right {
+  max-width: 150px;
+  transition-delay: 0ms;
 }
 
-@keyframes loadingSweep {
-  from { background-position: 100% 0; }
-  to { background-position: 0% 0; }
+.setting-row__bars--left {
+  transition-delay: 500ms; /* grows in last, after the text has revealed */
 }
 
-.setting-row--loading .setting-row__title,
-.setting-row--loading .setting-row__chevron {
-  opacity: 0.6;
+.setting-row--open .setting-row__bars--left {
+  max-width: 150px;
+  transition-delay: 500ms;
 }
 
-/* טקסט חשוף אחרי פתיחה */
-.setting-row__text {
-  margin: 0;
-  padding: 0 clamp(14px, 2.2vw, 20px) clamp(10px, 1.6vw, 14px);
-  font-size: clamp(11px, 1.3vw, 13px);
-  line-height: 1.7;
-  color: var(--text-dark);
-  animation: textReveal 0.3s ease;
+.setting-row__bar-item {
+  flex: 0 0 auto;
+  width: 7px;
+  height: 20px;
+  border-radius: 2px;
+  background: var(--icon-idle);
+  transform: skewX(-18deg) scaleY(0.4);
+  opacity: 0.4;
+  transition: background 0.3s ease, transform 0.35s ease, opacity 0.35s ease;
+  transition-delay: calc(var(--i) * 70ms);
 }
 
-@keyframes textReveal {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+.setting-row--open .setting-row__bar-item {
+  background: var(--accent-blue);
+  transform: skewX(-18deg) scaleY(1);
+  opacity: 1;
+}
+
+/* The first bar in the left group is always at least partly visible —
+   it's the "idle" indicator shown before the row has ever been opened. */
+.setting-row__bars--left .setting-row__bar-item:first-child {
+  opacity: 0.9;
+  transform: skewX(-18deg) scaleY(0.7);
+}
+
+.setting-row--open .setting-row__bars--left .setting-row__bar-item:first-child {
+  transform: skewX(-18deg) scaleY(1);
+}
+
+/* ---------------- טקסט ---------------- */
+
+.setting-row__label {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: clamp(11px, 1.3vw, 13.5px);
+  line-height: 1.6;
+  animation: setting-label-in 0.3s ease;
+  animation-delay: 300ms;
+  animation-fill-mode: backwards;
+}
+
+.setting-row--open .setting-row__label {
+  font-weight: 400;
+}
+
+.setting-row:not(.setting-row--open) .setting-row__label {
+  font-weight: 600;
+}
+
+@keyframes setting-label-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ---------------- כפתור אישור ---------------- */
 
 .setting-confirm-pill {
+  flex: 0 0 auto;
   align-self: center;
   margin-top: 4px;
   padding: 8px 32px;
@@ -176,5 +220,19 @@
 }
 
 @media (max-width: 480px) {
-  .setting-card { gap: 8px; }
+  .setting-card {
+    gap: 8px;
+  }
+  .setting-row__bars {
+    display: none; /* keeps narrow rows readable — remove to always show bars */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .setting-row__bars,
+  .setting-row__bar-item,
+  .setting-row__label {
+    transition: none !important;
+    animation: none !important;
+  }
 }

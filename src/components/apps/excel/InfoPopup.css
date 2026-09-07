@@ -16,6 +16,10 @@
   justify-content: center;
   z-index: 25;
 }
+.excel-window ::selection {
+   background: #d8ecdf;
+  color: #1b5e3a;
+}
 
 .popup-card {
   position: relative;
