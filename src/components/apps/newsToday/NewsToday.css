@@ -395,29 +395,27 @@
 }
 
 .nt-card__lock-overlay {
-  position: absolute;
-  top: clamp(8px, 1.6vw, 14px);
-  left: clamp(8px, 1.6vw, 14px);
-  right: clamp(8px, 1.6vw, 14px);
-  height: calc(clamp(70px, 20vw, 120px) + 8px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  color: #6a6a6a;
-  pointer-events: none;
+    position: absolute;
+    top: clamp(49px, 8.6vw, 124px);
+    left: clamp(8px, 1.6vw, 14px);
+    right: clamp(8px, 1.6vw, 14px);
+    height: calc(clamp(70px, 27vw, 168px) + 12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #6a6a6a;
+    pointer-events: none;
 }
-
 .nt-card__lock-icon {
-  width: clamp(24px, 3.4vw, 34px);
-  height: auto;
+    width: clamp(43px, 16.4vw, 168px);
+    height: auto;
 }
-
 .nt-card__lock-label {
-  font-size: clamp(8px, 1vw, 10.5px);
-  font-weight: 600;
-}
+    font-size: clamp(14px, 6vw, 18.5px);
+    font-weight: 600;
+     }
 
 .nt-card__schedule {
   font-size: clamp(12px, 1.4vw, 14.5px);
