@@ -1,15 +1,17 @@
 .chatgpt-page {
-  --bubble-teal: #1fa6a1;
+  /* שינינו את הגוון הטורקיז/כחול שיתאים בדיוק לחץ ולאישור מהתמונה */
+  --bubble-teal: #3b9dbd; 
   --text-dark: #26221c;
-  --text-muted: #6b6b6b;
+  --text-muted: #8e8e93;
   --border-light: #e4e0d8;
+  --input-bg: #f4f4f4;
 
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(10px, 2vw, 24px);
+  padding: clamp(2px, 1vw, 14px);
   direction: rtl;
   color: var(--text-dark);
 }
@@ -17,6 +19,7 @@
 /* ---------------- הכרטיס הלבן ---------------- */
 
 .chatgpt-card {
+  position: relative; /* מאפשר לבלון האישור לצוף מעל ה-Footer */
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
@@ -36,7 +39,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: clamp(10px, 1.6vw, 16px) clamp(14px, 2.4vw, 22px);
+  padding: clamp(6px, 1.2vw, 10px) clamp(14px, 2.4vw, 22px);
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -79,25 +82,26 @@
 
 .chatgpt-message__text {
   margin: 0;
-  font-size: clamp(16px, 1.75vw, 20px);
+  font-size: clamp(18px, 1.80vw, 22px);
   line-height: 1.8;
   color: var(--text-dark);
   text-align: right;
+  max-width: 900px;
 }
 
-/* הודעת המשתמש - בועה טורקיז, מיושרת לשמאל (כמו בתמונה השלישית) */
+/* הודעת המשתמש - בועה טורקיז, מיושרת לשמאל (כמו בתמונה) */
 .chatgpt-message--user {
-  align-items: flex-end;
-  animation: bubbleIn 0.28s ease forwards;
+    align-items: flex-end;
+    animation: bubbleIn 0.28s ease forw
 }
 
 .chatgpt-bubble {
   background: var(--bubble-teal);
   color: #fff;
   font-weight: 700;
-  font-size: clamp(12px, 1.35vw, 15px);
-  padding: 8px 18px;
-  border-radius: 20px;
+  font-size: clamp(14px, 1.5vw, 17px);
+  padding: 10px 20px;
+  border-radius: 20px 20px 20px 4px; /* עיצוב בועת צ'אט שנשלחת משמאל */
 }
 
 @keyframes bubbleIn {
@@ -111,71 +115,142 @@
   }
 }
 
-/* ---------------- שורת תחתית (composer) ---------------- */
+/* ---------------- שורת תחתית (הקומפוזר החדש) ---------------- */
 
-.chatgpt-card__footer {
+.chatgpt-card__footer-container {
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: clamp(8px, 1.4vw, 14px) clamp(14px, 2.4vw, 22px);
+  padding: clamp(10px, 1.5vw, 16px) clamp(14px, 2.4vw, 22px);
   border-top: 1px solid var(--border-light);
+  background-color: #ffffff;
 }
 
-.chatgpt-icon-btn {
-  flex-shrink: 0;
-  width: clamp(24px, 2.6vw, 30px);
-  height: clamp(24px, 2.6vw, 30px);
-  border-radius: 50%;
-  border: 1px solid var(--border-light);
-  background: #fff;
+/* מעטפת ה-Input המעוגלת והאפורה מהתמונה */
+.chatgpt-input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: var(--input-bg);
+  border-radius: 28px;
+  padding: 8px 16px;
+  gap: 12px;
+}
+
+/* כפתור הפלוס (+) בצד ימין */
+.chatgpt-input-plus {
+  background: none;
+  border: none;
+  font-size: 22px;
   color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: default;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
 }
 
-/* כפתור "הוספה" ה"+" צף בקצה, לא באמצע */
-.chatgpt-card__footer .chatgpt-icon-btn:last-child {
-  margin-right: auto;
-}
-
-.chatgpt-confirm-pill {
+/* הדמיית שדה הזנת טקסט */
+.chatgpt-mock-input {
   flex: 1;
-  max-width: 220px;
-  padding: 8px 16px;
-  border: 1px solid var(--bubble-teal);
-  border-radius: 999px;
-  background: #fff;
-  color: var(--bubble-teal);
-  font-weight: 700;
-  font-size: clamp(12px, 1.4vw, 14px);
+  font-size: clamp(14px, 1.5vw, 17px);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chatgpt-placeholder {
+  color: #b8b8b8;
+}
+
+.chatgpt-input-text-filled {
+  color: var(--text-dark);
+}
+
+/* ⭐ כפתור החץ העגול - לא פעיל (אפור) */
+.chatgpt-submit-circle-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+  color: #ffffff;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: not-allowed;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  padding: 0;
+}
+
+/* ⭐ כפתור חץ פעיל - הופך לעיגול כחול/טורקיז מלא עם חץ לבן */
+.chatgpt-submit-circle-btn--active {
+  background-color: var(--bubble-teal);
+  color: #ffffff;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-  animation: pillIn 0.25s ease;
 }
 
-.chatgpt-confirm-pill:hover {
-  background: var(--bubble-teal);
-  color: #fff;
+.chatgpt-submit-circle-btn--active:hover {
+  filter: brightness(0.9);
 }
 
-@keyframes pillIn {
+/* ---------------- בלון אישור צף מעל הפוטר ---------------- */
+
+.chatgpt-confirm-floating-pill {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bubble-teal);
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: clamp(13px, 1.4vw, 15px);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  animation: floatIn 0.25s ease-out forwards;
+}
+
+.chatgpt-confirm-floating-pill:hover {
+  filter: brightness(0.95);
+}
+
+@keyframes floatIn {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translate(-50%, 10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
 }
 
 @media (max-width: 480px) {
   .chatgpt-card {
     height: 88%;
+  }
+}
+/* ⭐ הוספה ל-Chatgpt.css: אנימציית הבהוב לחץ בכניסות חוזרות */
+.chatgpt-submit-circle-btn--blink {
+  animation: pulseBlink 1.4s infinite ease-in-out;
+  box-shadow: 0 0 0 0 rgba(59, 157, 189, 0.7);
+}
+
+@keyframes pulseBlink {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 157, 189, 0.7);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px 6px rgba(59, 157, 189, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 157, 189, 0);
   }
 }

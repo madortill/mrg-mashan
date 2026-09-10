@@ -17,7 +17,10 @@
   color: var(--text-dark);
   overflow: hidden;
 }
-
+.outlook-page ::selection {
+  background-color: #fdfb92; /* או צבע אדום בפורמט Hex כמו #e8352f */
+  color: var(--text-dark); /* צבע הטקסט בזמן המסומן */
+}
 /* ---------------- Header ---------------- */
 
 .outlook-header {

@@ -1,9 +1,7 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import "./Chatgpt.css";
 import chatIcon from "../../../assets/images/apps/chatgpt.png";
 
-// כל בלוק הוא הודעת עוזר אחת. heading הוא כותרת מודגשת (אופציונלי),
-// paragraphs הם שורות הטקסט מתחתיו.
 const messageBlocks = [
   {
     heading: null,
@@ -37,15 +35,30 @@ const messageBlocks = [
 ];
 
 const CONFIRM_LABEL = "הבנתי צ'אט";
-const SCROLL_END_THRESHOLD = 24; // פיקסלים - כמה "קרוב לסוף" נחשב מספיק
+const SCROLL_END_THRESHOLD = 24;
 
-const Chatgpt = ({ onComplete }) => {
-  const [reachedEnd, setReachedEnd] = useState(false);
-  const [sent, setSent] = useState(false);
+const Chatgpt = ({ page, onPageChange, onComplete }) => {
+  // ⭐ sent נגזר מהאב: אם page שווה ל-1 זה אומר שההודעה כבר נשלחה בעבר
+  const sent = page === 1;
+  
+  // נשמור משתנה מקומי ב-ref כדי לדעת אם העמוד נטען כשההודעה *כבר* הייתה שלוחה
+  // אם הוא נכנס כשההודעה כבר שלוחה, value בטעינה יהיה true ונדע שזו כניסה חוזרת
+  const isReturnVisit = useRef(sent);
+
+  const [reachedEnd, setReachedEnd] = useState(sent);
   const bodyRef = useRef(null);
 
+  useEffect(() => {
+    if (sent && bodyRef.current) {
+      bodyRef.current.scrollTo({
+        top: bodyRef.current.scrollHeight,
+        behavior: isReturnVisit.current ? "auto" : "smooth", 
+      });
+    }
+  }, [sent]);
+
   const handleScroll = useCallback(() => {
-    if (reachedEnd) return; // אין צורך לבדוק שוב אחרי שהגענו לסוף פעם אחת
+    if (reachedEnd) return;
     const el = bodyRef.current;
     if (!el) return;
 
@@ -59,13 +72,25 @@ const Chatgpt = ({ onComplete }) => {
 
   const handleSend = () => {
     if (sent) return;
-    setSent(true);
+    
+    onPageChange?.(1); // מעדכן את האב שההודעה נשלחה
+
+    // ⭐ אם זו הפעם הראשונה (הוא לא הגיע לפה כשההודעה כבר שלוחה), נצא אוטומטית אחרי שנייה וחצי
+    if (!isReturnVisit.current) {
+      setTimeout(() => {
+        onComplete?.();
+      }, 1500);
+    }
   };
 
-  const handleAnimationEnd = () => {
-    // ⭐ מתקדמים רק אחרי שאנימציית שליחת ההודעה הסתיימה בפועל
-    onComplete?.();
+  const handleNextStep = () => {
+    if (sent) {
+      onComplete?.();
+    }
   };
+
+  // תנאי לקביעה האם החץ צריך להבהב: רק אם ההודעה שלוחה וזו כניסה חוזרת לעמוד
+  const shouldBlink = sent && isReturnVisit.current;
 
   return (
     <div className="chatgpt-page">
@@ -94,34 +119,56 @@ const Chatgpt = ({ onComplete }) => {
           ))}
 
           {sent && (
-            <div
-              className="chatgpt-message chatgpt-message--user"
-              onAnimationEnd={handleAnimationEnd}
-            >
+            <div className="chatgpt-message chatgpt-message--user">
               <span className="chatgpt-bubble">{CONFIRM_LABEL}</span>
             </div>
           )}
+
+          <div style={{ height: "50px", flexShrink: 0 }} />
         </div>
 
-        <div className="chatgpt-card__footer">
-          <button type="button" className="chatgpt-icon-btn" aria-label="עזרה">
-            ?
-          </button>
-
-          {reachedEnd && !sent && (
-            <button
-              type="button"
-              className="chatgpt-confirm-pill"
-              onClick={handleSend}
-            >
-              {CONFIRM_LABEL}
+        <div className="chatgpt-card__footer-container">
+          <div className="chatgpt-input-wrapper">
+            <button type="button" className="chatgpt-input-plus" aria-label="הוספה">
+              +
             </button>
-          )}
+            
+            <div className="chatgpt-mock-input">
+              {!sent && !reachedEnd && (
+                <span className="chatgpt-placeholder">גלול מטה כדי לאשר את תוכן הצ'אט...</span>
+              )}
+              {!sent && reachedEnd && (
+                <span className="chatgpt-placeholder">לחץ על הבלון הצף למטה כדי לאשר</span>
+              )}
+              {sent && (
+                <span className="chatgpt-input-text-filled">
+                  תסביר לי על שינוי איוש בנ"ל בחיילי מילואים בצורה פשוטה
+                </span>
+              )}
+            </div>
 
-          <button type="button" className="chatgpt-icon-btn" aria-label="הוספה">
-            +
-          </button>
+            {/* ⭐ החץ יקבל מחלקה מיוחדת להבהוב במידה וזו כניסה חוזרת */}
+            <button 
+              type="button" 
+              className={`chatgpt-submit-circle-btn ${sent ? 'chatgpt-submit-circle-btn--active' : ''} ${shouldBlink ? 'chatgpt-submit-circle-btn--blink' : ''}`} 
+              onClick={handleNextStep}
+              disabled={!sent}
+              aria-label="המשך לשלב הבא"
+            >
+              ↑
+            </button>
+          </div>
         </div>
+
+        {reachedEnd && !sent && (
+          <button
+            type="button"
+            className="chatgpt-confirm-floating-pill"
+            onClick={handleSend}
+          >
+            {CONFIRM_LABEL}
+          </button>
+        )}
       </div>
     </div>
   );

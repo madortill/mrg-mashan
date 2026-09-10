@@ -70,7 +70,7 @@
 /* כפתור ריבועי ירוק, צמוד/בולט לקצה השמאלי של הכרטיס */
 .popup-card__side-btn {
   position: absolute;
-  bottom: -10%;
+  bottom: -15%;
   left: 0;
   transform: translate(-45%, -50%);
   width: clamp(34px, 5.5vw, 54px);
@@ -88,13 +88,11 @@
 .popup-card__side-btn:hover { transform: translate(-45%, -50%) scale(1.05); }
 
 .popup-card__side-btn img {
-  width: 50%;
-  height: 50%;
-  filter: brightness(0) invert(1); /* אייקון לבן על רקע ירוק */
+  width: 70%;
+  height: 70%;
 }
 
 /* אם קובץ ה-SVG של החץ פונה ימינה כברירת מחדל, הופכים כיוון עבור RTL */
-.popup-card__side-btn--arrow img { transform: scaleX(-1); }
 
 
 

@@ -6,10 +6,10 @@ import React, {
 import "./Laptop.css";
 
 import homeLaptop
-  from "../../../assets/images/computerHome.svg";
+  from "../../../assets/images/home-wide.svg";
 
 import emptyLaptop
-  from "../../../assets/images/emptyLaptop.svg";
+  from "../../../assets/images/home-desktop-clean-wide.svg";
 
 
 const DESIGN_WIDTH = 1440;

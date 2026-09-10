@@ -24,10 +24,10 @@ position:fixed;
 .laptop__stage {
   position: absolute;
 position: fix;
-  left: 54%;
-  bottom: -13%;
+  left: 48%;
+  bottom: -8%;
 
-  width: 1440px;
+  width: 1650px;
   height: 1024px;
 
   overflow: hidden;
@@ -46,7 +46,7 @@ position: fix;
 
   display: block;
 
-  width: 1480px;
+  width: 1650px;
   height: 1024px;
 
   object-fit: fill;
@@ -63,10 +63,10 @@ position: fix;
 
 .laptop__screen {
     position: absolute;
-        top: 4%;
-    left: 12.3%;
-    width: 72.6%;
-    height: 65.8%;
+        top: 9%;
+    left: 15%;
+    width: 79.6%;
+    height: 71.8%;
     overflow: hidden;
     container-type: inline-size;
     z-index: 2;

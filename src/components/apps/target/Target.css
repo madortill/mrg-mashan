@@ -23,7 +23,7 @@
   --target-transition: 480ms cubic-bezier(0.22, 0.61, 0.36, 1);
 
   position: relative;
-  width: min(100%, 720px);
+  width: min(100%, 1000px);
   
   /* 1. שינוי גובה מלא לגובה לפי תוכן, כדי שלא יימתח סתם */
   height: max-content; 
@@ -40,6 +40,8 @@
   color: var(--target-text);
   
   gap: clamp(6px, 5vh, 50px); 
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.60) 100%), linear-gradient(180deg, #E4F4FF 0%, #B7D8FF 100%);
+
 }
 
 /* ---------- כותרות ---------- */
@@ -162,6 +164,7 @@
 
 .target__box {
   grid-area: var(--area);
+  max-width: 280px;
 
   min-height: clamp(64px, 7.5vw, 82px);
   padding: 10px 14px;

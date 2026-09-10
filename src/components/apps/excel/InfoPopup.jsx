@@ -1,6 +1,6 @@
 import "./InfoPopup.css";
-import checkIcon from "../../../assets/images/check-icon.svg";
-import arrowIcon from "../../../assets/images/next-icon.svg";
+import checkIcon from "../../../assets/images/vi.svg";
+import arrowIcon from "../../../assets/images/arrowExcel.svg";
 import gili from "../../../assets/images/gili.svg";
 
 const InfoPopup = ({ title, text, highlightText, buttonType = "check", onButtonClick }) => (
