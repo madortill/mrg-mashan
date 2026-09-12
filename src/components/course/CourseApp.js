@@ -23,7 +23,7 @@ export const courseApps = [
     icon: chromeIcon,
     position: {
       top: "6%",
-      right: "1.5%",
+      right: "3.5%",
     },
   },
   {
@@ -31,7 +31,7 @@ export const courseApps = [
     label: "Padlet",
     icon: padletIcon,
     position: {
-      top: "29%",
+      top: "24%",
       right: "12.5%",
     },
   },
@@ -40,8 +40,8 @@ export const courseApps = [
     label: "Outlook",
     icon: outlookIcon,
     position: {
-      top: "29%",
-      right: "1.5%",
+      top: "24%",
+      right: "3.5%",
     },
   },
   {
@@ -49,7 +49,7 @@ export const courseApps = [
     label: "Excel",
     icon: excelIcon,
     position: {
-      top: "52%",
+      top: "40%",
       right: "12.5%",
     },
   },
@@ -58,8 +58,8 @@ export const courseApps = [
     label: "צאט",
     icon: chatgpt,
     position: {
-      top: "52%",
-      right: "1.5%",
+      top: "40%",
+      right: "3.5%",
     },
   },
   {
@@ -68,7 +68,7 @@ export const courseApps = [
     icon: settingIcon,
     position: {
       top: "90%",
-      right: "1.5%",
+      right: "3.5%",
     },
   },
   

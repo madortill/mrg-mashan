@@ -3,6 +3,7 @@ import "./css/App.css";
 import { Route, Routes } from "react-router-dom";
 import StartPage from "./components/start/StartPage"
 import CoursePlayer from "./components/course/CoursePlayer"
+import EndPage from "./components/end/End"
 import logos from "./assets/images/logo.png";
 import { useEffect, useState } from "react";
 import { preloadAssets } from "./preloadAssets";
@@ -35,6 +36,7 @@ function App() {
         <Routes>
                     <Route path="/" element={<StartPage />} />
                     <Route path="/learning" element={<CoursePlayer />} />
+                    <Route path="/end" element={<EndPage />} />
         </Routes>
       </div>
     </>

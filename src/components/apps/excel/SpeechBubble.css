@@ -1,12 +1,13 @@
 .character-bubble {
   position: absolute;
   bottom: 4%;
-  right: 10%; /* יוצאת מגבולות ה-excel-window, לא מוסתרת כי היא לא בתוכו */
+  right: 2%; /* יוצאת מגבולות ה-excel-window, לא מוסתרת כי היא לא בתוכו */
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 8px;
-  z-index: 5; /* נמוך מ-popup-overlay (25) כי לא אמורה להיות מעל הפופאפ */
+  z-index: 3; /* נמוך מ-popup-overlay (25) כי לא אמורה להיות מעל הפופאפ */
+  pointer-events: none; /* לא ניתן ללחוץ על הבועה */
 }
 
 .character-bubble__gili {
@@ -28,6 +29,7 @@
   color: #333;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   direction: rtl;
+  
 }
 
 .character-bubble__speech p { margin: 0; }

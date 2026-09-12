@@ -1,0 +1,331 @@
+/* Doualingo.css */
+
+.doualingo-app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: clamp(8px, 1.2vw, 14px);
+  overflow: hidden;
+  font-family: inherit;
+}
+
+/* ---------- כותרת ירוקה ---------- */
+
+.doualingo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #58cc02;
+  padding: clamp(10px, 1.6vw, 16px) clamp(14px, 2.2vw, 22px);
+  flex-shrink: 0;
+}
+
+.doualingo-header__title {
+  color: #ffffff;
+  font-weight: 800;
+  font-size: clamp(16px, 2.2vw, 22px);
+  letter-spacing: 0.2px;
+}
+
+.doualingo-header__avatar {
+  width: clamp(34px, 4.5vw, 48px);
+  height: clamp(34px, 4.5vw, 48px);
+  border-radius: 50%;
+  background: #ffffff;
+  object-fit: contain;
+  padding: 3px;
+}
+
+/* ---------- שורת ההתקדמות ---------- */
+
+.doualingo-progress-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.4vw, 14px);
+  padding: clamp(12px, 1.8vw, 18px) clamp(14px, 2.2vw, 22px) 0;
+  flex-shrink: 0;
+}
+
+.doualingo-progress-row__label {
+  font-size: clamp(12px, 1.4vw, 15px);
+  font-weight: 700;
+  color: #1a2733;
+  flex-shrink: 0;
+}
+
+.doualingo-progress-bar {
+  flex: 1;
+  height: clamp(8px, 1vw, 12px);
+  background: #e5e5e5;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.doualingo-progress-bar__fill {
+  height: 100%;
+  background: #58cc02;
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+/* ---------- גוף המסך ---------- */
+
+.doualingo-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.6vw, 16px);
+  padding: clamp(16px, 2.4vw, 26px);
+  overflow-y: auto;
+}
+
+.doualingo-question {
+  margin: 0;
+  text-align: right;
+  font-weight: 700;
+  font-size: clamp(14px, 1.8vw, 18px);
+  color: #1a2733;
+}
+
+.doualingo-answer-box {
+  width: 100%;
+  min-height: clamp(70px, 11vw, 110px);
+  resize: none;
+  border: 1.5px solid #d6d6d6;
+  border-radius: clamp(10px, 1.4vw, 14px);
+  padding: clamp(10px, 1.4vw, 16px);
+  font-size: clamp(12px, 1.4vw, 14px);
+  font-family: inherit;
+  color: #1a2733;
+  text-align: right;
+  background: #ffffff;
+}
+
+.doualingo-answer-box:disabled {
+  background: #f7f7f7;
+  color: #9a9a9a;
+  border-color: #e5e5e5;
+}
+
+.doualingo-answer-box::placeholder {
+  color: #b7b7b7;
+  font-style: italic;
+}
+
+.doualingo-check-btn {
+  align-self: flex-start;
+  padding: clamp(7px, 1.1vw, 10px) clamp(20px, 3vw, 28px);
+  border: none;
+  border-radius: 999px;
+  background: #58cc02;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: clamp(12px, 1.4vw, 14px);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+}
+
+.doualingo-check-btn:hover:not(:disabled) {
+  background: #4bb302;
+  transform: translateY(-1px);
+}
+
+.doualingo-check-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ---------- תשובה נכונה ---------- */
+
+.doualingo-correct-answer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: doualingo-fade-in 0.25s ease-out;
+}
+
+.doualingo-correct-answer__title {
+  margin: 0;
+  text-align: right;
+  font-weight: 700;
+  font-size: clamp(13px, 1.5vw, 16px);
+  color: #1a2733;
+}
+
+.doualingo-correct-answer__box {
+  border: 1.5px solid #58cc02;
+  background: #eef9e6;
+  border-radius: clamp(10px, 1.4vw, 14px);
+  padding: clamp(10px, 1.4vw, 16px);
+}
+
+.doualingo-correct-answer__box p {
+  margin: 0;
+  text-align: right;
+  font-size: clamp(11px, 1.3vw, 14px);
+  line-height: 1.6;
+  color: #1a2733;
+}
+
+@keyframes doualingo-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- כפתורי ניווט תחתונים ---------- */
+
+.doualingo-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(12px, 1.8vw, 18px) clamp(14px, 2.2vw, 22px);
+  flex-shrink: 0;
+}
+
+/* בהתאם לתמונה: "הבא" בצד שמאל, "קודם" בצד ימין */
+.doualingo-footer {
+  flex-direction: row-reverse;
+}
+
+.doualingo-nav-btn {
+  padding: clamp(8px, 1.2vw, 11px) clamp(18px, 2.6vw, 26px);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: clamp(12px, 1.4vw, 14px);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+  border: none;
+}
+
+.doualingo-nav-btn--next {
+  background: #58cc02;
+  color: #ffffff;
+}
+
+.doualingo-nav-btn--next:hover:not(:disabled) {
+  background: #4bb302;
+  transform: translateY(-1px);
+}
+
+.doualingo-nav-btn--next:disabled {
+  background: #cfe9b8;
+  cursor: default;
+}
+
+.doualingo-nav-btn--prev {
+  background: #ececec;
+  color: #9a9a9a;
+}
+
+.doualingo-nav-btn--prev:hover:not(:disabled) {
+  background: #e0e0e0;
+}
+
+.doualingo-nav-btn--prev:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ---------- פופ-אפ סיום ---------- */
+
+.doualingo-popup-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.doualingo-popup-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.doualingo-popup {
+  position: relative;
+  z-index: 1;
+  width: min(80%, 320px);
+  background: #ffffff;
+  border-radius: clamp(14px, 2vw, 20px);
+  padding: clamp(20px, 3vw, 30px);
+  text-align: center;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+  animation: doualingo-pop-in 0.25s ease-out;
+}
+
+@keyframes doualingo-pop-in {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.doualingo-popup__title {
+  margin: 0 0 6px;
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 800;
+  color: #58cc02;
+}
+
+.doualingo-popup__text {
+  margin: 0 0 18px;
+  font-size: clamp(13px, 1.6vw, 15px);
+  color: #1a2733;
+}
+
+.doualingo-popup__btn {
+  padding: clamp(8px, 1.3vw, 11px) clamp(28px, 4vw, 38px);
+  border: none;
+  border-radius: 999px;
+  background: #58cc02;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: clamp(12px, 1.4vw, 14px);
+  cursor: pointer;
+}
+
+.doualingo-popup__btn:hover {
+  background: #4bb302;
+}
+
+/* ---------- רספונסיביות ---------- */
+
+@media (max-width: 480px) {
+  .doualingo-footer {
+    padding: 12px 14px;
+  }
+
+  .doualingo-nav-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .doualingo-body {
+    padding: 14px;
+  }
+}
+
+@media (max-height: 480px) {
+  .doualingo-answer-box {
+    min-height: 56px;
+  }
+
+  .doualingo-body {
+    gap: 8px;
+  }
+}

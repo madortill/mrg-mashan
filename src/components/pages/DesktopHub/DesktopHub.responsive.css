@@ -68,10 +68,10 @@
 }
 
 @media (max-height: 760px) {
-  .desktop-hub__rope-button {
-    top: 12%;
-    width: clamp(36px, 7.5cqw, 82px);
-  }
+    .desktop-hub__rope-button {
+        top: -1%;
+        width: clamp(58px, 12.5cqw, 140px);
+    }
 
   .desktop-app-hotspot {
     width: var(--desktop-app-size, clamp(38px, 6.9cqw, 76px));

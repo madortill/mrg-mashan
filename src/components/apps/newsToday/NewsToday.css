@@ -49,7 +49,7 @@
 .nt-modal {
   position: relative;
   z-index: 1;
-  width: min(86%, 460px);
+  width: min(96%, 560px);
   display: flex;
   align-items: stretch;
   background: #ffffff;

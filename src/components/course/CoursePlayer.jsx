@@ -14,6 +14,8 @@ import Padlet from "../apps/padlet/Padlet.jsx";
 import Chatgpt from "../apps/chatGPT/Chatgpt.jsx";
 import NewsToday from "../apps/newsToday/NewsToday.jsx";
 import Calling from "../apps/calling/Calling.jsx";
+import SmsGal from "../apps/smsGal/SmsGal.jsx";
+import Doualingo from "../apps/doualingo/Doualingo.jsx";
 import IntroPopUp from "../elements/introPopUp/IntroPopUp.jsx";
 import Laptop from "../elements/laptop/Laptop";
 import DesktopHub from "../pages/DesktopHub/DesktopHub";
@@ -43,6 +45,8 @@ const APP_ORDER = [
   "setting",
   "newsToday",
   "calling",
+  "smsGal",
+  "doualingo",
 ];
 
 const APP_CONTENT = {
@@ -100,6 +104,18 @@ const APP_CONTENT = {
   component: Calling,
   laptopVariant: "empty",
 },
+  smsGal: {
+  label: "SmsGal",
+  navbarTitle: 'תורנויות מר"ג',
+  component: SmsGal,
+  laptopVariant: "empty",
+},
+  doualingo: {
+  label: "Doualingo",
+  navbarTitle: 'שאלות לסיכום',
+  component: Doualingo,
+  laptopVariant: "empty",
+}
 };
 
 
@@ -336,7 +352,23 @@ function closeIntroPopup() {
       };
     });
   }
+// ⭐ חדש - קפיצה ישירה לאפליקציה אחרת + עמוד ספציפי בתוכה,
+// בלי לעבור דרך שרשרת ה-"הבא" הרגילה. משמש למשל לקישור
+// בהודעת SMS שמוביל ישר לטבלה מסוימת באקסל.
+function jumpToApp(appId, targetPage = 0) {
+  const exists = COURSE_APPS.some((app) => app.id === appId);
+  if (!exists) return;
 
+  setProgress((previous) => ({
+    ...previous,
+    screen: appId,
+    visitedApps: Array.from(new Set([...previous.visitedApps, appId])),
+    appPages: {
+      ...previous.appPages,
+      [appId]: targetPage,
+    },
+  }));
+}
   function goToPreviousApp(appId) {
     const index = COURSE_APPS.findIndex((app) => app.id === appId);
 
@@ -432,17 +464,16 @@ function closeIntroPopup() {
       );
     }
 
-    const appProps = {
-    page: progress.appPages[activeApp.id] ?? 0,
-    onPageChange: (newPage) => setAppPage(activeApp.id, newPage),
-    onBack: () => goToPreviousApp(activeApp.id),
-    onHome: goHome,
-    onComplete: () => finishApp(activeApp.id, "home"),
-    onNext: () => finishApp(activeApp.id, "next"),
-    onSpeechChange: setSpeechText, // ⭐ חדש - כל אפליקציה יכולה "לצעוק" טקסט למעלה
-  };
-
-
+  const appProps = {
+  page: progress.appPages[activeApp.id] ?? 0,
+  onPageChange: (newPage) => setAppPage(activeApp.id, newPage),
+  onBack: () => goToPreviousApp(activeApp.id),
+  onHome: goHome,
+  onComplete: () => finishApp(activeApp.id, "home"),
+  onNext: () => finishApp(activeApp.id, "next"),
+  onSpeechChange: setSpeechText,
+  onJumpToApp: jumpToApp, // ⭐ חדש
+};
     if (activeApp.showDesktopBehind) {
       return (
         <Laptop variant={activeApp.laptopVariant ?? "home"}>

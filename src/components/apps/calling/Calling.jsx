@@ -7,14 +7,11 @@ import soundOnIcon from "../../../assets/images/sound-on.svg";
 import callAudio from "../../../assets/audio/callAudio.mp3";
 import "./Calling.css";
 
-// ---------------------------------------------------------------------------
-// טקסט הגוף שמוצג בזמן השיחה הפעילה
-// ---------------------------------------------------------------------------
 const CALL_BODY_TEXT =
   'מרכז גיוס אחראי על חיוג בחירום בהתאם לפקודת אמ"ץ ולשבצ"ק שלנו. באמצעות מערכת הקריאה, מרכז הגיוס מוציא חיוג לחיילי המילואים ע"פ הדרישה ומביא לקריאה של מקסימום חיילים במינימום זמן.';
 
-const WAIT_ON_DESKTOP_MS = 2200; // "כמה שניות" במסך הבית לפני מעבר הלאה
-const DECLINE_MESSAGE_MS = 2200; // כמה זמן מוצגת הודעת "השארתם הודעה"
+const WAIT_ON_DESKTOP_MS = 2200;
+const DECLINE_MESSAGE_MS = 2200;
 
 export const CALL_ANSWERED_KEY = "callAnsweredByUser";
 
@@ -22,6 +19,16 @@ const formatTime = (totalSeconds) => {
   const m = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
   const s = (totalSeconds % 60).toString().padStart(2, "0");
   return `${m}:${s}`;
+};
+
+// האם המשתמש כבר עבר פעם אחת את מסך הצלצול (ענה או דחה)?
+// זה מה שמבדיל בין "ביקור ראשון" לבין "חזרה לאפליקציה" מהנאבבר.
+const hasAlreadyGoneThroughCall = () => {
+  try {
+    return sessionStorage.getItem(CALL_ANSWERED_KEY) !== null;
+  } catch {
+    return false;
+  }
 };
 
 const Calling = ({ page, onPageChange, onNext, onComplete, onSpeechChange }) => {
@@ -36,20 +43,48 @@ const Calling = ({ page, onPageChange, onNext, onComplete, onSpeechChange }) => 
   const [mounted, setMounted] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
+  // true אם זו חזרה לקומפוננטה אחרי שכבר "היה" צלצול פעם קודמת בסשן הזה
+  const [isReturningVisit] = useState(hasAlreadyGoneThroughCall);
 
   const audioRef = useRef(null);
   const tickRef = useRef(null);
   const advanceTimeoutRef = useRef(null);
 
-  // אנימציית כניסה, באותה שיטה כמו ב-NewsToday
   useEffect(() => {
     const raf = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  // טקסט הבועה מעל הראש, לפי שלב
+  // ⭐ ביקור חוזר: קופצים ישר לתוך השיחה החיה, בלי צלצול ובלי הודעת דחייה,
+  // בדיוק כמו שביקשת - "לא יצלצל אלא ישר לשיחה".
+  useEffect(() => {
+    if (!isReturningVisit) return;
+    if (step === 1) return; // כבר בשיחה - אין צורך לעשות כלום
+
+    setElapsedSeconds(0);
+    setStep(1);
+
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.muted = isMuted;
+      audioRef.current.play().catch(() => {});
+    }
+
+    clearInterval(tickRef.current);
+    tickRef.current = setInterval(() => {
+      setElapsedSeconds((prev) => prev + 1);
+    }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // טקסט הבועה מעל הראש - מוצג רק בביקור הראשון, כמו שביקשת.
   useEffect(() => {
     if (typeof onSpeechChange !== "function") return;
+
+    if (isReturningVisit) {
+      onSpeechChange("");
+      return;
+    }
 
     if (step === 1) {
       onSpeechChange('אתם בשיחה עם מר"ג. כשתסיימו, לחצו על כפתור הניתוק.');
@@ -60,9 +95,8 @@ const Calling = ({ page, onPageChange, onNext, onComplete, onSpeechChange }) => 
     } else {
       onSpeechChange('יש שיחה נכנסת ממרכז הגיוס - ענו או דחו כדי להמשיך.');
     }
-  }, [step, onSpeechChange]);
+  }, [step, isReturningVisit, onSpeechChange]);
 
-  // ניקוי טיימרים/סאונד ביציאה מהקומפוננטה
   useEffect(() => {
     return () => {
       clearInterval(tickRef.current);
@@ -189,7 +223,7 @@ const Calling = ({ page, onPageChange, onNext, onComplete, onSpeechChange }) => 
           )}
         </div>
       )}
-      {/* step === 3: אין פופ-אפ, המחשב נשאר גלוי ברקע (showDesktopBehind) */}
+      {/* step === 3 עדיין קיים לרגע קצר לפני שה-timeout מעביר הלאה, לא נגיש דרך הנאבבר יותר */}
     </div>
   );
 };

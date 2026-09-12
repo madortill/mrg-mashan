@@ -3,91 +3,62 @@
   box-sizing: border-box;
 }
 
-
 .course-navbar {
   width: 100%;
   position: fixed;
-top:-60px; 
+  top: -30px; /* שינוי מ--60px כדי שהסרגל יוצג בצורה הגיונית בראש המסך */
   direction: rtl;
-
-  font-family:
-    ploni;
-
-  border-radius: 2rem;
-
+  font-family: ploni;
+  border-radius: 1.5rem; /* הקטנה קלה של הרדיוס מ-2rem */
   z-index: 100;
 }
-
 
 /* ============================
    מצב פתוח
 ============================ */
-
 .course-navbar--open {
-  padding-bottom: 0.55rem;
-
+  padding-bottom: 0.4rem;
   background: #ffffff;
-
-  box-shadow:
-    0 0.35rem 0.55rem
-    rgba(0, 0, 0, 0.22);
-
-  overflow: hidden;
+  box-shadow: 0 0.35rem 0.55rem rgba(0, 0, 0, 0.22);
+  
+  /* הסרנו את ה-overflow: hidden המוחלט כדי לאפשר גלילה */
+  border-radius: 1.5rem; 
 }
 
-
 /* ============================
-   הכפתור העליון
+   הכפתור העליון (הקטנה מקיפה)
 ============================ */
-
 .course-navbar__trigger {
   position: relative;
-
   width: 100%;
-  min-height: clamp(
-    2.2rem,
-    4vw,
-    3.7rem
-  );
+  
+  /* הקטנת גובה המינימום והמקסימום */
+  min-height: clamp(1.8rem, 3vw, 2.8rem); 
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding:
-    0.5rem
-    4rem;
-
+  
+  /* הקטנת פדינג פנימי */
+  padding: 0.35rem 3rem; 
   border: none;
-
   border-radius: 999rem;
-
   background: #ffffff;
-
   color: #111111;
-  box-shadow:
-    0 0.25rem 0.35rem
-    rgba(0, 0, 0, 0.22);
-
-  font-size: clamp(
-    1rem,
-    2vw,
-    1.7rem
-  );
-
+  box-shadow: 0 0.25rem 0.35rem rgba(0, 0, 0, 0.22);
+  
+  /* הקטנת גודל הגופן */
+  font-size: clamp(0.85rem, 1.5vw, 1.3rem); 
   cursor: pointer;
 }
 
-.course-navbar--open
-.course-navbar__trigger {
+.course-navbar--open .course-navbar__trigger {
   box-shadow: none;
 }
-
 
 /* ============================
    כותרת
 ============================ */
-
 .course-navbar__title {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -95,135 +66,101 @@ top:-60px;
 }
 
 /* ============================
-   זכוכית מגדלת
+   זכוכית מגדלת (הקטנת האייקון)
 ============================ */
-
 .course-navbar__search {
   position: absolute;
   top: 50%;
-  right: 1.4rem;
-  width: clamp(
-    1.4rem,
-    2.5vw,
-    2.1rem
-  );
-
-  height: clamp(
-    1.4rem,
-    2.5vw,
-    2.1rem
-  );
-
-  transform:
-    translateY(-50%);
+  right: 1.1rem;
+  
+  /* הקטנת מימדי הריבוע */
+  width: clamp(1.1rem, 2vw, 1.6rem);
+  height: clamp(1.1rem, 2vw, 1.6rem);
+  transform: translateY(-50%);
 }
-
 
 .course-navbar__search svg {
   width: 100%;
   height: 100%;
-
   fill: none;
-
   stroke: currentColor;
-
   stroke-width: 1.8;
-
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-
 /* ============================
-   הרשימה
+   הרשימה (הוספת גלילה והגבלת גובה)
 ============================ */
-
 .course-navbar__menu {
-  padding:
-    0.15rem
-    0.25rem
-    0.35rem;
-
+  padding: 0.15rem 0.25rem 0.35rem;
   display: flex;
   flex-direction: column;
+  gap: 0.15rem; /* הקטנת המרווח בין הפריטים */
 
-  gap: 0.2rem;
-
-  animation:
-    navbar-open
-    160ms ease-out
-    both;
+  /* גלילה: מגבילים את הגובה המקסימלי של התפריט ומאפשרים גלילה אנכית */
+  max-height: 250px; /* ניתן לשנות לכל גובה שמתאים לך, למשל 40vh */
+  overflow-y: auto;
+  
+  animation: navbar-open 160ms ease-out both;
 }
 
+/* עיצוב פס הגלילה שייראה עדין ודק (אופציונלי) */
+.course-navbar__menu::-webkit-scrollbar {
+  width: 5px;
+}
+.course-navbar__menu::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
 
 /* ============================
-   שורה
+   שורה (הקטנת פריטי התפריט)
 ============================ */
-
 .course-navbar__item {
   width: 100%;
-  min-height: clamp(1.7rem,3vw,2.6rem);
+  
+  /* הקטנת הגובה של כל שורה */
+  min-height: clamp(1.4rem, 2.5vw, 2.1rem);
+  
   display: grid;
-  grid-template-columns:
-    2.7rem
-    1fr 2.7rem;
+  grid-template-columns: 2.2rem 1fr 2.2rem; /* הקטנת העמודות הצדדיות מ-2.7rem */
   align-items: center;
-  padding:
-    0.15rem
-    0.3rem;
+  padding: 0.1rem 0.25rem;
   border: none;
-
   border-radius: 999rem;
-
   background: transparent;
-
   color: #151515;
-
   font-family: inherit;
-
-  font-size: clamp(
-    0.95rem,
-    1.8vw,
-    1.45rem
-  );
+  
+  /* הקטנת הפונט בתוך הרשימה */
+  font-size: clamp(0.8rem, 1.4vw, 1.15rem);
+  
   cursor: pointer;
-  transition:
-    background-color 150ms ease,
-    transform 150ms ease;
+  transition: background-color 150ms ease, transform 150ms ease;
 }
 
-
 /* האייקון בצד ימין */
-
 .course-navbar__status {
   grid-column: 3;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 2rem;
-  height: 2rem;
+  width: 1.6rem; /* הקטנה מ-2rem */
+  height: 1.6rem;
 }
-
 
 .course-navbar__status svg {
   width: 75%;
   height: 75%;
-
   fill: none;
-
   stroke: currentColor;
-
   stroke-width: 2;
-
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-
 /* הטקסט */
-
 .course-navbar__label {
   grid-column: 2;
   text-align: center;
@@ -232,80 +169,50 @@ top:-60px;
   text-overflow: ellipsis;
 }
 
-
 .course-navbar__spacer {
   grid-column: 1;
 }
 
-
 /* ============================
-   נושא קודם
+   סטטוסים וצבעים (נשאר זהה)
 ============================ */
-
 .course-navbar__item--completed:hover {
   background: #f2f2f2;
 }
 
-
-/* ============================
-   הנושא הנוכחי
-============================ */
-
 .course-navbar__item--current {
   background: #d7e8e9;
-
   color: #111111;
 }
-
 
 .course-navbar__item--current:hover {
   background: #cddfe0;
 }
 
-
-/* ============================
-   הבא
-============================ */
-
 .course-navbar__item--next {
   background: #f3f3f3;
-
   color: #999999;
 }
 
-
-/* ============================
-   נעול
-============================ */
-
 .course-navbar__item--locked {
   color: #b2b2b2;
-
   cursor: default;
 }
-
 
 .course-navbar__item:disabled {
   cursor: default;
 }
 
-
 /* ============================
    אנימציה
 ============================ */
-
 @keyframes navbar-open {
   from {
     opacity: 0;
-
-    transform:
-      translateY(-0.3rem);
+    transform: translateY(-0.3rem);
   }
-
   to {
     opacity: 1;
-
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
 }
