@@ -136,7 +136,8 @@ const ITEM_TYPES = [
   { type: "address", Icon: MapPin, special: false, label: "כתובת מגורים" },
 ];
 
-const TOTAL_ITEMS = ITEM_TYPES.length;
+// const TOTAL_ITEMS = ITEM_TYPES.length;
+const TOTAL_ITEMS = 10;
 
 const ITEM_SIZE = 52;
 const FOLDER_WIDTH = 92;

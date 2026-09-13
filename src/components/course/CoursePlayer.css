@@ -171,3 +171,68 @@
   border-right: 8px solid transparent;
   border-top: 10px solid #fff;
 }
+/* =================================
+   COURSE SPEECH - RESPONSIVE
+   שמירה על עיגון לתחתית + קריאות
+================================= */
+
+@media (max-width: 800px) {
+  .course-speech {
+    bottom: 10%;
+    right: 3%;
+    gap: 6px;
+  }
+
+  .course-speech__gili {
+    width: clamp(60px, 8vw, 100px);
+  }
+
+  .course-speech__bubble {
+    max-width: 160px;
+    font-size: clamp(9px, 1.4vw, 11px);
+    padding: 8px 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .course-speech {
+    /* במסך צר, מרכזים במקום להצמיד לימין */
+    right: 50%;
+    transform: translateX(50%);
+    align-items: center;
+    bottom: 6%;
+  }
+
+  .course-speech__gili {
+    width: clamp(50px, 14vw, 80px);
+  }
+
+  .course-speech__bubble {
+    max-width: 55vw;
+    font-size: clamp(9px, 2.6vw, 11px);
+    padding: 6px 12px;
+    text-align: center;
+  }
+
+  .course-speech__bubble::after {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+@media (max-width: 375px) {
+  .course-speech {
+    bottom: 4%;
+    gap: 4px;
+  }
+
+  .course-speech__gili {
+    width: clamp(45px, 16vw, 65px);
+  }
+
+  .course-speech__bubble {
+    max-width: 65vw;
+    font-size: 9px;
+    padding: 5px 10px;
+  }
+}

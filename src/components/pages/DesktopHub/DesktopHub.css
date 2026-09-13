@@ -173,10 +173,34 @@
 
   z-index: 10000;
 }
+.desktop-app-hotspot__label {
+  display: block;
+
+  margin-top: 2px;
+
+  width: 100%;
+
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+  font-size: clamp(9px, 0.85cqw, 16px);
+  font-weight: 500;
+
+  line-height: 1.1;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+  user-select: none;
+
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.8),
+    0 0 4px rgba(0, 0, 0, 0.6);
+}
 
 
-/* אין שום סימון ויזואלי
-   לאזור הלחיץ */
 
 .desktop-app-hotspot:not(
   :disabled
@@ -185,52 +209,60 @@
 }
 
 
-/* ========================================
-   האייקון הפעיל שמונח בדיוק
-   מעל האייקון שכבר נמצא בתמונה
-======================================== */
 
-/* ========================================
-   האייקון הפעיל (מצב רגיל/פתוח)
-======================================== */
 .desktop-app-hotspot__active-icon {
   width: 72%;
   height: auto;
   object-fit: contain;
+
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
+
   animation: desktop-app-glow 1.45s ease-in-out infinite;
 }
 
-/* ========================================
-   זוהר של אפליקציה פתוחה
-======================================== */
 @keyframes desktop-app-glow {
   0%, 100% {
     transform: scale(1);
-    filter: drop-shadow(0 0 0.15rem rgba(54, 202, 255, 0.5))
-            drop-shadow(0 0 0.3rem rgba(54, 202, 255, 0.4));
+
+    filter:
+      drop-shadow(
+        0 0 0.15rem
+        var(--app-glow, rgba(54, 202, 255, 0.5))
+      )
+      drop-shadow(
+        0 0 0.3rem
+        var(--app-glow-2, rgba(54, 202, 255, 0.4))
+      );
   }
 
   50% {
     transform: scale(1.08);
-    filter: drop-shadow(0 0 0.3rem rgba(54, 202, 255, 1))
-            drop-shadow(0 0 0.7rem rgba(119, 101, 240, 0.8));
+
+    filter:
+      drop-shadow(
+        0 0 0.3rem
+        var(--app-glow, rgba(54, 202, 255, 1))
+      )
+      drop-shadow(
+        0 0 0.7rem
+        var(--app-glow-2, rgba(119, 101, 240, 0.8))
+      );
   }
 }
 
-/* ========================================
-   אפליקציה נעולה (אפורה וללא אנימציה)
-======================================== */
 .desktop-app-hotspot--locked {
   cursor: not-allowed !important;
-  pointer-events: none; /* מונע אפשרות לחיצה */
+  pointer-events: none; 
+
 }
 
-/* פוגע ישירות בתמונת האייקון שבתוך האלמנט הנעול */
 .desktop-app-hotspot--locked .desktop-app-hotspot__active-icon {
-  animation: none !important; /* עצירת האנימציה והזוהר */
-  filter: grayscale(100%) opacity(0.5) !important; /* הפיכה לאפור + שקיפות קלה */
+  animation: none !important; 
+  filter: grayscale(100%) opacity(0.5) !important; 
   transform: scale(1) !important;
+  color: rgba(255, 255, 255, 0.45);
+
+  text-shadow: none;
 }

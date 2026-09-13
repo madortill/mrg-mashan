@@ -126,7 +126,67 @@ const APP_CONTENT = {
 }
 };
 
+const APP_GLOW_COLORS = {
+  target: {
+    glow: "#e51b3e",
+    glow2: "#ff4d6d",
+  },
 
+  chrome: {
+    glow: "#4285f4",
+    glow2: "#34a853",
+  },
+
+  padlet: {
+    glow: "#ff4f8b",
+    glow2: "#7c4dff",
+  },
+
+  outlook: {
+    glow: "#0078d4",
+    glow2: "#00a4ef",
+  },
+
+  excel: {
+    glow: "#217346",
+    glow2: "#33a852",
+  },
+
+  game: {
+    glow: "#9b59b6",
+    glow2: "#6c5ce7",
+  },
+
+  chatgpt: {
+    glow: "#10a37f",
+    glow2: "#34d399",
+  },
+
+  setting: {
+    glow: "#607d8b",
+    glow2: "#90a4ae",
+  },
+
+  newsToday: {
+    glow: "#e53935",
+    glow2: "#ff7043",
+  },
+
+  calling: {
+    glow: "#25d366",
+    glow2: "#7bdc9a",
+  },
+
+  smsGal: {
+    glow: "#2196f3",
+    glow2: "#64b5f6",
+  },
+
+  doualingo: {
+    glow: "#58cc02",
+    glow2: "#9be564",
+  },
+};
 /*  כך CoursePlayer ו-DesktopHub עובדים מול אותו מערך ולא מול שני מערכים סותרים.
 */
 const desktopAppsById = new Map(
@@ -431,6 +491,7 @@ function jumpToApp(appId, targetPage = 0) {
         isInteractionBlocked={blockApps || isIntroOpen}
         onRopeClick={openIntroPopup}
         onOpenApp={openApp}
+        glowColors={APP_GLOW_COLORS}
       />
     );
   }

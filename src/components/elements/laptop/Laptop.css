@@ -1,4 +1,4 @@
-.laptop,
+/* .laptop,
 .laptop * {
   box-sizing: border-box;
 }
@@ -73,4 +73,119 @@ position: fix;
 }
 .laptop__screen_target {
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.60) 100%), linear-gradient(180deg, #E4F4FF 0%, #B7D8FF 100%);
+} */
+.laptop,
+.laptop * {
+  box-sizing: border-box;
+}
+
+.laptop {
+  --laptop-scale: 1;
+
+  /* רצפת סקייל - לא יורדים מתחתיה, גם אם המסך צר מאוד */
+  --laptop-min-scale: 0.62;
+
+  position: fixed;
+  inset: 0;
+  bottom: -10%;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  z-index: 1;
+}
+
+.laptop__stage {
+  position: absolute;
+  left: 48%;
+  bottom: -8%;
+
+  /* חשוב: תואם בדיוק לרוחב/גובה התמונה בפועל */
+  width: 1650px;
+  height: 1024px;
+
+  overflow: hidden;
+
+  transform:
+    translateX(-50%)
+    scale(var(--laptop-scale));
+
+  transform-origin: center bottom;
+
+  will-change: transform;
+}
+
+.laptop__image {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  width: 1650px;
+  height: 1024px;
+
+  object-fit: fill;
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+
+  z-index: 0;
+}
+
+.laptop__screen {
+  position: absolute;
+  top: 9%;
+  left: 15%;
+  width: 79.6%;
+  height: 71.8%;
+  overflow: hidden;
+  container-type: inline-size;
+  z-index: 2;
+}
+
+.laptop__screen_target {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0.60) 100%),
+    linear-gradient(180deg, #E4F4FF 0%, #B7D8FF 100%);
+}
+
+/* =================================
+   רצפות סקייל לפי גודל מסך
+   ככל שהמסך צר יותר - מרשים ללפטופ
+   "לגלוש" יותר במקום להמשיך להתכווץ
+================================= */
+
+@media (max-width: 1200px) {
+  .laptop {
+    --laptop-min-scale: 0.58;
+  }
+}
+
+@media (max-width: 800px) {
+  .laptop {
+    --laptop-min-scale: 0.52;
+  }
+  .laptop__stage {
+    bottom: -6%;
+  }
+}
+
+@media (max-width: 520px) {
+  .laptop {
+    --laptop-min-scale: 0.46;
+  }
+  .laptop__stage {
+    bottom: -4%;
+  }
+}
+
+@media (max-width: 375px) {
+  .laptop {
+    --laptop-min-scale: 0.4;
+  }
+  .laptop__stage {
+    bottom: -2%;
+  }
 }

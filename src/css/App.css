@@ -101,3 +101,55 @@ img {
 
   min-height: 100dvh;
 }
+
+.loading {
+    white-space: nowrap;
+    position: absolute;
+    top: 25vh;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #88563B;
+    font-family: "Fredoka";
+    font-size: clamp(1.5rem, 5vw, 4rem);
+    font-style: normal;
+    line-height: normal;
+}
+
+.app-loading {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 1rem;
+
+    background: #a8c9f1bc;
+
+    color: #0d4a63;
+
+    font-family: "Ploni";
+    font-size: 1.2rem;
+}
+
+
+.app-loading-spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+
+    border: 0.3rem solid rgba(46, 134, 166, 0.2);
+    border-top-color: #75b3cc;
+
+    border-radius: 50%;
+
+    animation: loading-spin 0.8s linear infinite;
+}
+
+
+@keyframes loading-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

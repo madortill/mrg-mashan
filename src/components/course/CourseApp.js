@@ -64,11 +64,11 @@ export const courseApps = [
     },
   },
   {
-    id: "chatgpt",
-    label: "צאט",
-    icon: chatgpt,
+    id: "setting",
+    label: "הגדרות",
+    icon: settingIcon,
     position: {
-      top: "40%",
+      top: "85%",
       right: "3.5%",
     },
   },

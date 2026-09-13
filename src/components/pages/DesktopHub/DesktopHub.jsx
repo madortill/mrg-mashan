@@ -14,6 +14,8 @@ function DesktopHub({
   isInteractionBlocked = false,
   onRopeClick,
   onOpenApp,
+    glowColors,
+
 }) {
   const shouldRopeGlow =
     !introCompleted &&
@@ -65,30 +67,38 @@ function DesktopHub({
 
         return (
           <button
-            key={app.id}
-            type="button"
-            className={[
-              "desktop-app-hotspot",
-              isCurrent ? "desktop-app-hotspot--current" : "",
-              !isAvailable ? "desktop-app-hotspot--locked" : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            style={{ ...app.position }}
-            disabled={!isAvailable || isInteractionBlocked}
-            onClick={() => onOpenApp?.(app.id)}
-            aria-label={app.label}
-            aria-current={isCurrent ? "step" : undefined}
-          >
-            {app.icon && (
-              <img
-                src={app.icon}
-                className="desktop-app-hotspot__icon"
-                alt=""
-                draggable="false"
-              />
-            )}
-          </button>
+  key={app.id}
+  type="button"
+  className={[
+    "desktop-app-hotspot",
+    isCurrent ? "desktop-app-hotspot--current" : "",
+    !isAvailable ? "desktop-app-hotspot--locked" : "",
+  ]
+    .filter(Boolean)
+    .join(" ")}
+  style={{
+    ...app.position,
+    "--app-glow": app.glow,
+    "--app-glow-2": app.glow2,
+  }}
+  disabled={!isAvailable || isInteractionBlocked}
+  onClick={() => onOpenApp?.(app.id)}
+  aria-label={app.label}
+  aria-current={isCurrent ? "step" : undefined}
+>
+  {app.icon && (
+    <img
+      src={app.icon}
+      className="desktop-app-hotspot__icon"
+      alt=""
+      draggable="false"
+    />
+  )}
+
+  <span className="desktop-app-hotspot__label">
+    {app.label}
+  </span>
+</button>
         );
       })}
     </div>

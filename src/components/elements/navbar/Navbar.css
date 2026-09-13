@@ -3,52 +3,57 @@
   box-sizing: border-box;
 }
 
+
 .course-navbar {
   width: 100%;
-  position: fixed;
-  top: -30px; /* שינוי מ--60px כדי שהסרגל יוצג בצורה הגיונית בראש המסך */
+  position: absolute;
+  top: -45px;
+  left: 0;
+
   direction: rtl;
   font-family: ploni;
-  border-radius: 1.5rem; /* הקטנה קלה של הרדיוס מ-2rem */
+  border-radius: 1.5rem;
   z-index: 100;
 }
-
 /* ============================
    מצב פתוח
 ============================ */
+
 .course-navbar--open {
   padding-bottom: 0.4rem;
   background: #ffffff;
   box-shadow: 0 0.35rem 0.55rem rgba(0, 0, 0, 0.22);
-  
-  /* הסרנו את ה-overflow: hidden המוחלט כדי לאפשר גלילה */
-  border-radius: 1.5rem; 
+  border-radius: 1.5rem;
+
+  /* חשוב - שלא יהיה רוחב שונה בין ה-trigger לתפריט */
+  overflow: hidden;
 }
 
 /* ============================
-   הכפתור העליון (הקטנה מקיפה)
+   הכפתור העליון
 ============================ */
+
 .course-navbar__trigger {
   position: relative;
   width: 100%;
-  
-  /* הקטנת גובה המינימום והמקסימום */
-  min-height: clamp(1.8rem, 3vw, 2.8rem); 
+
+  min-height: clamp(1.8rem, 3vw, 2.8rem);
 
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  /* הקטנת פדינג פנימי */
-  padding: 0.35rem 3rem; 
+
+  padding: 0.35rem 3rem;
+
   border: none;
   border-radius: 999rem;
   background: #ffffff;
   color: #111111;
+
   box-shadow: 0 0.25rem 0.35rem rgba(0, 0, 0, 0.22);
-  
-  /* הקטנת גודל הגופן */
-  font-size: clamp(0.85rem, 1.5vw, 1.3rem); 
+
+  font-size: clamp(0.85rem, 1.5vw, 1.3rem);
+
   cursor: pointer;
 }
 
@@ -59,6 +64,7 @@
 /* ============================
    כותרת
 ============================ */
+
 .course-navbar__title {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -66,22 +72,24 @@
 }
 
 /* ============================
-   זכוכית מגדלת (הקטנת האייקון)
+   זכוכית מגדלת
 ============================ */
+
 .course-navbar__search {
   position: absolute;
   top: 50%;
   right: 1.1rem;
-  
-  /* הקטנת מימדי הריבוע */
+
   width: clamp(1.1rem, 2vw, 1.6rem);
   height: clamp(1.1rem, 2vw, 1.6rem);
+
   transform: translateY(-50%);
 }
 
 .course-navbar__search svg {
   width: 100%;
   height: 100%;
+
   fill: none;
   stroke: currentColor;
   stroke-width: 1.8;
@@ -90,69 +98,97 @@
 }
 
 /* ============================
-   הרשימה (הוספת גלילה והגבלת גובה)
+   הרשימה
 ============================ */
+
 .course-navbar__menu {
-  padding: 0.15rem 0.25rem 0.35rem;
+  width: 100%;
+
+  padding: 0.15rem 0 0.35rem;
+
   display: flex;
   flex-direction: column;
-  gap: 0.15rem; /* הקטנת המרווח בין הפריטים */
+  gap: 0;
 
-  /* גלילה: מגבילים את הגובה המקסימלי של התפריט ומאפשרים גלילה אנכית */
-  max-height: 250px; /* ניתן לשנות לכל גובה שמתאים לך, למשל 40vh */
+  max-height: 250px;
   overflow-y: auto;
-  
+
   animation: navbar-open 160ms ease-out both;
 }
 
-/* עיצוב פס הגלילה שייראה עדין ודק (אופציונלי) */
+/* scrollbar */
+
 .course-navbar__menu::-webkit-scrollbar {
   width: 5px;
 }
+
 .course-navbar__menu::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 10px;
 }
 
 /* ============================
-   שורה (הקטנת פריטי התפריט)
+   שורת תפריט
 ============================ */
+
 .course-navbar__item {
+  position: relative;
+
   width: 100%;
-  
-  /* הקטנת הגובה של כל שורה */
   min-height: clamp(1.4rem, 2.5vw, 2.1rem);
-  
+
   display: grid;
-  grid-template-columns: 2.2rem 1fr 2.2rem; /* הקטנת העמודות הצדדיות מ-2.7rem */
+
+  /*
+    העמודות נשארות קבועות כדי שהטקסט
+    והאייקונים לא "יקפצו"
+  */
+  grid-template-columns: 2.2rem minmax(0, 1fr) 2.2rem;
+
   align-items: center;
+
   padding: 0.1rem 0.25rem;
+
   border: none;
   border-radius: 999rem;
+
   background: transparent;
   color: #151515;
+
   font-family: inherit;
-  
-  /* הקטנת הפונט בתוך הרשימה */
   font-size: clamp(0.8rem, 1.4vw, 1.15rem);
-  
+
   cursor: pointer;
-  transition: background-color 150ms ease, transform 150ms ease;
+
+  /*
+    חשוב:
+    אין transform על ה-hover,
+    כדי שה-hover לא יזוז מהמיקום של העכבר
+  */
+  transition: background-color 150ms ease;
 }
 
-/* האייקון בצד ימין */
+/* ============================
+   אייקון
+============================ */
+
 .course-navbar__status {
   grid-column: 3;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.6rem; /* הקטנה מ-2rem */
+
+  width: 1.6rem;
   height: 1.6rem;
+
+  justify-self: center;
 }
 
 .course-navbar__status svg {
   width: 75%;
   height: 75%;
+
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -160,22 +196,38 @@
   stroke-linejoin: round;
 }
 
-/* הטקסט */
+/* ============================
+   טקסט
+============================ */
+
 .course-navbar__label {
   grid-column: 2;
+
+  width: 100%;
+
   text-align: center;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ============================
+   spacer
+============================ */
 
 .course-navbar__spacer {
   grid-column: 1;
 }
 
 /* ============================
-   סטטוסים וצבעים (נשאר זהה)
+   סטטוסים
 ============================ */
+
+.course-navbar__item--completed {
+  background: transparent;
+}
+
 .course-navbar__item--completed:hover {
   background: #f2f2f2;
 }
@@ -195,6 +247,7 @@
 }
 
 .course-navbar__item--locked {
+  background: transparent;
   color: #b2b2b2;
   cursor: default;
 }
@@ -204,15 +257,83 @@
 }
 
 /* ============================
-   אנימציה
+   אנימציית פתיחה
 ============================ */
+
 @keyframes navbar-open {
   from {
     opacity: 0;
     transform: translateY(-0.3rem);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ============================
+   RESPONSIVE
+============================ */
+
+/* מסכים קטנים */
+
+@media (max-width: 600px) {
+  .course-navbar {
+    top: -40px;
+  }
+
+  .course-navbar__trigger {
+    min-height: 2rem;
+    padding: 0.35rem 2.5rem;
+  }
+
+  .course-navbar__search {
+    right: 0.8rem;
+  }
+
+  .course-navbar__item {
+    grid-template-columns: 2rem minmax(0, 1fr) 2rem;
+    min-height: 1.9rem;
+  }
+
+  .course-navbar__status {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .course-navbar__menu {
+    max-height: 45vh;
+  }
+}
+
+/* טלפונים קטנים */
+
+@media (max-width: 375px) {
+  .course-navbar {
+    top: -35px;
+  }
+
+  .course-navbar__trigger {
+    min-height: 1.9rem;
+    padding: 0.3rem 2.2rem;
+    font-size: 0.9rem;
+  }
+
+  .course-navbar__search {
+    right: 0.65rem;
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .course-navbar__item {
+    grid-template-columns: 1.8rem minmax(0, 1fr) 1.8rem;
+    min-height: 1.75rem;
+    font-size: 0.85rem;
+  }
+
+  .course-navbar__status {
+    width: 1.3rem;
+    height: 1.3rem;
   }
 }

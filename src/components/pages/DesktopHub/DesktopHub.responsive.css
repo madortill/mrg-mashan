@@ -52,20 +52,8 @@
   outline-offset: clamp(2px, 0.3cqw, 5px);
 }
 
-@keyframes app-glow {
-  0%,
-  100% {
-    filter:
-      drop-shadow(0 0 0.3cqw #ffffff)
-      drop-shadow(0 0 0.65cqw rgba(48, 154, 255, 0.78));
-  }
 
-  50% {
-    filter:
-      drop-shadow(0 0 0.55cqw #ffffff)
-      drop-shadow(0 0 1.25cqw rgba(48, 154, 255, 1));
-  }
-}
+
 
 @media (max-height: 760px) {
     .desktop-hub__rope-button {
