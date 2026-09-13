@@ -5,6 +5,7 @@ import padletIcon from "./../../assets/images/apps/padlet.png";
 import chatgpt from "./../../assets/images/apps/chatgpt.png";
 import settingIcon from "./../../assets/images/apps/setting.svg";
 import targetIcon from "./../../assets/images/apps/target.png";
+import doualingoIcon from "./../../assets/images/apps/doualingoIcon.svg";
 
 export const courseApps = [
  
@@ -63,11 +64,20 @@ export const courseApps = [
     },
   },
   {
-    id: "setting",
-    label: "הגדרות",
-    icon: settingIcon,
+    id: "chatgpt",
+    label: "צאט",
+    icon: chatgpt,
     position: {
-      top: "90%",
+      top: "40%",
+      right: "3.5%",
+    },
+  },
+  {
+    id: "doualingo",
+    label: "דואלינג'",
+    icon: doualingoIcon,
+    position: {
+      top: "60%",
       right: "3.5%",
     },
   },

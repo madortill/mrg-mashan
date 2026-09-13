@@ -11,6 +11,7 @@ import GoogleYnet from "../apps/google/GoogleYnet";
 import Excel from "../apps/excel/Excel.jsx";
 import Outlook from "../apps/outlock/Outlook";
 import Padlet from "../apps/padlet/Padlet.jsx";
+import EmptyDetails from "../apps/emptyDetails/EmptyDetails.jsx";
 import Chatgpt from "../apps/chatGPT/Chatgpt.jsx";
 import NewsToday from "../apps/newsToday/NewsToday.jsx";
 import Calling from "../apps/calling/Calling.jsx";
@@ -41,6 +42,7 @@ const APP_ORDER = [
   "padlet",
   "outlook",
   "excel",
+  "game",
   "chatgpt",
   "setting",
   "newsToday",
@@ -78,6 +80,12 @@ const APP_CONTENT = {
     label: "Excel",
     navbarTitle: "דוחות ",
     component: Excel,
+    laptopVariant: "empty",
+  },
+   game: { 
+    label: "game",
+    navbarTitle: "דוח חסרי פרטים   ",
+    component: EmptyDetails,
     laptopVariant: "empty",
   },
    chatgpt: { 
