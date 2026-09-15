@@ -58,7 +58,7 @@
 .desktop-hub__rope-button {
   position: absolute;
   z-index: 50;
-  top: 2%;
+  top: -1.8%;
   left: -2.7%;
   width: clamp(102px, 18.2cqw, 168px);
   margin: 0;
@@ -170,7 +170,8 @@
   background: transparent;
 
   cursor: pointer;
-
+  display: flex;
+  flex-flow: column;
   z-index: 10000;
 }
 .desktop-app-hotspot__label {
@@ -180,24 +181,22 @@
 
   width: 100%;
 
-  color: #ffffff;
+  color: #858585;
 
-  font-family: Arial, sans-serif;
-  font-size: clamp(9px, 0.85cqw, 16px);
+  font-size: clamp(12px, 2cqw, 19px);
   font-weight: 500;
 
   line-height: 1.1;
 
   text-align: center;
 
-  white-space: nowrap;
+  white-space: wrap;
 
   pointer-events: none;
   user-select: none;
 
-  text-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.8),
-    0 0 4px rgba(0, 0, 0, 0.6);
+
+
 }
 
 

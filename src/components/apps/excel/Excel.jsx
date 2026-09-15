@@ -55,33 +55,35 @@ const Excel = ({ page = 0, onPageChange, onBack, onHome, onComplete, onSpeechCha
   };
 
   return (
-    <div className="excel-app">
-      <BackButton onClick={goBack} />
+    
+  <div className="excel-app">
+    <BackButton onClick={goBack} />
 
-      <ExcelWindow>
-        {lastTableScreen && (
-          <ExcelTable
-            columns={lastTableScreen.columns}
-            rows={lastTableScreen.rows}
-            dimmed={isPopupActive}
-            showConfirmButton={currentScreen.type === "table"}
-            confirmLabel={currentScreen.confirmLabel}
-            onConfirm={goNext}
-          />
-        )}
+    <ExcelWindow name={lastTableScreen?.tableName}>
+      {lastTableScreen && (
+        <ExcelTable
+          columns={lastTableScreen.columns}
+          rows={lastTableScreen.rows}
+          dimmed={isPopupActive}
+          showConfirmButton={currentScreen.type === "table"}
+          confirmLabel={currentScreen.confirmLabel}
+          onConfirm={goNext}
+        />
+      )}
 
-        {isPopupActive && (
-          <InfoPopup
-            key="popup"
-            title={currentScreen.title}
-            text={currentScreen.text}
-            highlightText={currentScreen.highlightText}
-            buttonType={currentScreen.buttonType}
-            onButtonClick={goNext}
-          />
-        )}
-      </ExcelWindow>
-    </div>
+      {isPopupActive && (
+        <InfoPopup
+          key="popup"
+          title={currentScreen.title}
+          text={currentScreen.text}
+          highlightText={currentScreen.highlightText}
+          buttonType={currentScreen.buttonType}
+          onButtonClick={goNext}
+        />
+      )}
+    </ExcelWindow>
+  </div>
+
   );
 };
 

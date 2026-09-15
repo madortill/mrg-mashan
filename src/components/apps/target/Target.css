@@ -162,11 +162,11 @@
 .target__grid {
   position: relative;
 
-  width: 100%;
-  padding-bottom: clamp(58px, 8vw, 76px);
+  width: 80%;
+  /* padding-bottom: clamp(58px, 8vw, 76px); */
 
   display: grid;
-  grid-template-columns: minmax(150px, 1fr) minmax(150px, 190px) minmax(150px, 1fr);
+  grid-template-columns: minmax(150px, 1fr) minmax(150px, 441px) minmax(150px, 1fr);
   grid-template-areas:
     "top-left center top-right"
     "bottom-left center bottom-right";
@@ -180,7 +180,7 @@
   grid-area: var(--area);
   max-width: 280px;
 
-  min-height: clamp(64px, 7.5vw, 82px);
+  min-height: clamp(74px, 8.5vw, 92px);
   padding: 10px 14px;
 
   display: flex;

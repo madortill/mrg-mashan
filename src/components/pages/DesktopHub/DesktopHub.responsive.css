@@ -39,7 +39,7 @@
   opacity: 1;
   filter:
     drop-shadow(0 0 0.35cqw #ffffff)
-    drop-shadow(0 0 0.9cqw rgba(48, 154, 255, 0.98));
+    drop-shadow(0 0 0.9cqw rgba(59, 164, 255, 0.98));
   animation: app-glow 1.4s ease-in-out infinite;
 }
 

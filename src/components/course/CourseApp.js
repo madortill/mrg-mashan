@@ -6,6 +6,7 @@ import chatgpt from "./../../assets/images/apps/chatgpt.png";
 import settingIcon from "./../../assets/images/apps/setting.svg";
 import targetIcon from "./../../assets/images/apps/target.png";
 import doualingoIcon from "./../../assets/images/apps/doualingoIcon.svg";
+import emptyDetailsIcon from "./../../assets/images/folder.svg";
 
 export const courseApps = [
  
@@ -55,11 +56,20 @@ export const courseApps = [
     },
   },
   {
+    id: "game",
+    label: "פרטים חסרים",
+    icon: emptyDetailsIcon,
+    position: {
+            top: "40%",
+      right: "3.5%",
+    },
+  },
+  {
     id: "chatgpt",
     label: "צאט",
     icon: chatgpt,
     position: {
-      top: "40%",
+      top: "60%",
       right: "3.5%",
     },
   },
@@ -78,7 +88,7 @@ export const courseApps = [
     icon: doualingoIcon,
     position: {
       top: "60%",
-      right: "3.5%",
+      right: "12.5%",
     },
   },
   

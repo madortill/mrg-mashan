@@ -120,7 +120,6 @@ import emptyLaptop
   from "../../../assets/images/home-desktop-clean-wide.svg";
 
 
-// תואם בדיוק לגודל האמיתי של .laptop__stage / .laptop__image ב-CSS
 const DESIGN_WIDTH = 1650;
 const DESIGN_HEIGHT = 1024;
 

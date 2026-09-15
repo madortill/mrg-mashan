@@ -103,15 +103,17 @@ const SmsGal = ({
     setUnderstoodClicked(true);
   }
 
-  function handleGoToHolidayTable() {
-    if (typeof onJumpToApp === "function") {
-      onJumpToApp("excel", HOLIDAY_READINESS_PAGE);
-      return;
-    }
-    // גיבוי אם משום מה onJumpToApp לא הועבר
-    if (typeof onNext === "function") onNext();
-    else if (typeof onComplete === "function") onComplete();
+function handleGoToHolidayTable() {
+  // מעבר ישיר לאקסל לטבלת כוננות לחג
+  if (typeof onJumpToApp === "function") {
+    onJumpToApp("excel", HOLIDAY_READINESS_PAGE);
   }
+
+  // סימון SmsGal כקומפוננטה שהסתיימה
+  if (typeof onComplete === "function") {
+    onComplete();
+  }
+}
 
   const allSent = sentCount >= SEQUENTIAL_MESSAGES.length;
 

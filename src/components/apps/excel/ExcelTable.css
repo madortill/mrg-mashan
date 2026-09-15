@@ -4,7 +4,6 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: clamp(1px, 0.5vw, 2px);
   display: flex;
   flex-direction: column;
 }
@@ -19,7 +18,7 @@
   width: 100%;
   border-collapse: collapse;
   min-width: 600px;
-  font-size: clamp(14px, 1.5vw, 18px);
+  font-size: clamp(16px, 1.7vw, 22px);
 }
 
 .excel-table th {

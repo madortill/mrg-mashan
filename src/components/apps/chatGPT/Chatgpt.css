@@ -87,6 +87,7 @@
   color: var(--text-dark);
   text-align: right;
   max-width: 900px;
+  white-space: pre-wrap;
 }
 
 /* הודעת המשתמש - בועה טורקיז, מיושרת לשמאל (כמו בתמונה) */

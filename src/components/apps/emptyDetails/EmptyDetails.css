@@ -151,6 +151,7 @@
   justify-content: center;
   z-index: 50;
   padding: 20px;
+  top: 0;
   border-radius: inherit;
 }
 
@@ -167,10 +168,10 @@
 
 .ed-popup-close {
   position: absolute;
-  top: -14px;
-  left: -14px;
-  width: 34px;
-  height: 34px;
+  top: -0px;
+  left: 0px;
+  width: 54px;
+  height: 44px;
   background: #ef4444;
   color: #fff;
   border: none;
