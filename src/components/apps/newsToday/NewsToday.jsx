@@ -7,9 +7,6 @@ import gili from "../../../assets/images/gili.svg";
 import eye from "../../../assets/images/icon-eye.svg";
 import "./NewsToday.css";
 
-// ---------------------------------------------------------------------------
-// Article copy — exactly as provided.
-// ---------------------------------------------------------------------------
 const Alltext = [
   'במרכז גיוס מתבצעות מידי יום תורנויות המהוות עתודה למצב חירום, זאת כחלק מההוראה המבצעית למוכנות וכוננות מערך הגיוס בהתאמה למצבי הכוננות בצה”ל',
   `מדי יום, יישארו במרכז הגיוס מפקד תורן (קצין או נגד) ומש"ק תורן מקריית משא"ן המילואים. תורנות זו תבוצע אך ורק על ידי בעלי תפקידים אשר עברו הליך חפיפה מקצועית וחניכה ואושרו לביצוע התורנות ע"י מפקד מרכז הגיוס/סגנו.
@@ -32,17 +29,14 @@ const renderWithHighlight = (text, phrase) => {
   );
 };
 
-// ---------------------------------------------------------------------------
-// DailyNEWS reveal cards — replace title/description/schedule with real copy.
-// ---------------------------------------------------------------------------
 const DAILY_CARDS = [
   {
     id: "card-1",
-    title: "תדרוך מפקדתו",
+    title: "תדרוך מפקדתי",
     description:
       "עם תחילת ההיערכות, יוצא המפקד לתדרוך צוותי הגיוס בדרג ראשון (מטה), ומעביר לבעלי התפקידים את דרכי התפקוד הנדרשים לשעת חירום.",
     schedule: "כל יום | 08:00",
-    image: guidingImg, // right-hand card
+    image: guidingImg,
   },
   {
     id: "card-2",
@@ -50,11 +44,13 @@ const DAILY_CARDS = [
     description:
       "מדי יום, מתקיים תדרוך קצר של מפקד מרכז הגיוס עם צוותי המשמרת, בו מועברים העדכונים הנדרשים לשמירה על תפקוד תקין של המרכז.",
     schedule: "כל יום | 08:00",
-    image: guidingImgLeft, // left-hand card
+    image: guidingImgLeft,
   },
 ];
 
-const STORAGE_KEY = "newsToday.dailyCardsRevealed";
+// שונה: גרסה חדשה למפתח - "מנקה" באופן אוטומטי ערכים ישנים שנשארו
+// ב-localStorage מבדיקות קודמות ומראים כרטיסים כ"נחשפו" בטעות.
+const STORAGE_KEY = "newsToday.dailyCardsRevealed.v2";
 
 const loadRevealedState = () => {
   try {
@@ -111,7 +107,6 @@ const NewsToday = ({
   onPageChange,
   onSpeechChange,
 }) => {
-  // 0 = popup, 1 = article, 2 = DailyNEWS reveal cards
   const [internalStep, setInternalStep] = useState(0);
   const step = typeof page === "number" ? page : internalStep;
   const setStep = (next) => {
@@ -161,7 +156,6 @@ const NewsToday = ({
   return (
     <div className={`nt-root ${mounted ? "nt-root--in" : ""}`} dir="rtl">
       {step === 0 && (
-        // -------------------- Popup step --------------------
         <div className="nt-popup-layer">
           <div className="nt-popup-backdrop" />
           <div className="nt-modal">
@@ -186,12 +180,14 @@ const NewsToday = ({
       )}
 
       {step === 1 && (
-        // -------------------- Article step --------------------
         <div className="nt-article">
+          {/* שונה: direction: ltr ב-CSS על ה-nav הזה בלבד, כך שהסדר הוא
+              לוגו (שמאל) -> תפריט -> באדג' אדום (ימין), בדיוק כמו בתמונה */}
           <div className="nt-article__nav">
             <div className="nt-article__logo">
               <img src={IsraelHayomLogo} alt="ישראל היום" className="nt-article__logo-img" />
             </div>
+
             <nav className="nt-article__menu" aria-hidden="true">
               <span className="nav-item">ראשי</span>
               <span className="nav-item">מרכז</span>
@@ -200,6 +196,10 @@ const NewsToday = ({
               <span className="nav-item">תרבות</span>
               <span className="nav-item">בריאות</span>
             </nav>
+
+            <div className="nt-article__badge">
+              <img src={HayomIcon} alt="" className="nt-article__badge-img" />
+            </div>
           </div>
 
           <div className="nt-article__body">
@@ -213,8 +213,24 @@ const NewsToday = ({
                 >
                   ✕
                 </button>
+                <p className="nt-ad-card__title">
+                  היה
+                  <br />
+                  מוכן!
+                </p>
+                <p className="nt-ad-card__text">
+                  תרגול מוביל
+                  <br />
+                  לשלמות
+                </p>
                 <img src={gili} alt="" className="nt-ad-card__icon" />
-                <p className="nt-ad-card__text">היה מוכן! תרגול מוביל לשלמות</p>
+                {/* טקסט זעיר בתמונה המקורית לא ניתן לקריאה בבירור -
+                    שים כאן את הניסוח המדויק אם יש לך אותו */}
+                <p className="nt-ad-card__caption">
+                  אנשים שהוכשרו
+                  <br />
+                  מוכנים תמיד
+                </p>
               </aside>
             )}
 
@@ -226,18 +242,16 @@ const NewsToday = ({
               </p>
             ))}
 
+            {/* תוקן: כפתור בתוך כפתור (HTML לא חוקי) הוחלף בכפתור יחיד */}
             <button type="button" className="nt-article__continue" onClick={openDailyCards}>
-              <button class="nt-article__continue">
-  <span>להמשך קריאה</span>
-  <span class="nt-article__chevron">&lt;&lt;</span>
-</button>
+              <span>להמשך קריאה</span>
+              <span className="nt-article__chevron">‹‹</span>
             </button>
           </div>
         </div>
       )}
 
       {step === 2 && (
-        // -------------------- DailyNEWS reveal-cards step --------------------
         <div className="nt-daily">
           <div className="nt-daily__header">
             <img src={IsraelHayomLogo} alt="ישראל היום" className="nt-daily__logo" />

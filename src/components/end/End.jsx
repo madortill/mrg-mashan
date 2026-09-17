@@ -6,6 +6,9 @@ import confeti from "../../assets/images/Confetti.svg";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LaptopOutro from "./LaptopOutro";
+import desk from "../../assets/images/desk_wide.svg";
+import plant from "../../assets/images/plant.svg";
+import backgroundDecor from "../../assets/images/background-decor.svg";
 import "./End.css";
 
 export default function End() {
@@ -21,7 +24,9 @@ export default function End() {
 
   return (
     <main className="course-end" dir="rtl">
-      
+            <img src={backgroundDecor} className="background-decoration" alt="" draggable="false" />
+            <img src={desk} className="desk" alt="" draggable="false" />
+            <img src={plant} className="plant" alt="" draggable="false" />
    
 
       <div className="course-end__desk" aria-hidden="true" />

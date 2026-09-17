@@ -112,6 +112,7 @@ import React, {
 } from "react";
 
 import "./Laptop.css";
+import { motion } from "framer-motion";
 
 import homeLaptop
   from "../../../assets/images/home-wide.svg";
@@ -232,6 +233,25 @@ function Laptop({
 
       </div>
     </div>
+  //     <motion.div
+  //   layoutId="app-laptop"
+  //   ref={wrapperRef}
+  //   className="laptop"
+  //   // transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+  //   initial={{ opacity: 0 }}
+  // animate={{ opacity: 1 }}
+  // transition={{ duration: 0.35, delay: 0.25 }}
+  // >
+  //   <div className="laptop__stage">
+  //     <img
+  //       src={laptopImage}
+  //       className="laptop__image"
+  //       alt=""
+  //       draggable="false"
+  //     />
+  //     <div className="laptop__screen">{children}</div>
+  //   </div>
+  // </motion.div>
   );
 }
 

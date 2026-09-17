@@ -12,6 +12,7 @@ import plant from "../../assets/images/plant.svg";
 import backgroundDecor from "../../assets/images/background-decor.svg";
 
 import laptopOpening from "../../assets/images/computerClean.svg";
+import { motion } from "framer-motion";
 
 import logo from "../../assets/images/logo.png";
 import searchIcon from "../../assets/images/search_icon.svg";
@@ -86,15 +87,26 @@ function AnimatedPlane() {
 
       {/* המטוס */}
       <g className="flight-plane">
-        <animateMotion
-          dur="3.2s"
-          begin="0.2s"
-          fill="freeze"
-          rotate="auto"
-          calcMode="paced"
-        >
-          <mpath href="#opening-flight-route" />
-        </animateMotion>
+      
+<animateMotion
+  dur="3.2s"
+  begin="0.2s"
+  fill="freeze"
+  rotate="auto"
+  calcMode="paced"
+>
+  <mpath href="#opening-flight-route" />
+</animateMotion>
+<animateTransform
+  attributeName="transform"
+  type="rotate"
+  additive="sum"
+  from="0"
+  to="-15"           /* ← כאן תכייל את המספר */
+  begin="3.2s"
+  dur="0.01s"
+  fill="freeze"
+/>
 
         <PlaneShape />
       </g>
@@ -346,8 +358,14 @@ export default function StartPage({ nextPage }) {
           </div>
         )}
 
-        <div className="laptop-wrapper laptop-wrapper--motion">
-          <LaptopOutro
+<motion.div
+  layoutId="app-laptop"
+  className="laptop-wrapper laptop-wrapper--motion"
+  // transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+    initial={{ opacity: 1 }}
+  exit={{ opacity: 0 }}
+  transition={{ duration: 0.35 }}
+>          <LaptopOutro
             opening
             duration={3900}
             framing="full"
@@ -399,7 +417,7 @@ export default function StartPage({ nextPage }) {
               </div>
             )}
           </LaptopOutro>
-        </div>
+        </motion.div>
       </section>
 
       <div

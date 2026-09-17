@@ -130,7 +130,7 @@ body {
 /* ========================================
    שולחן
 ======================================== */
-
+/* 
 .desk {
   position: absolute;
 
@@ -149,8 +149,26 @@ body {
 
   pointer-events: none;
   user-select: none;
+} */
+.desk {
+  position: absolute;
+  left: 0;
+  bottom: -3.5%;
+  width: 100%;
+  height: clamp(10rem, 24dvh, 18rem);
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
 }
 
+@media (min-width: 1600px) {
+  .desk {
+    height: clamp(12rem, 20dvh, 16rem);
+  }
+}
 
 /* ========================================
    עציץ
@@ -1358,9 +1376,9 @@ body {
 }
 .mapalRope{
   position: absolute;
-  opacity: 70%;
-  top: -10%;
-  right: -20%;
+  opacity: 85%;
+  top: -5%;
+  right: -25%;
   z-index: 0;
 }
 .opening-page--motion .start-about__toggle {

@@ -88,11 +88,16 @@ function DesktopHub({
 >
   {app.icon && (
     <img
-      src={app.icon}
-      className="desktop-app-hotspot__icon"
-      alt=""
-      draggable="false"
-    />
+  src={app.icon}
+  className={[
+    "desktop-app-hotspot__icon",
+    isCurrent ? "desktop-app-hotspot__icon--glowing" : "",
+  ]
+    .filter(Boolean)
+    .join(" ")}
+  alt=""
+  draggable="false"
+/>
   )}
 
   <span className="desktop-app-hotspot__label">

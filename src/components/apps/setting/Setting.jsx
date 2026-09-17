@@ -83,7 +83,7 @@ const Setting = ({ page = 0, onPageChange, onComplete, onNext }) => {
         </div>
 
         <p className="setting-card__subtitle">
-          -לחצו כדי לטעון את הנושאים שנתקעו-
+          -לחצו כדי לטעון איך נעקוב ונבקר את הנתונים במרג-
         </p>
 
         <div className="setting-card__rows">

@@ -3,7 +3,7 @@
   --row-bg-open: #e2eef4;
   --accent-blue: #5fa8c9;
   --accent-blue-dark: #3d87ab;
-  --icon-idle: #d9a15c; /* muted/warm "not opened yet" color, distinct from the accent blue used once open */
+  --icon-idle: #d9a15c;
   --text-dark: #26221c;
   --text-muted: #303030;
   --border-light: #e4e0d8;
@@ -15,23 +15,25 @@
   direction: rtl;
   color: var(--text-dark);
   box-sizing: border-box;
-}
 
-/* ---------------- כרטיס ----------------
-   flex:1 so the card fills the available height instead of being
-   vertically centered with empty space above/below it. */
+  /* תיקון הבאג: כל ה-clamp() למטה נמדד יחסית לרוחב הקומפוננטה עצמה (cqw),
+     לא לחלון הדפדפן (vw). זה מה שגרם לקפיצות גודל כשה-stage שמסביב
+     משנה קנה מידה - vw לא "יודע" על השינוי הזה, cqw כן. */
+  container-type: inline-size;
+  min-width: 820px; /* לא נותן לכל הרכיב לקרוס מתחת לרוחב הזה */
+}
 
 .setting-card {
   flex: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1500px;
   margin: 0 auto;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.1);
-  padding: clamp(4px, 2vw, 14px);
+  padding: clamp(4px, 2cqw, 14px);
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -41,46 +43,49 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: clamp(8px, 1.4vw, 14px);
+  padding-bottom: clamp(8px, 1.4cqw, 14px);
   border-bottom: 1px solid var(--border-light);
 }
 
 .setting-card__title {
   font-weight: 800;
   letter-spacing: 1px;
-  font-size: clamp(15px, 1.9vw, 19px);
+  font-size: clamp(19px, 2.2cqw, 28px);
 }
 
 .setting-card__icon {
-  width: clamp(20px, 2.2vw, 26px);
-  height: clamp(20px, 2.2vw, 26px);
+  width: clamp(20px, 2.2cqw, 26px);
+  height: clamp(20px, 2.2cqw, 26px);
 }
 
 .setting-card__subtitle {
   flex: 0 0 auto;
   margin: 0;
-  font-size: clamp(16px, 1.45vw, 18px);
+  position: relative;
+  top: 4%;
+  font-size: clamp(19px, 1.85cqw, 25px);
   color: var(--text-muted);
   text-align: center;
 }
 
-/* ---------------- שורות ----------------
-   flex:1 + centered content: rows sit nicely centered in the remaining
-   vertical space, matching the reference instead of hugging the top. */
-
 .setting-card__rows {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: clamp(17px, 11.6vw, 59px);
-    min-height: 0;
-    overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(17px, 11.6cqw, 59px);
+  min-height: 0;
+  overflow-y: auto;
+  max-width: 90%;
+  position: relative;
+  margin: 0 auto;
+    min-width: 1100px;      /* חדש: לא נותן לעמודת השורות לרדת מתחת לרוחב הזה */
+
 }
 
 .setting-row {
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 40px;
   overflow: hidden;
   background: var(--row-bg);
   transition: background 0.2s ease;
@@ -94,41 +99,43 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(6px, 1vw, 10px);
-  padding: clamp(10px, 1.6vw, 14px) clamp(12px, 2vw, 18px);
-  min-height: clamp(38px, 5vw, 46px);
+  gap: clamp(6px, 1cqw, 10px);
+  padding: clamp(10px, 1.6cqw, 14px) clamp(12px, 2cqw, 18px);
+  min-height: clamp(38px, 5cqw, 46px);
+  height: clamp(58px, 14cqw, 106px);
 }
 
-/* ---------------- Bars ---------------- */
+/* ---------------- Bars ----------------
+   סדר החשיפה: ימין (0-400ms) -> טקסט (350-700ms) -> שמאל (700-900ms).
+   בסה"כ 900ms, מסונכרן עם ANIMATION_DURATION_MS ב-JS. */
+
 .setting-row__bars {
   display: flex;
   align-items: center;
-  gap: 4px;
-  max-width: 0; /* ברירת מחדל: חבוי לחלוטין */
+  gap: 2px;
   overflow: hidden;
-  transition: max-width 0.4s ease;
 }
 
-/* שונה: צד ימין הוא כעת הבר שנשאר גלוי במצב סגור (Idle) */
 .setting-row__bars--right {
-  max-width: 30px; /* מספיק בדיוק כדי להציג את הבר הבודד */
-  transition-delay: 500ms; /* נפתח אחרון, אחרי שהטקסט נחשף */
+  max-width: 30px;
+  transition: max-width 0.4s ease;
+  transition-delay: 0ms;
 }
 
 .setting-row--open .setting-row__bars--right {
-  max-width: 150px;
-  transition-delay: 500ms;
+  max-width: 190px;
+  transition-delay: 0ms;
 }
 
-/* שונה: צד שמאל כעת חבוי לחלוטין עד לפתיחה — שום דבר לא יושב כאן במנוחה */
 .setting-row__bars--left {
-  max-width: 0; 
-  transition-delay: 0ms;
+  max-width: 0;
+  transition: max-width 0.2s ease;
+  transition-delay: 700ms;
 }
 
 .setting-row--open .setting-row__bars--left {
   max-width: 150px;
-  transition-delay: 0ms;
+  transition-delay: 700ms;
 }
 
 .setting-row__bar-item {
@@ -139,8 +146,20 @@
   background: var(--icon-idle);
   transform: skewX(-18deg) scaleY(0.4);
   opacity: 0.4;
-  transition: background 0.3s ease, transform 0.35s ease, opacity 0.35s ease;
-  transition-delay: calc(var(--i) * 70ms);
+  transition-property: background, transform, opacity;
+  transition-timing-function: ease;
+}
+
+/* פס ימני - "נטענים" ברצף מהיר בתוך חלון 0-400ms */
+.setting-row__bars--right .setting-row__bar-item {
+  transition-duration: 0.3s;
+  transition-delay: calc(var(--i) * 30ms);
+}
+
+/* פס שמאלי - נטענים בתוך חלון 700-900ms */
+.setting-row__bars--left .setting-row__bar-item {
+  transition-duration: 0.15s;
+  transition-delay: calc(700ms + var(--i) * 15ms);
 }
 
 .setting-row--open .setting-row__bar-item {
@@ -149,7 +168,6 @@
   opacity: 1;
 }
 
-/* שונה: הבר הראשון בקבוצה הימנית הוא זה שתמיד גלוי חלקית במצב סגור */
 .setting-row__bars--right .setting-row__bar-item:first-child {
   opacity: 0.9;
   transform: skewX(-18deg) scaleY(0.7);
@@ -159,17 +177,18 @@
   transform: skewX(-18deg) scaleY(1);
 }
 
-/* ---------------- טקסט ---------------- */
+/* ---------------- טקסט ----------------
+   נחשף כ"וילון" שנפתח מימין לשמאל: inset(0 0 0 100%) הוא ריבוע ברוחב 0
+   שממוקם בקצה הימני, וכשה-inset השמאלי יורד ל-0% הריבוע מתרחב שמאלה. */
 
 .setting-row__label {
   flex: 1;
   min-width: 0;
   text-align: center;
-  font-size: clamp(16px, 1.6vw, 18px);
+  font-size: clamp(18px, 1.9cqw, 22px);
   line-height: 1.6;
-  animation: setting-label-in 0.3s ease;
-  animation-delay: 300ms;
-  animation-fill-mode: backwards;
+  animation: setting-label-reveal 0.35s ease-out both;
+  animation-delay: 350ms;
 }
 
 .setting-row--open .setting-row__label {
@@ -180,14 +199,14 @@
   font-weight: 600;
 }
 
-@keyframes setting-label-in {
+@keyframes setting-label-reveal {
   from {
-    opacity: 0;
-    transform: translateY(-3px);
+    clip-path: inset(0 0 0 100%);
+    opacity: 0.5;
   }
   to {
+    clip-path: inset(0 0 0 0%);
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -196,14 +215,14 @@
 .setting-confirm-pill {
   flex: 0 0 auto;
   align-self: center;
-  margin-top: 4px;
-  padding: 8px 32px;
+  margin-top: -10px; /* הועלה מעלה */
+  padding: 10px 34px;
   border: none;
   border-radius: 999px;
   background: #d8e6ec;
   color: #9fb4bd;
   font-weight: 700;
-  font-size: clamp(12px, 1.4vw, 14px);
+  font-size: clamp(15px, 1.8cqw, 18px);
   cursor: not-allowed;
   transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
@@ -224,7 +243,7 @@
     gap: 8px;
   }
   .setting-row__bars {
-    display: none; /* keeps narrow rows readable — remove to always show bars */
+    display: none;
   }
 }
 

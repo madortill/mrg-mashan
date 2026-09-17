@@ -41,3 +41,31 @@
   filter: grayscale(1);
   transform: scaleY(-1);
 }
+.laptop-outro__boot-loader {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+  z-index: 5;
+}
+
+.laptop-outro__boot-spinner {
+  width: clamp(2rem, 4cqw, 3.5rem);
+  height: clamp(2rem, 4cqw, 3.5rem);
+
+  border-radius: 50%;
+  border: clamp(0.18rem, 0.4cqw, 0.35rem) solid rgba(255, 255, 255, 0.22);
+  border-top-color: #ffffff;
+
+  animation: laptop-outro-spin 0.9s linear infinite;
+}
+
+@keyframes laptop-outro-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

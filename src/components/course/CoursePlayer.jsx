@@ -196,6 +196,7 @@ const COURSE_APPS = APP_ORDER.map((id) => ({
   ...(desktopAppsById.get(id) ?? {}),
   id,
   ...APP_CONTENT[id],
+  ...APP_GLOW_COLORS[id],
 }));
 
 const initialAppPages = Object.fromEntries(

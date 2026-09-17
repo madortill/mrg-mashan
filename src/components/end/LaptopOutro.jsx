@@ -2,6 +2,7 @@ import React, {
   useEffect,
   useLayoutEffect,
   useRef,
+  useState,
 } from "react";
 
 import { mountLaptop } from "./laptop-motion.js";
@@ -9,7 +10,8 @@ import "./LaptopOutro.css";
 
 import base from "../../assets/images/laptop-base.svg";
 import screen from "../../assets/images/laptop-screen.svg";
-import back from "../../assets/images/laptop-back.svg";
+import screenBlack from "../../assets/images/laptop-screen-black.svg";
+import back from "../../assets/images/laptop-back-flat.svg";
 
 export default function LaptopOutro({
   closed = false,
@@ -26,18 +28,39 @@ export default function LaptopOutro({
   const root = useRef(null);
   const controller = useRef(null);
   const complete = useRef(onComplete);
+  const bootTimerRef = useRef(null); // ⭐ כאן, לא בהמשך הקובץ
 
   complete.current = onComplete;
+
+  const [bootPhase, setBootPhase] = useState(
+    opening ? "booting" : "ready"
+  );
+
+  // ... כל שאר הקוד נשאר זהה, פשוט תמחק את השורה
+  // "const bootTimerRef = useRef(null);" שהופיעה בהמשך
 
   const width = framing === "original" ? 1524 : 1650;
   const height = framing === "original" ? 855 : 1045;
 
-  // Sets the initial position before the browser paints.
   useLayoutEffect(() => {
     const instance = mountLaptop(root.current, {
       duration,
       initialClosed: opening,
-      onComplete: () => complete.current?.(),
+      onComplete: () => {
+        // בפתיחה בלבד: המכסה נפתח -> מסך שחור עם לואדר
+        // למשך 2 שניות נוספות -> ואז עוברים למסך הרגיל
+        // ורק אז מודיעים להורה שהאנימציה הושלמה.
+        if (opening) {
+          const timer = setTimeout(() => {
+            setBootPhase("ready");
+            complete.current?.();
+          }, 500);
+
+          bootTimerRef.current = timer;
+        } else {
+          complete.current?.();
+        }
+      },
     });
 
     controller.current = instance;
@@ -45,8 +68,13 @@ export default function LaptopOutro({
     return () => {
       instance.destroy();
       controller.current = null;
+
+      if (bootTimerRef.current) {
+        clearTimeout(bootTimerRef.current);
+      }
     };
   }, [duration, framing, opening]);
+
 
   useEffect(() => {
     const content = root.current.querySelector(
@@ -60,6 +88,9 @@ export default function LaptopOutro({
       { animate: opening || closed }
     );
   }, [closed, duration, framing, opening]);
+
+  const isBooting = opening && bootPhase !== "ready";
+  const screenSrc = isBooting ? screenBlack : screen;
 
   return (
     <div
@@ -84,12 +115,21 @@ export default function LaptopOutro({
 
         <div className="laptop-outro__lid" data-lid>
           <div className="laptop-outro__front" data-front>
-            <img src={screen} alt="" draggable={false} />
+            <img src={screenSrc} alt="" draggable={false} />
 
             <div
               className="laptop-outro__content"
               aria-hidden={(!opening && closed) || undefined}
             >
+              {isBooting && (
+                <div
+                  className="laptop-outro__boot-loader"
+                  aria-hidden="true"
+                >
+                  <span className="laptop-outro__boot-spinner" />
+                </div>
+              )}
+
               {children}
             </div>
           </div>

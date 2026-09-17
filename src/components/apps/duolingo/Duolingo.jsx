@@ -38,6 +38,8 @@ function loadSavedAnswers() {
 }
 
 const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
+    const navigate = useNavigate();
+
   const currentIndex = typeof page === "number" ? page : 0;
   const setCurrentIndex = useCallback(
     (next) => {
@@ -117,14 +119,11 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
 
     setCurrentIndex(currentIndex + 1);
   }
-
-  function handleFinishConfirm() {
-    setShowFinishPopup(false);
-    onComplete?.();
-       const navigate = useNavigate();
-      navigate("/end");
-  }
-
+function handleFinishConfirm() {
+  setShowFinishPopup(false);
+  onComplete?.();
+  navigate("/end");
+}
   return (
     <div className="duolingo-app" dir="rtl">
       <div className="duolingo-header">
