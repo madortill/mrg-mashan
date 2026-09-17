@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import duolingoIcon from "../../../assets/images/apps/duolingoIcon.svg";
 import { questions } from "./duolingoData";
-import "./duolingo.css";
+import "./Duolingo.css";
 import { useNavigate } from "react-router-dom";
 
 const TOTAL_QUESTIONS = questions.length;
