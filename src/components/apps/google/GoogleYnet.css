@@ -1,6 +1,6 @@
 .ynet-div {
-  width: 87%;
-  margin: 0 auto;        /* מרכז את כל התוכן */
+  width: 84%;
+  margin: 0 auto;       
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +17,7 @@
   font-family: "ploni-bold";
   color: #000;
   text-align: center;
-  font-size: 4.2rem; /* קטן יותר כמו בתמונה */
+  font-size: 5.2rem; /* קטן יותר כמו בתמונה */
   font-weight: 700;
   margin: 0.8rem 0 0.2rem; /* מצמצם רווחים */
 }
@@ -25,8 +25,8 @@
 .writer-ynet {
   color: #6b6b6b;
   text-align: start;
-  font-size: 0.95rem;
-  margin: 0.2rem 0; /* כמעט בלי רווח */
+  font-size: 1.2rem;
+  margin: 0.5rem 0; /* כמעט בלי רווח */
 }
 .semi {
      text-align: end; 
@@ -35,12 +35,12 @@
 
 .text-ynet {
   text-align: start;
-  font-size: 1.25rem;
+  font-size: 1.65rem;
   color: #000;
-  padding: 0 1.5rem;
-  margin: 0.4rem 0 0.6rem; /* מצמצם רווחים */
-  line-height: 1.8rem;
-  letter-spacing: 3%;
+  padding: 0 2.5rem;
+  margin: 0.4rem 0 0.6rem; 
+  line-height:2.2rem;
+  letter-spacing: 1.9%;
 }
 
 .ynet__cta {
@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.9rem;
   border: none;
   border-radius: 2rem;
   background: #de1a1a;
@@ -82,10 +82,10 @@
   transition: max-height 0.6s ease, -webkit-text-fill-color 0.4s ease;
   text-align: start;
   padding: 0 1.5rem;
-  font-size: 1.25rem;
+  font-size: 1.65rem;
   line-height: 2rem;
-  margin-top: 0.4rem;
-    letter-spacing: 2.5%;
+  margin-top: 2.9rem;
+    letter-spacing: 1.5%;
 
 }
 

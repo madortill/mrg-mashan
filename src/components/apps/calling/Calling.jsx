@@ -1,7 +1,7 @@
 // Calling.jsx
 import { useState, useEffect, useRef, useCallback } from "react";
-import answerIcon from "../../../assets/images/answer.svg";
-import declineIcon from "../../../assets/images/decline.svg";
+import answerIcon from "../../../assets/images/answerClean.svg";
+import declineIcon from "../../../assets/images/rejectclean.svg";
 import soundOffIcon from "../../../assets/images/sound-off.svg";
 import soundOnIcon from "../../../assets/images/sound-on.svg";
 import callAudio from "../../../assets/audio/callAudio.mp3";
@@ -89,11 +89,11 @@ const Calling = ({ page, onPageChange, onNext, onComplete, onSpeechChange }) => 
     if (step === 1) {
       onSpeechChange('אתם בשיחה עם מר"ג. כשתסיימו, לחצו על כפתור הניתוק.');
     } else if (step === 2) {
-      onSpeechChange("דחיתם את השיחה - נשארה הודעה למרכז הגיוס.");
+      onSpeechChange("דחיתם את השיחה - מרכז הגיוס השאיר לכם הודעה.");
     } else if (step === 3) {
       onSpeechChange("");
     } else {
-      onSpeechChange('יש שיחה נכנסת ממרכז הגיוס - ענו או דחו כדי להמשיך.');
+      onSpeechChange('יש שיחה נכנסת ממרכז הגיוס - ענו כדי להמשיך.');
     }
   }, [step, isReturningVisit, onSpeechChange]);
 

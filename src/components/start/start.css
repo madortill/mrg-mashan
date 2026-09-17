@@ -708,7 +708,7 @@ body {
 .flight-plane {
   opacity: 0;
 
-  transform:rotate(45deg);
+  transform:rotate(-10deg);
   animation:
     show-flight-plane
     0.2s
@@ -1246,5 +1246,296 @@ body {
 
   .flight-route-mask {
     stroke-dashoffset: 0;
+  }
+}
+/* ========================================
+   חיבור הלפטופ המונפש לעיצוב ה-Start הקיים
+======================================== */
+
+.opening-page--motion {
+  position: relative;
+  font-family: "ploni", Arial, sans-serif;
+}
+
+/* שמירה על הלוגואים בפינה השמאלית */
+.opening-page--motion .opening-brand {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  width: clamp(110px, 14vw, 190px);
+  max-height: 80px;
+  object-fit: contain;
+  z-index: 9;
+  pointer-events: none;
+}
+
+/*
+  המיקום והגודל נשארים מה-laptop-wrapper המקורי.
+  מבטלים רק את תנועת הכניסה הישנה של כל המחשב:
+  פתיחת המכסה מנוהלת כעת בקובץ laptop-motion.
+*/
+.opening-page--motion .laptop-wrapper--motion {
+  animation: none;
+  transform: translateX(-50%);
+}
+
+/*
+  LaptopOutro כבר ממקם את התוכן בתוך המסך.
+  אין להפעיל עליו שוב את אחוזי המיקום הישנים.
+*/
+.opening-page--motion .laptop-screen--motion {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+/* משאירים את הפונט והצבע מהעיצוב הקיים */
+.opening-page--motion .opening-title {
+  white-space: normal;
+}
+
+.opening-page--motion .opening-title:focus {
+  outline: none;
+}
+
+/*
+  התוכן בתוך LaptopOutro נמדד ביחידות האיור
+  ומוקטן יחד עם המחשב, ולכן הכפתור צריך
+  מידות פנימיות גדולות יותר.
+*/
+.opening-page--motion .laptop-screen--motion .start-button {
+  min-height: 80px;
+  padding: 16px 42px;
+  gap: 12px;
+  font-size: 32px;
+}
+
+.opening-page--motion .start-button:focus-visible {
+  outline: 5px solid #07435d;
+  outline-offset: 6px;
+}
+
+/* תמיכה בשמות המחלקות של המטוס מהגרסה האחרונה */
+.opening-page--motion .start-screen__flight {
+  position: absolute;
+  left: -2%;
+  bottom: 6%;
+  width: 39%;
+  height: auto;
+  overflow: visible;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* התנועה במסלול כבר קובעת את כיוון המטוס */
+.opening-page--motion .flight-plane {
+  transform: none;
+}
+
+/* ========================================
+   אודות — כרטיס קטן בפינה הימנית העליונה
+======================================== */
+
+.opening-page--motion .start-about {
+  position: absolute;
+  top: max(44px, env(safe-area-inset-top));
+  right: max(46px, env(safe-area-inset-right));
+  bottom: auto;
+  left: auto;
+
+  width: max-content;
+  max-width: calc(100% - 32px);
+  margin: 0;
+  padding: 0;
+
+  z-index: 100;
+  direction: rtl;
+
+  font-family: "ploni", Arial, sans-serif;
+
+}
+.mapalRope{
+  position: absolute;
+  opacity: 70%;
+  top: -10%;
+  right: -20%;
+  z-index: 0;
+}
+.opening-page--motion .start-about__toggle {
+  display: block;
+  margin-right: 0;
+  margin-left: auto;
+
+  min-width: 74px;
+  min-height: 44px;
+  padding: 6px 16px;
+
+  border: 1px solid #80d4df;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #21758d;
+
+  font-family: "ploni", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.opening-page--motion .start-about__toggle:hover {
+  background: #ffffff;
+}
+
+.opening-page--motion .start-about__toggle:focus-visible {
+  outline: 3px solid #21758d;
+  outline-offset: 3px;
+}
+
+.opening-page--motion .start-about__card {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 2%;
+
+  width: 240px;
+  max-width: calc(100vw - 32px);
+
+  max-height: calc(100vh - 88px);
+  max-height: calc(100dvh - 88px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  padding: 22px 18px;
+
+  border: 1.5px solid #338fe6;
+  border-radius: 16px;
+
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgb(70 55 25 / 12%);
+
+  text-align: center;
+  font-family: "ploni", Arial, sans-serif;
+}
+
+/* מבטיח שהכרטיס באמת מוסתר לפני הפתיחה */
+.opening-page--motion .start-about__card[hidden] {
+  display: none;
+}
+
+.opening-page--motion .start-about__details {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  margin: 0;
+  padding: 0;
+      z-index: 50;
+
+}
+
+.opening-page--motion .start-about__details > div {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+      z-index: 50;
+
+}
+
+.opening-page--motion .start-about__details dt {
+  margin: 0 0 4px;
+
+  font-family: "ploni-bold", "ploni", Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.15;
+
+  color: #21758d;
+  z-index: 50;
+}
+
+.opening-page--motion .start-about__details dd {
+  margin: 0;
+
+  font-family: "ploni", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.3;
+
+  color: #4896ae;
+    z-index: 50;
+
+}
+
+/* ========================================
+   התאמות לתוכן המונפש במובייל
+======================================== */
+
+@media (max-width: 600px) {
+  .opening-page--motion .welcome-bar {
+    width: min(82vw, 38rem);
+    max-width: calc(100% - 24px);
+    padding-inline: 3rem;
+  }
+
+  .opening-page--motion .laptop-screen--motion .screen-content {
+    gap: 18px;
+    padding: 30px;
+        z-index: 50;
+
+  }
+
+  .opening-page--motion .laptop-screen--motion .opening-title {
+    max-width: 94%;
+    font-size: 80px;
+    line-height: 1.1;
+        z-index: 50;
+
+  }
+
+  .opening-page--motion .laptop-screen--motion .opening-icon {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+        z-index: 50;
+
+  }
+
+  .opening-page--motion .laptop-screen--motion .start-button {
+    min-height: 216px;
+    padding: 24px 65px;
+    font-size: 72px;
+        z-index: 50;
+
+  }
+
+  .opening-page--motion .start-about__card {
+    width: 220px;
+    padding: 18px 14px;
+        z-index: 50;
+
+  }
+
+  .opening-page--motion .start-about__details {
+    gap: 14px;
+    z-index: 50;
+  }
+
+  .opening-page--motion .start-about__details dt {
+    font-size: 21px;
+  }
+
+  .opening-page--motion .start-about__details dd {
+    font-size: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening-page--motion .start-screen__plane,
+  .opening-page--motion .flight-plane {
+    display: none;
   }
 }

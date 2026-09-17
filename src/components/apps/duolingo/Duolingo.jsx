@@ -1,11 +1,12 @@
-// Doualingo.jsx
+// duolingo.jsx
 import { useState, useEffect, useCallback } from "react";
-import doualingoIcon from "../../../assets/images/apps/doualingoIcon.svg";
-import { questions } from "./doualingoData";
-import "./Doualingo.css";
+import duolingoIcon from "../../../assets/images/apps/duolingoIcon.svg";
+import { questions } from "./duolingoData";
+import "./duolingo.css";
+import { useNavigate } from "react-router-dom";
 
 const TOTAL_QUESTIONS = questions.length;
-const STORAGE_KEY = "doualingo-progress";
+const STORAGE_KEY = "duolingo-progress";
 
 const ANSWER_PLACEHOLDER = "כתבו כאן את תשובתכם...";
 
@@ -36,7 +37,7 @@ function loadSavedAnswers() {
   }
 }
 
-const Doualingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
+const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
   const currentIndex = typeof page === "number" ? page : 0;
   const setCurrentIndex = useCallback(
     (next) => {
@@ -120,36 +121,38 @@ const Doualingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
   function handleFinishConfirm() {
     setShowFinishPopup(false);
     onComplete?.();
+       const navigate = useNavigate();
+      navigate("/end");
   }
 
   return (
-    <div className="doualingo-app" dir="rtl">
-      <div className="doualingo-header">
-        <span className="doualingo-header__title">doualingo</span>
+    <div className="duolingo-app" dir="rtl">
+      <div className="duolingo-header">
+        <span className="duolingo-header__title">duolingo</span>
         <img
-          className="doualingo-header__avatar"
-          src={doualingoIcon}
+          className="duolingo-header__avatar"
+          src={duolingoIcon}
           alt=""
         />
       </div>
 
-      <div className="doualingo-progress-row">
-        <span className="doualingo-progress-row__label">
+      <div className="duolingo-progress-row">
+        <span className="duolingo-progress-row__label">
           {currentIndex + 1}/{TOTAL_QUESTIONS}
         </span>
-        <div className="doualingo-progress-bar">
+        <div className="duolingo-progress-bar">
           <div
-            className="doualingo-progress-bar__fill"
+            className="duolingo-progress-bar__fill"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
       </div>
 
-      <div className="doualingo-body">
-        <p className="doualingo-question">{currentQuestion.question}</p>
+      <div className="duolingo-body">
+        <p className="duolingo-question">{currentQuestion.question}</p>
 
         <textarea
-          className="doualingo-answer-box"
+          className="duolingo-answer-box"
           value={currentAnswer.text}
           onChange={handleAnswerChange}
           placeholder={ANSWER_PLACEHOLDER}
@@ -159,7 +162,7 @@ const Doualingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
 
         <button
           type="button"
-          className="doualingo-check-btn"
+          className="duolingo-check-btn"
           onClick={handleCheck}
           disabled={currentAnswer.checked}
         >
@@ -167,19 +170,19 @@ const Doualingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
         </button>
 
         {currentAnswer.checked && (
-          <div className="doualingo-correct-answer">
-            <p className="doualingo-correct-answer__title">התשובה הנכונה</p>
-            <div className="doualingo-correct-answer__box">
+          <div className="duolingo-correct-answer">
+            <p className="duolingo-correct-answer__title">התשובה הנכונה</p>
+            <div className="duolingo-correct-answer__box">
               <p>{currentQuestion.correctAnswer}</p>
             </div>
           </div>
         )}
       </div>
 
-      <div className="doualingo-footer">
+      <div className="duolingo-footer">
         <button
           type="button"
-          className="doualingo-nav-btn doualingo-nav-btn--next"
+          className="duolingo-nav-btn duolingo-nav-btn--next"
           onClick={handleNext}
           disabled={!currentAnswer.checked}
         >
@@ -188,7 +191,7 @@ const Doualingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
 
         <button
           type="button"
-          className="doualingo-nav-btn doualingo-nav-btn--prev"
+          className="duolingo-nav-btn duolingo-nav-btn--prev"
           onClick={handlePrev}
           disabled={currentIndex === 0}
         >
@@ -197,14 +200,14 @@ const Doualingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
       </div>
 
       {showFinishPopup && (
-        <div className="doualingo-popup-layer">
-          <div className="doualingo-popup-backdrop" />
-          <div className="doualingo-popup">
-            <p className="doualingo-popup__title">כל הכבוד!</p>
-            <p className="doualingo-popup__text">סיימת את התרגול בהצלחה</p>
+        <div className="duolingo-popup-layer">
+          <div className="duolingo-popup-backdrop" />
+          <div className="duolingo-popup">
+            <p className="duolingo-popup__title">כל הכבוד!</p>
+            <p className="duolingo-popup__text">סיימת את התרגול בהצלחה</p>
             <button
               type="button"
-              className="doualingo-popup__btn"
+              className="duolingo-popup__btn"
               onClick={handleFinishConfirm}
             >
               סיום
@@ -216,4 +219,4 @@ const Doualingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
   );
 };
 
-export default Doualingo;
+export default duolingo;

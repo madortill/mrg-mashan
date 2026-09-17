@@ -5,7 +5,7 @@ import padletIcon from "./../../assets/images/apps/padlet.png";
 import chatgpt from "./../../assets/images/apps/chatgpt.png";
 import settingIcon from "./../../assets/images/apps/setting.svg";
 import targetIcon from "./../../assets/images/apps/target.png";
-import doualingoIcon from "./../../assets/images/apps/doualingoIcon.svg";
+import duolingoIcon from "./../../assets/images/apps/duolingoIcon.svg";
 import emptyDetailsIcon from "./../../assets/images/folder.svg";
 
 export const courseApps = [
@@ -83,9 +83,9 @@ export const courseApps = [
     },
   },
   {
-    id: "doualingo",
+    id: "duolingo",
     label: "דואלינג'",
-    icon: doualingoIcon,
+    icon: duolingoIcon,
     position: {
       top: "60%",
       right: "12.5%",

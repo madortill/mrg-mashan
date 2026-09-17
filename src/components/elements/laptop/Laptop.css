@@ -137,13 +137,15 @@ position: fix;
 
 .laptop__screen {
   position: absolute;
-  top: 9%;
-  left: 15%;
-  width: 79.6%;
-  height: 72.8%;
+  top: 8%;
+  left: 14.7%;
+  width: 79.1%;
+  height: 73.8%;
   overflow: hidden;
   container-type: inline-size;
   z-index: 2;
+  border-radius: 20px;
+  
 }
 
 .laptop__screen_target {

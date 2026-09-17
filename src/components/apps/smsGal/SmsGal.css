@@ -4,6 +4,8 @@
   position: absolute;
   inset: 0;
   pointer-events: none; /* רק האלמנטים הפנימיים לחיצים */
+    background: rgba(20, 26, 36, 0.35);
+
 }
 
 .smsgal-root > * {

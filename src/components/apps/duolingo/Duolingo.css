@@ -1,6 +1,6 @@
-/* Doualingo.css */
+/* duolingo.css */
 
-.doualingo-app {
+.duolingo-app {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -9,11 +9,17 @@
   background: #ffffff;
   border-radius: clamp(8px, 1.2vw, 14px);
   overflow: hidden;
+
+}
+
+.duolingo-app::selection {
+color: #141414;
+background-color: #58cc02;
 }
 
 /* ---------- כותרת ירוקה ---------- */
 
-.doualingo-header {
+.duolingo-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,14 +28,14 @@
   flex-shrink: 0;
 }
 
-.doualingo-header__title {
+.duolingo-header__title {
   color: #ffffff;
   font-weight: 800;
   font-size: clamp(22px, 2.6vw, 28px);
   letter-spacing: 0.2px;
 }
 
-.doualingo-header__avatar {
+.duolingo-header__avatar {
   width: clamp(34px, 4.5vw, 48px);
   height: clamp(34px, 4.5vw, 48px);
   border-radius: 50%;
@@ -40,7 +46,7 @@
 
 /* ---------- שורת ההתקדמות ---------- */
 
-.doualingo-progress-row {
+.duolingo-progress-row {
   display: flex;
   align-items: center;
   gap: clamp(8px, 1.4vw, 14px);
@@ -48,14 +54,14 @@
   flex-shrink: 0;
 }
 
-.doualingo-progress-row__label {
+.duolingo-progress-row__label {
   font-size: clamp(12px, 1.4vw, 15px);
   font-weight: 700;
   color: #1a2733;
   flex-shrink: 0;
 }
 
-.doualingo-progress-bar {
+.duolingo-progress-bar {
   flex: 1;
   height: clamp(8px, 1vw, 12px);
   background: #e5e5e5;
@@ -63,7 +69,7 @@
   overflow: hidden;
 }
 
-.doualingo-progress-bar__fill {
+.duolingo-progress-bar__fill {
   height: 100%;
   background: #58cc02;
   border-radius: 999px;
@@ -72,16 +78,19 @@
 
 /* ---------- גוף המסך ---------- */
 
-.doualingo-body {
+.duolingo-body {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: clamp(10px, 1.6vw, 16px);
   padding: clamp(16px, 2.4vw, 26px);
   overflow-y: auto;
+    justify-content: center;
+  justify-items: center;
+  
 }
 
-.doualingo-question {
+.duolingo-question {
   margin: 0;
   text-align: right;
   font-weight: 700;
@@ -89,9 +98,10 @@
   color: #1a2733;
 }
 
-.doualingo-answer-box {
-  width: 100%;
+.duolingo-answer-box {
+  width: 90%;
   min-height: clamp(70px, 11vw, 110px);
+  height: clamp(90px, 15vw, 150px);
   resize: none;
   border: 1.5px solid #d6d6d6;
   border-radius: clamp(10px, 1.4vw, 14px);
@@ -103,18 +113,18 @@
   background: #ffffff;
 }
 
-.doualingo-answer-box:disabled {
+.duolingo-answer-box:disabled {
   background: #f7f7f7;
   color: #9a9a9a;
   border-color: #e5e5e5;
 }
 
-.doualingo-answer-box::placeholder {
+.duolingo-answer-box::placeholder {
   color: #b7b7b7;
   font-style: italic;
 }
 
-.doualingo-check-btn {
+.duolingo-check-btn {
   align-self: flex-start;
   padding: clamp(7px, 1.1vw, 10px) clamp(20px, 3vw, 28px);
   border: none;
@@ -127,26 +137,27 @@
   transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
 }
 
-.doualingo-check-btn:hover:not(:disabled) {
+.duolingo-check-btn:hover:not(:disabled) {
   background: #4bb302;
   transform: translateY(-1px);
 }
 
-.doualingo-check-btn:disabled {
+.duolingo-check-btn:disabled {
   opacity: 0.6;
   cursor: default;
 }
 
 /* ---------- תשובה נכונה ---------- */
 
-.doualingo-correct-answer {
+.duolingo-correct-answer {
+  padding-top: 4%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  animation: doualingo-fade-in 0.25s ease-out;
+  gap: 10px;
+  animation: duolingo-fade-in 0.25s ease-out;
 }
 
-.doualingo-correct-answer__title {
+.duolingo-correct-answer__title {
   margin: 0;
   text-align: right;
   font-weight: 700;
@@ -154,14 +165,17 @@
   color: #1a2733;
 }
 
-.doualingo-correct-answer__box {
+.duolingo-correct-answer__box {
   border: 1.5px solid #58cc02;
   background: #eef9e6;
   border-radius: clamp(10px, 1.4vw, 14px);
   padding: clamp(10px, 1.4vw, 16px);
+    min-height: clamp(70px, 11vw, 110px);
+  height: clamp(90px, 15vw, 150px);
+  width: 90%;
 }
 
-.doualingo-correct-answer__box p {
+.duolingo-correct-answer__box p {
   margin: 0;
   text-align: right;
   font-size: clamp(18px, 2.6vw, 24px);
@@ -169,7 +183,7 @@
   color: #1a2733;
 }
 
-@keyframes doualingo-fade-in {
+@keyframes duolingo-fade-in {
   from {
     opacity: 0;
     transform: translateY(6px);
@@ -182,7 +196,7 @@
 
 /* ---------- כפתורי ניווט תחתונים ---------- */
 
-.doualingo-footer {
+.duolingo-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -191,11 +205,11 @@
 }
 
 /* בהתאם לתמונה: "הבא" בצד שמאל, "קודם" בצד ימין */
-.doualingo-footer {
+.duolingo-footer {
   flex-direction: row-reverse;
 }
 
-.doualingo-nav-btn {
+.duolingo-nav-btn {
   padding: clamp(8px, 1.2vw, 11px) clamp(18px, 2.6vw, 26px);
   border-radius: 999px;
   font-weight: 700;
@@ -205,38 +219,38 @@
   border: none;
 }
 
-.doualingo-nav-btn--next {
+.duolingo-nav-btn--next {
   background: #58cc02;
   color: #ffffff;
 }
 
-.doualingo-nav-btn--next:hover:not(:disabled) {
+.duolingo-nav-btn--next:hover:not(:disabled) {
   background: #4bb302;
   transform: translateY(-1px);
 }
 
-.doualingo-nav-btn--next:disabled {
+.duolingo-nav-btn--next:disabled {
   background: #cfe9b8;
   cursor: default;
 }
 
-.doualingo-nav-btn--prev {
+.duolingo-nav-btn--prev {
   background: #ececec;
   color: #9a9a9a;
 }
 
-.doualingo-nav-btn--prev:hover:not(:disabled) {
+.duolingo-nav-btn--prev:hover:not(:disabled) {
   background: #e0e0e0;
 }
 
-.doualingo-nav-btn--prev:disabled {
+.duolingo-nav-btn--prev:disabled {
   opacity: 0.6;
   cursor: default;
 }
 
 /* ---------- פופ-אפ סיום ---------- */
 
-.doualingo-popup-layer {
+.duolingo-popup-layer {
   position: absolute;
   inset: 0;
   display: flex;
@@ -245,13 +259,13 @@
   z-index: 10;
 }
 
-.doualingo-popup-backdrop {
+.duolingo-popup-backdrop {
   position: absolute;
   inset: 0;
   background: rgba(15, 23, 42, 0.45);
 }
 
-.doualingo-popup {
+.duolingo-popup {
   position: relative;
   z-index: 1;
   width: min(80%, 320px);
@@ -260,10 +274,10 @@
   padding: clamp(20px, 3vw, 30px);
   text-align: center;
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
-  animation: doualingo-pop-in 0.25s ease-out;
+  animation: duolingo-pop-in 0.25s ease-out;
 }
 
-@keyframes doualingo-pop-in {
+@keyframes duolingo-pop-in {
   from {
     transform: scale(0.92);
     opacity: 0;
@@ -274,20 +288,20 @@
   }
 }
 
-.doualingo-popup__title {
+.duolingo-popup__title {
   margin: 0 0 6px;
   font-size: clamp(20px, 2.6vw, 24px);
   font-weight: 800;
   color: #58cc02;
 }
 
-.doualingo-popup__text {
+.duolingo-popup__text {
   margin: 0 0 18px;
   font-size: clamp(18px, 2.6vw, 24px);
   color: #1a2733;
 }
 
-.doualingo-popup__btn {
+.duolingo-popup__btn {
   padding: clamp(8px, 1.3vw, 11px) clamp(28px, 4vw, 38px);
   border: none;
   border-radius: 999px;
@@ -298,33 +312,40 @@
   cursor: pointer;
 }
 
-.doualingo-popup__btn:hover {
+.duolingo-popup__btn:hover {
   background: #4bb302;
 }
 
 /* ---------- רספונסיביות ---------- */
 
 @media (max-width: 480px) {
-  .doualingo-footer {
+  .duolingo-footer {
     padding: 12px 14px;
   }
 
-  .doualingo-nav-btn {
+  .duolingo-nav-btn {
     padding: 8px 16px;
     font-size: 12px;
   }
 
-  .doualingo-body {
+  .duolingo-body {
     padding: 14px;
   }
 }
 
 @media (max-height: 480px) {
-  .doualingo-answer-box {
+  .duolingo-answer-box {
     min-height: 56px;
   }
-
-  .doualingo-body {
+  
+  .duolingo-body {
     gap: 8px;
   }
+}
+
+@media (max-width: 1750px) {
+  .character-bubble {
+    display: none;
+  }
+
 }

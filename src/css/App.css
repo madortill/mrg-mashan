@@ -109,7 +109,6 @@ img {
     left: 50%;
     transform: translateX(-50%);
     color: #88563B;
-    font-family: "Fredoka";
     font-size: clamp(1.5rem, 5vw, 4rem);
     font-style: normal;
     line-height: normal;
@@ -152,4 +151,7 @@ img {
     to {
         transform: rotate(360deg);
     }
+}
+.bahad11 {
+  width: 12vw;
 }

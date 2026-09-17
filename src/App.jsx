@@ -31,7 +31,7 @@ function App() {
     <>
       <div className="app">
             <div className="symbols">
-        <img src={logos} alt="bahad6" className="bahad6" />
+        <img src={logos} alt="bahad11" className="bahad11" />
       </div>
         <Routes>
                     <Route path="/" element={<StartPage />} />

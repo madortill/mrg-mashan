@@ -4,7 +4,7 @@
 
 
 import "./start.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import desk from "../../assets/images/desk_wide.svg";
@@ -17,8 +17,10 @@ import logo from "../../assets/images/logo.png";
 import searchIcon from "../../assets/images/search_icon.svg";
 import rope from "../../assets/images/rope2.svg";
 import openingIcon from "../../assets/images/BHD11Round.png";
+import logoWatermark from "../../assets/images/BHD11END.svg";
+import mapalRope from "../../assets/images/mapalRope2.svg";
+import LaptopOutro from "../end/LaptopOutro.jsx";
 
-const INTRO_DURATION_MS = 3900;
 
 const FLIGHT_PATH =
   "M -45 145 C 4 76 71 78 72 119 C 73 158 123 160 150 121 C 173 87 149 57 117 68 C 84 80 91 124 134 132 C 194 142 224 88 253 57 C 285 23 320 44 333 77 C 346 110 375 91 414 27";
@@ -264,94 +266,202 @@ function start() {
         draggable="false"
       />
 
-      {/* <LaptopIntro
-        onOpened={() =>
-          setLaptopIsOpen(true)
-        }
-      >
-        <StartScreenContent
-          visible={laptopIsOpen}
-          onStart={() =>
-            navigate(
-              "/learning/desktop",
-              { replace: true }
-            )
-          }
-        />
-      </LaptopIntro> */}
     </section>
   );
 }
+export default function StartPage({ nextPage }) {
+  const navigate = useNavigate();
 
+  const [ready, setReady] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
 
-
-function StartPage({ nextPage }) {
-  const [phase, setPhase] = useState("start");
-  const navigate = useNavigate(); // ה-Hook מוגדר כעת בצורה תקינה בתוך הקומפוננטה
-
-   const handleStartClick = () => {
-    console.log("press");
-    navigate("/learning");
-  }; 
+  const titleRef = useRef(null);
+  const aboutButtonRef = useRef(null);
 
   useEffect(() => {
-    const prefersReducedMotion =
-      window.matchMedia?.(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-
-    if (prefersReducedMotion) {
-      setPhase("start");
-      return undefined;
+    if (ready) {
+      titleRef.current?.focus({ preventScroll: true });
     }
+  }, [ready]);
 
-    const timer = window.setTimeout(() => {
-      setPhase("start");
-    }, INTRO_DURATION_MS);
+  const handleStartClick = () => {
+    if (typeof nextPage === "function") {
+      nextPage();
+    } else {
+      navigate("/learning");
+    }
+  };
 
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, []);
+  const closeAbout = () => {
+    setShowAbout(false);
+    aboutButtonRef.current?.focus();
+  };
 
   return (
     <main
-      className={`opening-page ${
-        phase === "start"
-          ? "opening-page-start"
-          : "opening-page-intro"
-      }`}
+      className="opening-page opening-page--motion"
+      dir="rtl"
     >
       <section className="opening-scene">
         <img
           src={backgroundDecor}
           className="background-decoration"
           alt=""
-          draggable="false"
+          draggable={false}
         />
 
         <img
           src={desk}
           className="desk"
           alt=""
-          draggable="false"
+          draggable={false}
         />
 
         <img
           src={plant}
           className="plant"
           alt=""
-          draggable="false"
+          draggable={false}
         />
 
-        {phase === "intro" ? (
-          <LaptopIntro />
-        ) : (
-          <StartLaptop nextPage={handleStartClick} />
+        {/* <img
+          src={logo}
+          className="opening-brand"
+          alt="לוגואי הארגונים"
+          draggable={false}
+        /> */}
+
+        {ready && (
+          <div className="welcome-bar">
+            <span className="welcome-text">
+              ברוכים הבאים!
+            </span>
+
+            <img
+              src={searchIcon}
+              className="welcome-search-icon"
+              alt=""
+              draggable={false}
+            />
+          </div>
         )}
+
+        <div className="laptop-wrapper laptop-wrapper--motion">
+          <LaptopOutro
+            opening
+            duration={3900}
+            framing="full"
+            lidLogoSrc={logoWatermark}
+            onComplete={() => setReady(true)}
+          >
+            {ready && (
+              <div className="laptop-screen laptop-screen--motion">
+                <img
+                  src={rope}
+                  className="screen-rope"
+                  alt=""
+                  draggable={false}
+                />
+
+                <AnimatedPlane />
+
+                <div className="screen-content">
+                  <h1
+                    className="opening-title"
+                    ref={titleRef}
+                    tabIndex={-1}
+                  >
+                    לומדת ממשקי עבודה מרכז גיוס
+                  </h1>
+
+                  <img
+                    src={openingIcon}
+                    className="opening-icon"
+                    alt=""
+                    draggable={false}
+                  />
+
+                  <button
+                    type="button"
+                    className="start-button"
+                    onClick={handleStartClick}
+                  >
+                    <span>להתחלת הלומדה</span>
+
+                    <span
+                      className="start-button-arrow"
+                      aria-hidden="true"
+                    >
+                      ›
+                    </span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </LaptopOutro>
+        </div>
       </section>
+
+      <div
+        className="start-about"
+        onKeyDown={(event) => {
+          if (event.key === "Escape" && showAbout) {
+            event.preventDefault();
+            closeAbout();
+          }
+        }}
+      >
+        <button
+          ref={aboutButtonRef}
+          type="button"
+          className="start-about__toggle"
+          aria-expanded={showAbout}
+          aria-controls="start-about-content"
+          onClick={() => setShowAbout((value) => !value)}
+        >
+          {showAbout ? "סגירת אודות" : "אודות"}
+        </button>
+
+        <div
+          id="start-about-content"
+          className="start-about__card"
+          hidden={!showAbout}
+          role="region"
+          aria-label="אודות הלומדה"
+        >
+          <img src={mapalRope}className="mapalRope"></img>
+          <dl className="start-about__details">
+            <div>
+              <dt>מפתחת ראשית:</dt>
+              <dd>רב"ט רעות מנה</dd>
+            </div>
+
+            <div>
+              <dt>גרפיקה:</dt>
+              <dd>
+                רב"ט רעות מנה
+                <br />
+                רב"ט דינה ליפשיץ
+              </dd>
+            </div>
+
+            <div>
+              <dt>מומחית תוכן:</dt>
+              <dd>סג"ם נויה חן</dd>
+            </div>
+
+            <div>
+              <dt>רמ"ד טי"ל:</dt>
+              <dd>סמ"ר קטיה מדבדב</dd>
+            </div>
+
+            <div>
+              <dt>גרסה:</dt>
+              <dd>ספטמבר 2026</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
     </main>
   );
 }
-
-export default StartPage;

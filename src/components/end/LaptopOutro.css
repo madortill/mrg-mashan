@@ -1,0 +1,43 @@
+.laptop-outro {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--laptop-view-width, 1650) / var(--laptop-view-height, 1045);
+  overflow: hidden;
+  isolation: isolate;
+  bottom: -10%;
+}
+.laptop-outro__scene {
+  position: absolute; left: 0; top: 0; width: 1650px; height: 1045px;
+  transform-origin: 0 0; direction: ltr;
+}
+.laptop-outro__base { position: absolute; inset: 0; width: 1650px; height: 1045px; }
+.laptop-outro__lid {
+  position: absolute; left: 0; top: 0; width: 1258px; height: 765px;
+  transform-origin: 0 0; will-change: transform;
+}
+.laptop-outro__front, .laptop-outro__back { position: absolute; inset: 0; width: 100%; height: 100%; }
+.laptop-outro__front > img { display: block; width: 100%; height: 100%; }
+.laptop-outro__back { visibility: hidden; }
+.laptop-outro__content {
+  position: absolute; left: 33px; top: 35.6382px; width: 1187px; height: 692.1px;
+  overflow: hidden; border-radius: 14px; direction: rtl;
+}
+.laptop-outro[data-state="closing"] .laptop-outro__content,
+.laptop-outro[data-state="closed"] .laptop-outro__content { pointer-events: none; }
+.laptop-outro__back-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.laptop-outro__lid-logo {
+  position: absolute;
+  left: 41%;
+  top: 22%;
+  width: 18%;
+  height: 56%;
+  object-fit: contain;
+  opacity: 0.13;
+  filter: grayscale(1);
+  transform: scaleY(-1);
+}

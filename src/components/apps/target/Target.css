@@ -26,15 +26,11 @@
   width: min(100%, 1000px);
   
   /* 1. שינוי גובה מלא לגובה לפי תוכן, כדי שלא יימתח סתם */
-  height: max-content; 
   
   margin-inline: auto;
-  padding: 0 18px;
 
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  
+  flex-direction: column;  
   justify-content: flex-start; 
   
   color: var(--target-text);
@@ -54,7 +50,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
+  padding-top: 4%;
 }
 
 
@@ -78,7 +75,7 @@
   color: #003a87;
   font-family: "rinat";
   
-  font-size: clamp(1.75rem, 4vw, 3.25rem);
+  font-size: clamp(1.95rem, 4vw, 3.25rem);
   font-weight: 700;
   line-height: 1;
 }
@@ -93,6 +90,8 @@
   font-family: "rinat"; 
   font-size: clamp(0.95rem, 1.8vw, 1.8rem);
   line-height: 1.1;
+    padding-bottom: 12%;
+
 }
 
 .target__pointer {
@@ -135,7 +134,7 @@
 .target__header-text {
   color: var(--target-text);
   font-family: var(--target-font);
-  font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+  font-size: clamp(1.5rem, 1.4vw, 1.4rem);
   font-weight: 400;
   line-height: 1.3;
   text-align: center;
@@ -178,7 +177,7 @@
 
 .target__box {
   grid-area: var(--area);
-  max-width: 280px;
+  max-width: 300px;
 
   min-height: clamp(74px, 8.5vw, 92px);
   padding: 10px 14px;
@@ -219,7 +218,7 @@
 
 .target__box-text {
   font-family: var(--target-font);
-  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  font-size: clamp(1.5rem, 1.4vw, 1.4rem);
   font-weight: 500;
   line-height: 1.3;
 
@@ -416,7 +415,7 @@
 
   color: #ffffff;
   font-family: var(--target-font);
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   font-weight: 400;
   line-height: 1;
   text-align: center;
@@ -455,7 +454,7 @@
 @media (max-height: 720px) {
   .target {
     gap: 8px;
-    padding-top: 8px;
+  padding-top: 9%;
   }
 
   .target__grid {

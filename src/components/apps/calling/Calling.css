@@ -49,13 +49,13 @@
 }
 
 .calling-modal--expanded {
-  width: 300px;
+  width: clamp(300px,30vw,400px);
   min-height: 210px;
-  padding-top: 34px;
+  padding-top: 24px;
 }
 
 .calling-modal__title {
-  font-size: 14px;
+  font-size: clamp(18px,2vw,22px);
   font-weight: 600;
   color: #1f2430;
   margin: 0 0 16px;
@@ -115,14 +115,14 @@
 }
 
 .calling-modal__timer {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
   color: #1f2430;
   margin: 0 0 14px;
 }
 
 .calling-modal__body-text {
-  font-size: 12.5px;
+  font-size: clamp(18px,2vw,22px);
   line-height: 1.65;
   color: #333c46;
   margin: 0 0 20px;

@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import "./CoursePlayer.css";
-// import "./CoursePlayer.responsive.css";
 
 import SpeechBubble from "../apps/excel/SpeechBubble";
 import Navbar from "../elements/navbar/Navbar";
@@ -16,7 +15,7 @@ import Chatgpt from "../apps/chatGPT/Chatgpt.jsx";
 import NewsToday from "../apps/newsToday/NewsToday.jsx";
 import Calling from "../apps/calling/Calling.jsx";
 import SmsGal from "../apps/smsGal/SmsGal.jsx";
-import Doualingo from "../apps/doualingo/Doualingo.jsx";
+import Duolingo from "../apps/duolingo/Duolingo.jsx";
 import IntroPopUp from "../elements/introPopUp/IntroPopUp.jsx";
 import Laptop from "../elements/laptop/Laptop";
 import DesktopHub from "../pages/DesktopHub/DesktopHub";
@@ -48,7 +47,7 @@ const APP_ORDER = [
   "newsToday",
   "calling",
   "smsGal",
-  "doualingo",
+  "duolingo",
 ];
 
 const APP_CONTENT = {
@@ -116,12 +115,12 @@ const APP_CONTENT = {
   label: "SmsGal",
   navbarTitle: 'תורנויות מר"ג',
   component: SmsGal,
-  laptopVariant: "empty",
+  laptopVariant: "home",
 },
-  doualingo: {
-  label: "Doualingo",
+  duolingo: {
+  label: "duolingo",
   navbarTitle: 'שאלות לסיכום',
-  component: Doualingo,
+  component: Duolingo,
   laptopVariant: "empty",
 }
 };
@@ -182,7 +181,7 @@ const APP_GLOW_COLORS = {
     glow2: "#64b5f6",
   },
 
-  doualingo: {
+  duolingo: {
     glow: "#58cc02",
     glow2: "#9be564",
   },
