@@ -22,6 +22,7 @@
   flex-direction: column;
   gap: 12px;
   width: 100%;
+  height: 90%;
   max-width: 1120px;
   flex: 1 1 auto;
   min-width: 0;
@@ -37,6 +38,8 @@
 
 /* --- מגרש המשחק --- */
 .ed-board {
+    height: 90%;
+
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -257,8 +260,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 58px;
-  height: 48px;
+  width: 7%;
+  height: 7%;
   background: #ef4444;
   color: #fff;
   border: none;
@@ -451,5 +454,443 @@
   .ed-side-row,
   .ed-cloud {
     transition: none;
+  }
+}
+
+
+
+
+
+
+
+
+
+/* ===== מעטפת המשחק ===== */
+
+.ed-wrapper {
+  container-name: empty-details;
+  container-type: inline-size;
+
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  gap: 1rem;
+  padding: 1rem;
+  overflow: auto;
+}
+
+/* ===== עמודת הלוח ===== */
+
+.ed-board-column {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1 1 0;
+  width: auto;
+  height: auto;
+  max-width: none;
+
+  min-width: 0;
+  min-height: 0;
+  gap: 0.65rem;
+}
+
+.ed-hint {
+  flex: 0 0 auto;
+  margin: 0;
+
+  font-size: clamp(1rem, 2.1cqw, 1.4rem);
+  line-height: 1.4;
+}
+
+/* ממלא את כל השטח שנותר בעמודה */
+.ed-board {
+  flex: 1 1 0;
+
+  width: 100%;
+  height: auto;
+  min-height: 15rem;
+  max-height: none;
+  aspect-ratio: auto;
+
+  border-radius: 1rem;
+}
+
+/* ===== רשימת הפריטים ===== */
+
+.ed-side {
+  flex: 0 0 clamp(11rem, 23cqw, 16rem);
+  width: auto;
+  min-width: 0;
+
+  padding: clamp(0.75rem, 1.6cqw, 1.25rem);
+  border-radius: 1rem;
+  overflow: auto;
+}
+
+.ed-side h3 {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.1rem, 2.1cqw, 1.5rem);
+  line-height: 1.3;
+}
+
+.ed-side-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.ed-side-row {
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 2.8rem;
+
+  gap: 0.55rem;
+  padding: 0.5rem 0.6rem;
+
+  font-size: clamp(0.9rem, 1.5cqw, 1.1rem);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.ed-side-icon {
+  width: 2.2rem;
+  height: 2.2rem;
+  flex: 0 0 2.2rem;
+}
+
+.ed-side-icon svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.ed-progress {
+  margin-top: 0.9rem;
+  font-size: clamp(0.9rem, 1.5cqw, 1.1rem);
+}
+
+/* ===== פופאפ ===== */
+
+.ed-overlay {
+  padding: clamp(0.65rem, 2cqw, 1.5rem);
+  overflow: auto;
+}
+
+.ed-popup {
+  flex: 0 1 34rem;
+
+  width: 100%;
+  max-width: 34rem;
+  min-width: 0;
+  min-height: 0;
+  max-height: 100%;
+
+  padding:
+    3.25rem
+    clamp(1rem, 3cqw, 2rem)
+    clamp(1rem, 2.5cqw, 1.75rem);
+
+  border-radius: 1.1rem;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.ed-popup-close {
+  top: 0.6rem;
+  left: 0.6rem;
+
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+
+  border-radius: 0.65rem;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.ed-popup-close svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.ed-popup h4 {
+  margin: 0 0 0.85rem;
+
+  font-size: clamp(1.3rem, 3cqw, 1.85rem);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.ed-popup p {
+  margin: 0;
+
+  font-size: clamp(1rem, 2cqw, 1.2rem);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.ed-help-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.ed-help-btn {
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+}
+
+/* הטיפ נפתח בתוך זרימת הפופאפ כדי שלא ייחתך */
+.ed-tooltip {
+  position: static;
+  inset: auto;
+  transform: none;
+
+  width: 100%;
+  max-width: 20rem;
+  margin-top: 0.75rem;
+  padding: 0.85rem;
+
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.ed-tooltip-placeholder {
+  height: auto;
+  min-height: 5rem;
+  aspect-ratio: 2 / 1;
+}
+
+.ed-final-list {
+  margin: 1rem 0 1.25rem;
+  gap: 0.6rem;
+}
+
+.ed-final-item {
+  padding: 0.75rem 0.85rem;
+  font-size: clamp(0.95rem, 1.8cqw, 1.1rem);
+  line-height: 1.5;
+}
+
+.ed-final-btn {
+  max-width: 100%;
+  min-height: 2.75rem;
+  padding: 0.75rem 1.75rem;
+
+  font-size: 1rem;
+  line-height: 1.3;
+  white-space: normal;
+}
+
+/* ===== מעטפת צרה — הרשימה מתחת למשחק ===== */
+
+@container empty-details (max-width: 42rem) {
+  .ed-board-column {
+    /* העמודה נשארת במעטפת; הרשימה תמוקם בתוכה חזותית
+       באמצעות שינוי כיוון המעטפת בהמשך */
+    min-height: 0;
+  }
+
+  .ed-side {
+    flex: 0 0 auto;
+    width: 100%;
+    max-height: 10rem;
+    padding: 0.65rem;
+  }
+
+  .ed-side h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+  }
+
+  .ed-side-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .ed-side-row {
+    min-height: 2.4rem;
+    padding: 0.4rem;
+    font-size: 0.85rem;
+  }
+
+  .ed-side-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    flex-basis: 1.8rem;
+  }
+
+  .ed-side-icon svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .ed-progress {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+  }
+}
+
+/*
+  Flex wrap מאפשר מעבר לפי רוחב המעטפת עצמה.
+  כאשר אין מקום ללוח ולרשימה יחד, הרשימה יורדת שורה.
+*/
+.ed-wrapper {
+  flex-wrap: wrap;
+}
+
+.ed-board-column {
+  flex-basis: 24rem;
+}
+
+@container empty-details (max-width: 42rem) {
+  .ed-board-column {
+    flex: 1 1 100%;
+  }
+}
+.ed-help-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+
+  width: 100%;
+  min-width: 0;
+  margin-top: 1rem;
+}
+
+.ed-help-image {
+  width: 100%;
+  min-width: 0;
+}
+
+.ed-help-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+/* תמונה מעט גדולה יותר בתוך הפופאפ */
+.ed-help-image {
+  width: calc(100% + 1rem);
+  max-width: none;
+  align-self: center;
+  padding: 0.4rem;
+}
+
+.ed-help-image-button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  border-radius: 0.65rem;
+  background: transparent;
+  cursor: zoom-in;
+
+  animation: ed-image-pulse 2.6s ease-in-out infinite;
+}
+
+.ed-help-image-button img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: inherit;
+}
+
+.ed-help-image-button:hover,
+.ed-help-image-button:focus-visible {
+  animation: none;
+}
+
+.ed-help-image-button:focus-visible {
+  outline: 0.2rem solid #0ea5a8;
+  outline-offset: 0.25rem;
+}
+
+@keyframes ed-image-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(14, 165, 168, 0);
+  }
+
+  50% {
+    transform: scale(1.025);
+    box-shadow: 0 0 0.85rem rgba(14, 165, 168, 0.25);
+  }
+}
+
+/* התמונה המוגדלת — מעל כל המסך */
+.ed-image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4.5rem 1rem 1.5rem;
+  background: rgba(15, 23, 42, 0.88);
+  cursor: zoom-out;
+  overscroll-behavior: contain;
+}
+
+.ed-image-lightbox > img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+
+  border-radius: 0.65rem;
+  background: #fff;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.35);
+  cursor: default;
+}
+
+.ed-image-lightbox__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  color: #111827;
+  cursor: pointer;
+}
+
+.ed-image-lightbox__close:focus-visible {
+  outline: 0.2rem solid #38bdf8;
+  outline-offset: 0.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ed-help-image-button {
+    animation: none;
   }
 }

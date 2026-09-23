@@ -292,3 +292,117 @@
   color: rgba(255, 255, 255, 0.45);
   text-shadow: none;
 }
+
+
+.desktop-app-hotspot__icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.desktop-app-hotspot--locked {
+  opacity: 0.52;
+  filter: grayscale(0.95) saturate(0.72);
+  cursor: default;
+}
+
+
+
+.desktop-app-hotspot--current:hover {
+  transform: scale(1.055);
+}
+
+.desktop-app-hotspot:focus-visible {
+  outline: clamp(2px, 0.24cqw, 4px) solid #ffffff;
+  outline-offset: clamp(2px, 0.3cqw, 5px);
+}
+
+
+
+
+@media (max-height: 760px) {
+    .desktop-hub__rope-button {
+        top: -1%;
+        width: clamp(58px, 12.5cqw, 140px);
+    }
+
+  .desktop-app-hotspot {
+    width: var(--desktop-app-size, clamp(38px, 6.9cqw, 76px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop-hub__rope-button--glowing .desktop-hub__rope,
+  .desktop-app-hotspot--current {
+    animation: none;
+  }
+}
+/* הקטנה עדינה של האפליקציות */
+.desktop-app-hotspot {
+  scale: 0.9;
+}
+
+/* ביקרנו, אך עדיין לא השלמנו */
+.desktop-app-hotspot--visited:not(
+  .desktop-app-hotspot--completed
+):not(
+  .desktop-app-hotspot--current
+):not(
+  .desktop-app-hotspot--locked
+) .desktop-app-hotspot__icon {
+  opacity: 0.88;
+  filter: saturate(0.8);
+}
+
+/* אפליקציה שהושלמה */
+.desktop-app-hotspot--completed:not(
+  .desktop-app-hotspot--current
+):not(
+  .desktop-app-hotspot--locked
+) .desktop-app-hotspot__icon {
+  opacity: 0.68;
+  filter: saturate(0.50);
+  animation: none;
+    transition: opacity 300ms, filter 200ms, scale 300ms; 
+
+}
+
+/* במעבר עכבר או ניווט מקלדת חוזרת להדגשה */
+.desktop-app-hotspot:is(
+  .desktop-app-hotspot--visited,
+  .desktop-app-hotspot--completed
+):not(
+  .desktop-app-hotspot--locked
+):is(
+  :hover,
+  :focus-visible
+) .desktop-app-hotspot__icon {
+  opacity: 0.95;
+  transform: scale(1.03);
+  transition: 30ms;
+  filter: saturate(0.9);
+}
+
+/* הגדרות — קטנות יותר, בפינה הימנית התחתונה */
+.desktop-app-hotspot--settings {
+  top: auto !important;
+  right: 3.5%;
+  bottom: 2%;
+  scale: 0.65;
+  transform-origin: bottom right;
+}
+
+/* מניעת תנועה גם באייקונים עצמם */
+@media (prefers-reduced-motion: reduce) {
+  .desktop-app-hotspot__icon--glowing {
+    animation: none;
+  }
+}
+.desktop-hub__rope-button:not(
+  .desktop-hub__rope-button--glowing
+) .desktop-hub__rope {
+  animation: none;
+}

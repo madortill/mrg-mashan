@@ -10,14 +10,10 @@ const STORAGE_KEY = "duolingo-progress";
 
 const ANSWER_PLACEHOLDER = "כתבו כאן את תשובתכם...";
 
-// ---------------------------------------------------------------------------
-// מצב ברירת מחדל: מערך באורך מספר השאלות, כל איבר = { text, checked }
-// ---------------------------------------------------------------------------
 function createDefaultAnswers() {
   return questions.map(() => ({ text: "", checked: false }));
 }
 
-// טעינת מצב שמור מ-sessionStorage (אם המשתמש כבר ענה על חלק מהשאלות)
 function loadSavedAnswers() {
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
@@ -38,7 +34,7 @@ function loadSavedAnswers() {
 }
 
 const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const currentIndex = typeof page === "number" ? page : 0;
   const setCurrentIndex = useCallback(
@@ -50,6 +46,8 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
 
   const [answers, setAnswers] = useState(loadSavedAnswers);
   const [showFinishPopup, setShowFinishPopup] = useState(false);
+  // סטייט חדש לשליטה בפופ-אפ האזהרה לפני נעילת התשובה
+  const [showLockPopup, setShowLockPopup] = useState(false);
 
   const currentQuestion = questions[currentIndex];
   const currentAnswer = answers[currentIndex];
@@ -57,7 +55,9 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
   const completedCount = answers.filter((a) => a.checked).length;
   const progressPercent = (completedCount / TOTAL_QUESTIONS) * 100;
 
-  // שמירה אוטומטית בכל שינוי תשובות, כדי שחזרה אחורה / כניסה מחדש תשמור מצב
+  // בדיקה האם המשתמש הקליד טקסט כלשהו (מתעלם מרווחים בלבד)
+  const isAnswerEmpty = !currentAnswer.text.trim();
+
   useEffect(() => {
     try {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
@@ -66,7 +66,6 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
     }
   }, [answers]);
 
-  // טקסט בועה מנחה, לפי מצב השאלה הנוכחית
   useEffect(() => {
     if (typeof onSpeechChange !== "function") return;
 
@@ -84,7 +83,7 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleAnswerChange(event) {
-    if (currentAnswer.checked) return; // נעול - אי אפשר לשנות אחרי בדיקה
+    if (currentAnswer.checked) return;
 
     const value = event.target.value;
     setAnswers((previous) => {
@@ -94,9 +93,15 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
     });
   }
 
-  function handleCheck() {
-    if (currentAnswer.checked) return;
+  // פונקציה שרק פותחת את פופ-אפ האזהרה
+  function handleCheckClick() {
+    if (currentAnswer.checked || isAnswerEmpty) return;
+    setShowLockPopup(true);
+  }
 
+  // אישור סופי בפופ-אפ - נועל את התשובה ומציג את הפתרון
+  function handleConfirmLock() {
+    setShowLockPopup(false);
     setAnswers((previous) => {
       const next = [...previous];
       next[currentIndex] = { ...next[currentIndex], checked: true };
@@ -110,7 +115,7 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
   }
 
   function handleNext() {
-    if (!currentAnswer.checked) return; // לא ניתן להתקדם בלי לבדוק
+    if (!currentAnswer.checked) return;
 
     if (isLastQuestion) {
       setShowFinishPopup(true);
@@ -119,20 +124,18 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
 
     setCurrentIndex(currentIndex + 1);
   }
-function handleFinishConfirm() {
-  setShowFinishPopup(false);
-  onComplete?.();
-  navigate("/end");
-}
+
+  function handleFinishConfirm() {
+    setShowFinishPopup(false);
+    onComplete?.();
+    navigate("/end");
+  }
+
   return (
     <div className="duolingo-app" dir="rtl">
       <div className="duolingo-header">
         <span className="duolingo-header__title">duolingo</span>
-        <img
-          className="duolingo-header__avatar"
-          src={duolingoIcon}
-          alt=""
-        />
+        <img className="duolingo-header__avatar" src={duolingoIcon} alt="" />
       </div>
 
       <div className="duolingo-progress-row">
@@ -162,8 +165,9 @@ function handleFinishConfirm() {
         <button
           type="button"
           className="duolingo-check-btn"
-          onClick={handleCheck}
-          disabled={currentAnswer.checked}
+          onClick={handleCheckClick}
+          // הכפתור חסום אם כבר נבדק, או אם תיבת הטקסט ריקה
+          disabled={currentAnswer.checked || isAnswerEmpty}
         >
           לבדיקה
         </button>
@@ -198,6 +202,35 @@ function handleFinishConfirm() {
         </button>
       </div>
 
+      {/* פופ-אפ אזהרה לפני הגשת תשובה ונעילתה */}
+      {showLockPopup && (
+        <div className="duolingo-popup-layer">
+          <div className="duolingo-popup-backdrop" onClick={() => setShowLockPopup(false)} />
+          <div className="duolingo-popup">
+            <p className="duolingo-popup__title">שימו לב!</p>
+            <p className="duolingo-popup__text">לאחר ההגשה לא ניתן יהיה לערוך או לשנות את התשובה. האם להמשיך?</p>
+            <div className="duolingo-popup__actions" style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '15px' }}>
+              <button
+                type="button"
+                className="duolingo-popup__btn"
+                onClick={handleConfirmLock}
+              >
+                כן, להגיש
+              </button>
+              <button
+                type="button"
+                className="duolingo-popup__btn duolingo-popup__btn--cancel"
+                onClick={() => setShowLockPopup(false)}
+                style={{ backgroundColor: '#ccc', color: '#333' }}
+              >
+                חזרה לעריכה
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* פופ-אפ סיום האפליקציה */}
       {showFinishPopup && (
         <div className="duolingo-popup-layer">
           <div className="duolingo-popup-backdrop" />
