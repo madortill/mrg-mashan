@@ -24,7 +24,7 @@ const SEQUENTIAL_MESSAGES = [
 ];
 
 const SENDER_NAME = 'מערכת "גל"';
-const SEND_DELAY_MS = 1100; // זמן "שולח..." בין הודעה להודעה
+const SEND_DELAY_MS = 1500; // זמן "שולח..." בין הודעה להודעה
 
 const getTimestamp = () => {
   const now = new Date();
@@ -103,18 +103,27 @@ const SmsGal = ({
     setUnderstoodClicked(true);
   }
 
+// function handleGoToHolidayTable() {
+//   // מעבר ישיר לאקסל לטבלת כוננות לחג
+//   if (typeof onJumpToApp === "function") {
+//     onJumpToApp("excel", HOLIDAY_READINESS_PAGE);
+//   }
+
+//   // סימון SmsGal כקומפוננטה שהסתיימה
+//   if (typeof onComplete === "function") {
+//     onComplete();
+//   }
+// }
 function handleGoToHolidayTable() {
-  // מעבר ישיר לאקסל לטבלת כוננות לחג
+  // מעבר ישיר לאקסל לטבלת כוננות לחג.
+  // "smsGal" מועבר כ-completionAppId כדי שכשה-Excel יקרא ל-onComplete
+  // (בלחיצה על "סיום" בטבלת החג), זה יסמן את smsGal כמושלם ולא את excel.
   if (typeof onJumpToApp === "function") {
-    onJumpToApp("excel", HOLIDAY_READINESS_PAGE);
+    onJumpToApp("excel", HOLIDAY_READINESS_PAGE, "smsGal");
   }
-
-  // סימון SmsGal כקומפוננטה שהסתיימה
-  if (typeof onComplete === "function") {
-    onComplete();
-  }
+  // בלי onComplete כאן! זה קורה עכשיו אוטומטית מ-Excel.goNext
+  // כשהמשתמש בפועל לוחץ "סיום" על הטבלה.
 }
-
   const allSent = sentCount >= SEQUENTIAL_MESSAGES.length;
 
   return (

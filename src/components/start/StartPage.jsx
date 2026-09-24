@@ -15,6 +15,7 @@ import laptopOpening from "../../assets/images/computerClean.svg";
 import { motion } from "framer-motion";
 
 import logo from "../../assets/images/logo.png";
+import me from "../../assets/images/reut.svg";
 import searchIcon from "../../assets/images/search_icon.svg";
 import rope from "../../assets/images/rope2.svg";
 import openingIcon from "../../assets/images/BHD11Round.png";
@@ -28,9 +29,32 @@ const FLIGHT_PATH =
 
 
 
+// function PlaneShape() {
+//   return (
+//     // ⭐ סיבוב תיקון קבוע: מיישר את "האף" של הצורה לאורך ציר ה-X (0°)
+//     // אם הזווית עדיין לא מדויקת, שנה רק את המספר הזה
+//     <g transform="translate(-25 -20) rotate(20, 25, 20)">
+//       <path
+//         className="plane-main-shape"
+//         d="M3 19 L48 2 L32 40 L22 26 L11 34 L15 23 Z"
+//       />
+
+//       <path
+//         className="plane-fold-shape"
+//         d="M15 23 L35 11 L22 26"
+//       />
+
+//       <path
+//         className="plane-detail-shape"
+//         d="M22 26 L32 40"
+//       />
+//     </g>
+//   );
+// }
 function PlaneShape() {
   return (
-    <g transform="translate(-25 -20)">
+    // ⭐ שנה רק את המספר הזה (כרגע 0) כדי לכוון את זווית האף
+    <g transform="translate(-25 -20) rotate(66, 25, 20)">
       <path
         className="plane-main-shape"
         d="M3 19 L48 2 L32 40 L22 26 L11 34 L15 23 Z"
@@ -48,8 +72,6 @@ function PlaneShape() {
     </g>
   );
 }
-
-
 
 function AnimatedPlane() {
   return (
@@ -97,16 +119,16 @@ function AnimatedPlane() {
 >
   <mpath href="#opening-flight-route" />
 </animateMotion>
-<animateTransform
+{/* <animateTransform
   attributeName="transform"
   type="rotate"
   additive="sum"
   from="0"
-  to="-15"           /* ← כאן תכייל את המספר */
+  to="-30"        
   begin="3.2s"
   dur="0.01s"
   fill="freeze"
-/>
+/> */}
 
         <PlaneShape />
       </g>
@@ -114,56 +136,6 @@ function AnimatedPlane() {
   );
 }
 
-
-/* ========================================
-   אנימציית פתיחת הלפטופ
-
-   משתמשים באותה תמונה פעמיים:
-   שכבה אחת לבסיס ושכבה אחת למכסה.
-======================================== */
-
-function LaptopIntro() {
-  return (
-    <div className="intro-laptop" aria-hidden="true">
-      {/* שומר על יחס הגובה והרוחב של התמונה */}
-      <img
-        src={laptopOpening}
-        className="intro-laptop-sizer"
-        alt=""
-        draggable="false"
-      />
-
-      {/* החלק התחתון של המחשב */}
-      <div className="intro-laptop-base">
-        <img
-          src={laptopOpening}
-          className="intro-laptop-part"
-          alt=""
-          draggable="false"
-        />
-      </div>
-
-      {/* המכסה שנפתח */}
-      <div className="intro-laptop-lid">
-        <img
-          src={laptopOpening}
-          className="intro-laptop-part"
-          alt=""
-          draggable="false"
-        />
-
-        {/* המסך שנדלק */}
-        <div className="intro-screen-power">
-          <span className="intro-boot-line" />
-
-          <span className="intro-power-core" />
-        </div>
-      </div>
-
-      <div className="intro-laptop-shadow" />
-    </div>
-  );
-}
 
 
 /* ========================================
@@ -359,7 +331,7 @@ export default function StartPage({ nextPage }) {
         )}
 
 <motion.div
-  layoutId="app-laptop"
+  // layoutId="app-laptop"
   className="laptop-wrapper laptop-wrapper--motion"
   // transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
     initial={{ opacity: 1 }}
@@ -449,35 +421,42 @@ export default function StartPage({ nextPage }) {
         >
           <img src={mapalRope}className="mapalRope"></img>
           <dl className="start-about__details">
-            <div>
-              <dt>מפתחת ראשית:</dt>
-              <dd>רב"ט רעות מנה</dd>
-            </div>
+  <div>
+    <dt>מפתחת ראשית:</dt>
+    <dd>רב"ט רעות מנה</dd>
+  </div>
 
-            <div>
-              <dt>גרפיקה:</dt>
-              <dd>
-                רב"ט רעות מנה
-                <br />
-                רב"ט דינה ליפשיץ
-              </dd>
-            </div>
+  <div>
+    <dt>גרפיקה:</dt>
+    <dd>
+      רב"ט רעות מנה
+      <br />
+      רב"ט דינה ליפשיץ
+    </dd>
+  </div>
 
-            <div>
-              <dt>מומחית תוכן:</dt>
-              <dd>סג"ם נויה חן</dd>
-            </div>
+  <div>
+    <dt>מומחית תוכן:</dt>
+    <dd>סג"ם נויה חן</dd>
+  </div>
 
-            <div>
-              <dt>רמ"ד טי"ל:</dt>
-              <dd>סמ"ר קטיה מדבדב</dd>
-            </div>
+  <div>
+    <dt>רמ"ד טי"ל:</dt>
+    <dd>סמ"ר קטיה מדבדב</dd>
+  </div>
 
-            <div>
-              <dt>גרסה:</dt>
-              <dd>ספטמבר 2026</dd>
-            </div>
-          </dl>
+  <div>
+    <dt>גרסה:</dt>
+    <dd>ספטמבר 2026</dd>
+  </div>
+</dl>
+
+<div className="start-about__image">
+  <img
+    src={me}
+    alt=""
+  />
+</div>
         </div>
       </div>
     </main>

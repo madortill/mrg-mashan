@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const TOTAL_QUESTIONS = questions.length;
 const STORAGE_KEY = "duolingo-progress";
+const POPUP_SEEN_KEY = "duolingo-popup-seen"; // מפתח חדש לשמירת מצב הפופ-אפ
 
 const ANSWER_PLACEHOLDER = "כתבו כאן את תשובתכם...";
 
@@ -46,8 +47,12 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
 
   const [answers, setAnswers] = useState(loadSavedAnswers);
   const [showFinishPopup, setShowFinishPopup] = useState(false);
-  // סטייט חדש לשליטה בפופ-אפ האזהרה לפני נעילת התשובה
   const [showLockPopup, setShowLockPopup] = useState(false);
+  
+  // סטייט חדש: בודק האם המשתמש כבר נחשף לפופ-אפ האזהרה בעבר
+  const [hasSeenLockPopup, setHasSeenLockPopup] = useState(() => {
+    return sessionStorage.getItem(POPUP_SEEN_KEY) === "true";
+  });
 
   const currentQuestion = questions[currentIndex];
   const currentAnswer = answers[currentIndex];
@@ -55,7 +60,6 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
   const completedCount = answers.filter((a) => a.checked).length;
   const progressPercent = (completedCount / TOTAL_QUESTIONS) * 100;
 
-  // בדיקה האם המשתמש הקליד טקסט כלשהו (מתעלם מרווחים בלבד)
   const isAnswerEmpty = !currentAnswer.text.trim();
 
   useEffect(() => {
@@ -93,20 +97,38 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
     });
   }
 
-  // פונקציה שרק פותחת את פופ-אפ האזהרה
+  // פונקציית הבדיקה המעודכנת
   function handleCheckClick() {
     if (currentAnswer.checked || isAnswerEmpty) return;
-    setShowLockPopup(true);
+
+    if (hasSeenLockPopup) {
+      // אם הוא כבר ראה את הפופ-אפ בעבר, נועלים מיד ללא אזהרה נוספת
+      lockCurrentAnswer();
+    } else {
+      // אם זו הפעם הראשונה, מציגים את הפופ-אפ
+      setShowLockPopup(true);
+    }
   }
 
-  // אישור סופי בפופ-אפ - נועל את התשובה ומציג את הפתרון
-  function handleConfirmLock() {
-    setShowLockPopup(false);
+  // לוגיקת נעילת התשובה שפוצלה לפונקציה נפרדת כדי למנוע כפל קוד
+  function lockCurrentAnswer() {
     setAnswers((previous) => {
       const next = [...previous];
       next[currentIndex] = { ...next[currentIndex], checked: true };
       return next;
     });
+  }
+
+  // אישור סופי בפופ-אפ - מופעל רק בפעם הראשונה
+  function handleConfirmLock() {
+    setShowLockPopup(false);
+    setHasSeenLockPopup(true);
+    try {
+      sessionStorage.setItem(POPUP_SEEN_KEY, "true");
+    } catch {
+      /* מתעלמים משגיאת אחסון */
+    }
+    lockCurrentAnswer();
   }
 
   function handlePrev() {
@@ -166,15 +188,14 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
           type="button"
           className="duolingo-check-btn"
           onClick={handleCheckClick}
-          // הכפתור חסום אם כבר נבדק, או אם תיבת הטקסט ריקה
           disabled={currentAnswer.checked || isAnswerEmpty}
         >
-          לבדיקה
+          הגש
         </button>
 
         {currentAnswer.checked && (
           <div className="duolingo-correct-answer">
-            <p className="duolingo-correct-answer__title">התשובה הנכונה</p>
+            <p className="duolingo-correct-answer__title"> התשובה הנכונה</p>
             <div className="duolingo-correct-answer__box">
               <p>{currentQuestion.correctAnswer}</p>
             </div>
@@ -202,7 +223,6 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
         </button>
       </div>
 
-      {/* פופ-אפ אזהרה לפני הגשת תשובה ונעילתה */}
       {showLockPopup && (
         <div className="duolingo-popup-layer">
           <div className="duolingo-popup-backdrop" onClick={() => setShowLockPopup(false)} />
@@ -230,7 +250,6 @@ const duolingo = ({ page, onPageChange, onComplete, onSpeechChange }) => {
         </div>
       )}
 
-      {/* פופ-אפ סיום האפליקציה */}
       {showFinishPopup && (
         <div className="duolingo-popup-layer">
           <div className="duolingo-popup-backdrop" />

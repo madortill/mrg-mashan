@@ -1,6 +1,8 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import "./Chatgpt.css";
 import chatIcon from "../../../assets/images/apps/chatgpt.png";
+// 1. ייבוא תמונת הטבלה (שנה את הנתיב והשם בהתאם למיקום המדויק אצלך)
+import tableImage from "../../../assets/images/chatTable.svg";
 
 const messageBlocks = [
   {
@@ -32,15 +34,10 @@ const messageBlocks = [
     heading: "לכל כלל יש יוצא מן הכלל!",
     paragraphs: ["ישנם מקרים בהם החייל יאויש אוטומטית בסוג איוש בלתי נקרא."],
   },
-    {
+  {
     heading: "טבלת פוטנציאל בנל",
-    paragraphs: [
-      `┌──────────────┬────────────┬──────────────┬────────────┬────────┬──────────────┬────────────────┬──────────────────────────────┐
-       │ שם פרטי      │ מספר אישי  │ שם משפחה     │ חטיבה      │ דרגה   │ תאריך קליטה  │ סוג הקפאת שכר │ הנחיות מר"ג              │
-        ├──────────────┼────────────┼──────────────┼────────────┼────────┼──────────────┼────────────────┼──────────────────────────────┤
-        │ דורוון         │ 7402892    │ [מושחר]      │ [מושחר]    │ רס"ר   │ [מושחר]      │ חריגי יעוד     │ נדרש לשבץ במסגרת ממתינים│ 
-        └──────────────┴────────────┴──────────────┴────────────┴────────┴──────────────┴────────────────┴──────────────────────────────┘`,
-    ],
+    paragraphs: [], // ריק מאחר ואנחנו מציגים תמונה במקום טקסט
+    image: tableImage, // 2. הוספת מאפיין התמונה לבלוק
   },
 ];
 
@@ -120,11 +117,25 @@ const Chatgpt = ({ page, onPageChange, onComplete }) => {
               {block.heading && (
                 <h4 className="chatgpt-message__heading">{block.heading}</h4>
               )}
+              
+              {/* רינדור פסקאות הטקסט במידה וקיימות */}
               {block.paragraphs.map((p, j) => (
                 <p className="chatgpt-message__text" key={j}>
                   {p}
                 </p>
               ))}
+
+              {/* 3. במידה וקיים מאפיין image בבלוק, נציג אותו כתמונה */}
+              {block.image && (
+            <div style={{ display: "flex", justifyContent: "start", width: "100%" }}>
+                <img 
+                  src={block.image} 
+                  alt={block.heading || "טבלה"} 
+                  className="chatgpt-message__image" 
+                  style={{ maxWidth: "100%", height: "auto", marginTop: "10px", borderRadius: "8px" , width: "65%"}}
+                  />
+                  </div>
+              )}
             </div>
           ))}
 

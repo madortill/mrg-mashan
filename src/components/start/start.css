@@ -206,285 +206,6 @@ body {
 
 
 /* ========================================
-   אנימציית הלפטופ הראשונית
-======================================== */
-
-.intro-laptop {
-  z-index: 10;
-
-  perspective: 100rem;
-  transform-style: preserve-3d;
-
-  animation:
-    intro-laptop-sequence
-    3.9s
-    linear
-    both;
-}
-
-
-/*
-  התמונה הזו שקופה,
-  אבל היא מגדירה ל-wrapper את הגובה
-  לפי היחס האמיתי של computer_home.png.
-*/
-
-.intro-laptop-sizer {
-  width: 100%;
-  height: auto;
-
-  display: block;
-
-  opacity: 0;
-
-  pointer-events: none;
-}
-
-
-/* שתי השכבות של המחשב */
-
-.intro-laptop-base,
-.intro-laptop-lid {
-  position: absolute;
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-}
-
-
-/*
-  מציג רק את אזור המקלדת והבסיס.
-  ניתן לכוון את 77.5% לפי התמונה שלך.
-*/
-
-.intro-laptop-base {
-  clip-path: inset(77.5% 0 0 0);
-
-  z-index: 2;
-}
-
-
-/*
-  מציג רק את המסך והמכסה.
-*/
-
-.intro-laptop-lid {
-  clip-path: inset(0 0 22% 0);
-
-  transform-origin: 50% 78%;
-  transform:
-    perspective(100rem)
-    rotateX(84deg);
-
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-
-  filter: brightness(0.7);
-
-  animation:
-    laptop-lid-open
-    1.3s
-    0.55s
-    cubic-bezier(0.16, 1, 0.3, 1)
-    forwards;
-
-  z-index: 3;
-}
-
-.intro-laptop-part {
-  width: 100%;
-  height: auto;
-
-  display: block;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* ========================================
-   המסך השחור שמתעורר לחיים
-======================================== */
-
-.intro-screen-power {
-  position: absolute;
-
-  top: var(--screen-top);
-  left: var(--screen-left);
-
-  width: var(--screen-width);
-  height: var(--screen-height);
-
-  overflow: hidden;
-
-  background-color: #03070a;
-
-  border-radius: clamp(0.2rem, 0.35vw, 0.55rem);
-
-  box-shadow:
-    inset 0 0 1.5rem rgba(0, 0, 0, 0.95);
-
-  z-index: 4;
-}
-
-
-/* שכבת הצבע שנדלקת */
-
-.intro-screen-power::after {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(232, 255, 255, 0.5) 0%,
-      transparent 37%
-    ),
-    linear-gradient(
-      110deg,
-      #a8deeb 0%,
-      #b8d9f0 48%,
-      #d5d1f8 100%
-    );
-
-  opacity: 0;
-
-  animation:
-    intro-screen-color
-    0.9s
-    2.05s
-    cubic-bezier(0.2, 0.75, 0.2, 1)
-    forwards;
-
-  z-index: 0;
-}
-
-
-/* קו ההדלקה האופקי */
-
-.intro-boot-line {
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-
-  width: 0;
-  height: clamp(0.12rem, 0.25cqw, 0.28rem);
-
-  transform: translate(-50%, -50%);
-
-  border-radius: 999rem;
-
-  background-color: #edffff;
-
-  box-shadow:
-    0 0 0.8rem rgba(207, 254, 255, 1),
-    0 0 2.4rem rgba(98, 217, 236, 0.9);
-
-  animation:
-    intro-boot-line
-    0.55s
-    1.82s
-    ease-out
-    forwards;
-
-  z-index: 3;
-}
-
-
-/* סימן הפעלה במרכז */
-
-.intro-power-core {
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-
-  width: clamp(2.6rem, 3.5cqw, 5rem);
-  aspect-ratio: 1;
-
-  transform:
-    translate(-50%, -50%)
-    scale(0.25);
-
-  opacity: 0;
-
-  border:
-    clamp(0.15rem, 0.3cqw, 0.3rem)
-    solid
-    rgba(255, 255, 255, 0.94);
-
-  border-top-color: transparent;
-
-  border-radius: 50%;
-
-  filter:
-    drop-shadow(
-      0 0 0.7rem rgba(216, 255, 255, 0.9)
-    );
-
-  animation:
-    intro-power-core-in
-    0.7s
-    2.5s
-    cubic-bezier(0.16, 1, 0.3, 1)
-    forwards,
-    intro-power-pulse
-    0.55s
-    3.2s
-    ease-in-out
-    2
-    alternate;
-
-  z-index: 4;
-}
-
-.intro-power-core::after {
-  content: "";
-
-  position: absolute;
-
-  top: -20%;
-  left: 50%;
-
-  width: 12%;
-  height: 48%;
-
-  transform: translateX(-50%);
-
-  border-radius: 999rem;
-
-  background-color: rgba(255, 255, 255, 0.96);
-}
-
-
-/* צל מתחת למחשב */
-
-.intro-laptop-shadow {
-  position: absolute;
-
-  left: 50%;
-  bottom: 3%;
-
-  width: 58%;
-  height: 4%;
-
-  transform: translateX(-50%);
-
-  border-radius: 50%;
-
-  background-color: rgba(0, 0, 0, 0.22);
-
-  filter: blur(1.2rem);
-
-  z-index: 0;
-}
-
-
-/* ========================================
    פס ברוכים הבאים
 ======================================== */
 
@@ -664,7 +385,7 @@ body {
 .flight-graphic {
   position: absolute;
 
-  left: -2%;
+  left: -4%;
   bottom: 6%;
 
   width: 39%;
@@ -1351,58 +1072,63 @@ body {
 .opening-page--motion .flight-plane {
   transform: none;
 }
-
 /* ========================================
-   אודות — כרטיס קטן בפינה הימנית העליונה
+   אודות — כפתור וכרטיס
 ======================================== */
 
 .opening-page--motion .start-about {
   position: absolute;
-  top: max(44px, env(safe-area-inset-top));
-  right: max(46px, env(safe-area-inset-right));
+
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+
   bottom: auto;
   left: auto;
 
   width: max-content;
-  max-width: calc(100% - 32px);
+  max-width: calc(100vw - 24px);
+
   margin: 0;
   padding: 0;
 
   z-index: 100;
+
   direction: rtl;
-
   font-family: "ploni", Arial, sans-serif;
+}
 
-}
-.mapalRope{
-  position: absolute;
-  opacity: 85%;
-  top: -5%;
-  right: -25%;
-  z-index: 0;
-}
+
+/* ========================================
+   כפתור אודות
+======================================== */
+
 .opening-page--motion .start-about__toggle {
   display: block;
-  margin-right: 0;
-  margin-left: auto;
 
-  min-width: 74px;
-  min-height: 44px;
-  padding: 6px 16px;
+  margin: 0 0 0 auto;
+
+  /* גדל במסכים גדולים ומתכווץ במסכים קטנים */
+  width: clamp(88px, 8vw, 120px);
+  min-height: clamp(44px, 5vw, 58px);
+
+  padding: clamp(7px, 1vw, 11px)
+           clamp(14px, 1.5vw, 24px);
 
   border: 1px solid #80d4df;
-  border-radius: 10px;
+  border-radius: clamp(9px, 1vw, 13px);
 
   background: #ffffff;
   color: #21758d;
 
   font-family: "ploni", Arial, sans-serif;
-  font-size: 18px;
+  font-size: clamp(17px, 1.6vw, 23px);
   font-weight: 700;
   line-height: 1.2;
-  text-decoration: none;
 
+  text-decoration: none;
   cursor: pointer;
+
+  box-sizing: border-box;
 }
 
 .opening-page--motion .start-about__toggle:hover {
@@ -1414,78 +1140,299 @@ body {
   outline-offset: 3px;
 }
 
+
+/* ========================================
+   כרטיס אודות
+======================================== */
+
 .opening-page--motion .start-about__card {
   position: absolute;
-  top: calc(100% + 8px);
-  right: 2%;
 
-  width: 240px;
-  max-width: calc(100vw - 32px);
+  top: calc(100% + clamp(6px, 0.8vw, 10px));
 
-  max-height: calc(100vh - 88px);
-  max-height: calc(100dvh - 88px);
+  /* הכרטיס מיושר לצד ימין של הכפתור */
+  right: 0;
+
+  /*
+    רוחב יחסי למסך אבל עם גבולות
+  */
+  width: clamp(200px, 20vw, 270px);
+
+  /*
+    לעולם לא יצא מגבולות המסך
+  */
+  max-width: calc(100vw - 54px);
+
+  /*
+    שלא יתפוס את כל גובה המסך
+  */
+  max-height: calc(100vh - 90px);
+  max-height: calc(100dvh - 90px);
+
   overflow-y: auto;
   overscroll-behavior: contain;
 
-  padding: 22px 18px;
+  padding: clamp(16px, 2vw, 24px)
+           clamp(14px, 1.8vw, 22px);
 
   border: 1.5px solid #338fe6;
-  border-radius: 16px;
+  border-radius: clamp(12px, 1.3vw, 18px);
 
   background: #ffffff;
+
   box-shadow: 0 4px 12px rgb(70 55 25 / 12%);
 
   text-align: center;
+
   font-family: "ploni", Arial, sans-serif;
+
+  box-sizing: border-box;
+
+  isolation: isolate;
 }
 
-/* מבטיח שהכרטיס באמת מוסתר לפני הפתיחה */
+
+/* ========================================
+   הסתרה
+======================================== */
+
 .opening-page--motion .start-about__card[hidden] {
   display: none;
 }
 
+
+/* ========================================
+   תוכן
+======================================== */
+
 .opening-page--motion .start-about__details {
   display: flex;
   flex-direction: column;
-  gap: 17px;
+
+  gap: clamp(12px, 1.5vw, 18px);
+
   margin: 0;
   padding: 0;
-      z-index: 50;
 
+  position: relative;
+  z-index: 2;
 }
 
 .opening-page--motion .start-about__details > div {
   display: block;
+
   margin: 0;
   padding: 0;
-  border: 0;
-      z-index: 50;
 
+  border: 0;
 }
 
 .opening-page--motion .start-about__details dt {
-  margin: 0 0 4px;
+  margin: 0 0 clamp(3px, 0.4vw, 5px);
 
   font-family: "ploni-bold", "ploni", Arial, sans-serif;
-  font-size: 22px;
+
+  font-size: clamp(18px, 1.7vw, 23px);
   font-weight: 700;
+
   line-height: 1.15;
 
   color: #21758d;
-  z-index: 50;
 }
 
 .opening-page--motion .start-about__details dd {
   margin: 0;
 
   font-family: "ploni", Arial, sans-serif;
-  font-size: 18px;
+
+  font-size: clamp(15px, 1.35vw, 19px);
   font-weight: 400;
+
   line-height: 1.3;
 
   color: #4896ae;
-    z-index: 50;
+}
 
+
+/* ========================================
+   תמונה בתחתית
+======================================== */
+
+.opening-page--motion .start-about__image {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
+  margin-top: clamp(16px, 2vw, 24px);
+  padding-top: clamp(12px, 1.5vw, 18px);
+
+  border-top: 1px solid #d8edf1;
+}
+
+.opening-page--motion .start-about__image img {
+  display: block;
+
+  /*
+    התמונה גדלה מעט במסכים גדולים,
+    אבל נשארת קטנה
+  */
+  width: clamp(60px, 8vw, 95px);
+
+  max-width: 100%;
+  height: auto;
+
+  object-fit: contain;
+}
+
+
+/* ========================================
+   החבל הדקורטיבי
+======================================== */
+
+.mapalRope {
+  position: absolute;
+
+  width: clamp(80px, 11vw, 150px);
+  height: auto;
+
+  opacity: 0.85;
+
+  top: clamp(-15px, -2vw, -5px);
+  right: clamp(-80px, -7vw, -25px);
+
+  z-index: -1;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* ========================================
+   מסכים קטנים
+======================================== */
+
+@media (max-width: 600px) {
+
+  .opening-page--motion .start-about {
+    top: max(10px, env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
+
+    max-width: calc(100vw - 20px);
+  }
+
+  .opening-page--motion .start-about__toggle {
+    width: 92px;
+    min-height: 46px;
+
+    padding: 7px 14px;
+
+    font-size: 18px;
+  }
+
+  .opening-page--motion .start-about__card {
+    /*
+      במסך קטן הכרטיס כמעט לכל רוחב המסך,
+      אבל משאיר שוליים
+    */
+    width: min(280px, calc(100vw - 20px));
+
+    max-width: calc(100vw - 20px);
+
+    max-height: calc(100dvh - 72px);
+
+    padding: 17px 14px;
+
+    border-radius: 13px;
+  }
+
+  .opening-page--motion .start-about__details {
+    gap: 13px;
+  }
+
+  .opening-page--motion .start-about__details dt {
+    font-size: 18px;
+  }
+
+  .opening-page--motion .start-about__details dd {
+    font-size: 16px;
+  }
+
+  .opening-page--motion .start-about__image {
+    margin-top: 16px;
+    padding-top: 12px;
+  }
+
+  .opening-page--motion .start-about__image img {
+    width: 70px;
+  }
+
+  .mapalRope {
+    width: 120px;
+
+    right: -45px;
+    top: -10px;
+  }
+}
+
+
+/* ========================================
+   מסכים ממש קטנים
+======================================== */
+
+@media (max-width: 380px) {
+
+  .opening-page--motion .start-about {
+    right: 8px;
+    max-width: calc(100vw - 16px);
+  }
+
+  .opening-page--motion .start-about__toggle {
+    width: 86px;
+    min-height: 43px;
+
+    font-size: 17px;
+  }
+
+  .opening-page--motion .start-about__card {
+    width: calc(100vw - 16px);
+    max-width: calc(100vw - 16px);
+
+    padding: 14px 11px;
+  }
+
+  .opening-page--motion .start-about__details {
+    gap: 11px;
+  }
+
+  .opening-page--motion .start-about__details dt {
+    font-size: 17px;
+  }
+
+  .opening-page--motion .start-about__details dd {
+    font-size: 15px;
+  }
+
+  .opening-page--motion .start-about__image img {
+    width: 60px;
+  }
+}
+
+
+/* ========================================
+   מסכים רחבים / מחשב
+======================================== */
+
+@media (min-width: 1200px) {
+
+  .opening-page--motion .start-about__card {
+    width: 300px;
+  }
 }
 
 /* ========================================

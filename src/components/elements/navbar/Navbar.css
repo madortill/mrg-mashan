@@ -25,7 +25,6 @@
   box-shadow: 0 0.35rem 0.55rem rgba(0, 0, 0, 0.22);
   border-radius: 1.5rem;
 
-  /* חשוב - שלא יהיה רוחב שונה בין ה-trigger לתפריט */
   overflow: hidden;
 }
 
@@ -104,11 +103,15 @@
 .course-navbar__menu {
   width: 100%;
 
-  padding: 0.15rem 0 0.35rem;
+  /* ⭐ padding אופקי - כדי שהפריטים לא ייצמדו לקצוות
+     ותהיה סביבם "נשימה" שמאפשרת לראות את הפינות המעוגלות */
+  padding: 0.35rem 0.55rem 0.5rem;
 
   display: flex;
   flex-direction: column;
-  gap: 0;
+
+  /* ⭐ מרווח בין שורות - כך שה-hover של שורה לא נדבק לשורה השכנה */
+  gap: 0.3rem;
 
   max-height: 250px;
   overflow-y: auto;
@@ -135,19 +138,17 @@
   position: relative;
 
   width: 100%;
-  min-height: clamp(1.4rem, 2.5vw, 2.1rem);
+  /* ⭐ קצת יותר גובה - פחות מכווץ */
+  min-height: clamp(1.9rem, 3vw, 2.5rem);
 
   display: grid;
 
-  /*
-    העמודות נשארות קבועות כדי שהטקסט
-    והאייקונים לא "יקפצו"
-  */
   grid-template-columns: 2.2rem minmax(0, 1fr) 2.2rem;
 
   align-items: center;
 
-  padding: 0.1rem 0.25rem;
+  /* ⭐ padding פנימי גדול יותר */
+  padding: 0.25rem 0.4rem;
 
   border: none;
   border-radius: 999rem;
@@ -160,11 +161,6 @@
 
   cursor: pointer;
 
-  /*
-    חשוב:
-    אין transform על ה-hover,
-    כדי שה-hover לא יזוז מהמיקום של העכבר
-  */
   transition: background-color 150ms ease;
 }
 
@@ -180,11 +176,10 @@
   justify-content: center;
 
   width: 1.6rem;
-  height: 1.6rem;
+  height: 100%; /* ⭐ שונה מ-1.6rem כדי להתאים בדיוק לגובה השורה */
 
   justify-self: center;
 }
-
 .course-navbar__status svg {
   width: 75%;
   height: 75%;
@@ -204,8 +199,14 @@
   grid-column: 2;
 
   width: 100%;
+  height: 95%;
 
-  text-align: center;
+  /* ⭐ flex כדי למרכז אנכית באותו אופן כמו האייקון */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 1;
 
   white-space: nowrap;
   overflow: hidden;
@@ -276,8 +277,6 @@
    RESPONSIVE
 ============================ */
 
-/* מסכים קטנים */
-
 @media (max-width: 600px) {
   .course-navbar {
     top: -40px;
@@ -292,18 +291,20 @@
     right: 0.8rem;
   }
 
+  .course-navbar__menu {
+    padding: 0.3rem 0.45rem 0.4rem;
+    gap: 0.25rem;
+    max-height: 45vh;
+  }
+
   .course-navbar__item {
     grid-template-columns: 2rem minmax(0, 1fr) 2rem;
-    min-height: 1.9rem;
+    min-height: 1.85rem;
   }
 
   .course-navbar__status {
     width: 1.45rem;
     height: 1.45rem;
-  }
-
-  .course-navbar__menu {
-    max-height: 45vh;
   }
 }
 
@@ -326,9 +327,14 @@
     height: 1.15rem;
   }
 
+  .course-navbar__menu {
+    padding: 0.25rem 0.4rem 0.35rem;
+    gap: 0.2rem;
+  }
+
   .course-navbar__item {
     grid-template-columns: 1.8rem minmax(0, 1fr) 1.8rem;
-    min-height: 1.75rem;
+    min-height: 1.7rem;
     font-size: 0.85rem;
   }
 

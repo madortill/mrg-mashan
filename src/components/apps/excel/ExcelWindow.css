@@ -37,7 +37,15 @@
 .excel-window__menu {
   flex-shrink: 0; /* לא נמעכים כשה-body גדל */
 }
-
+.excel-window_main-title {
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: clamp(18px, 3vw, 24px);
+  align-self: center; /* מרכז את הכותרת אנכית */
+  right: 50%; /* מיקום אופקי */
+  transform: translateX(50%); /* מיקום אופקי */
+  position: relative; /* מאפשר למקם את הכותרת באופן חופשי */
+}
 .excel-window__body {
   position: relative;
   flex: 1;         
@@ -48,15 +56,7 @@
   overflow: hidden;
 }
 
-.excel-window__icon {
-  width: clamp(10px, 2vw, 20px);
-  height: clamp(10px, 2vw, 22px);
-  background: #fff;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 
 .excel-window__icon-x {
   color: var(--excel-green-dark);

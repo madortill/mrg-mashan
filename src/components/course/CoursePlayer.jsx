@@ -49,80 +49,92 @@ const APP_ORDER = [
   "smsGal",
   "duolingo",
 ];
-
 const APP_CONTENT = {
   target: {
     label: "Target",
+    navMenuLabel: "מטרות הלומדה", // ⭐ שם לתצוגה בנאבבר
     navbarTitle: "מטרות הלומדה",
     component: Target,
     laptopVariant: "empty",
   },
   chrome: {
     label: "Google Chrome",
+    navMenuLabel: "מהו מרכז גיוס -ynet", // ⭐
     navbarTitle: "מהו מרכז גיוס? google",
     component: GoogleYnet,
     laptopVariant: "empty",
   },
   padlet: {
     label: "padlet",
+    navMenuLabel: "מהם דוחות מרג", // ⭐
     navbarTitle: " דוחות מרג",
     component: Padlet,
     laptopVariant: "empty",
   },
   outlook: {
     label: "Outlook",
+    navMenuLabel: "Outlook", // ⭐
     navbarTitle: "דוחות יומיים-פניות קודוד",
     component: Outlook,
     laptopVariant: "empty",
   },
   excel: {
     label: "Excel",
+    navMenuLabel: "סוגי דוחות -excel  ", // ⭐
     navbarTitle: "דוחות ",
     component: Excel,
     laptopVariant: "empty",
   },
-   game: { 
+  game: {
     label: "game",
+    navMenuLabel: "דוח חסרי פרטים", // ⭐
     navbarTitle: "דוח חסרי פרטים   ",
     component: EmptyDetails,
     laptopVariant: "empty",
   },
-   chatgpt: { 
+  chatgpt: {
     label: "chatgpt",
+    navMenuLabel: "שינוי איוש בחיילי מילואים - chat", // ⭐
     navbarTitle: "שינוי איוש בחיילי מילואים",
     component: Chatgpt,
     laptopVariant: "empty",
   },
-   setting: { 
+  setting: {
     label: "setting",
+    navMenuLabel: "מעקב ובקרה על נתונים", // ⭐
     navbarTitle: "מעקב ובקרה על נתונים",
     component: Setting,
     laptopVariant: "empty",
   },
   newsToday: {
-  label: "NewsToday",
-  navbarTitle: 'תורנויות מר"ג',
-  component: NewsToday,
-  laptopVariant: "empty",
-},
+    label: "NewsToday",
+    navMenuLabel: "מה זה תורנויות מרג- מידי יום ", 
+    navbarTitle: 'תורנויות מר"ג',
+    component: NewsToday,
+    laptopVariant: "empty",
+  },
   calling: {
-  label: "Calling",
-  navbarTitle: 'תורנויות מר"ג',
-  component: Calling,
-  laptopVariant: "empty",
-},
+    label: "Calling",
+    navMenuLabel: "תורנויות מרג טלפון בחירום", // ⭐
+    navbarTitle: 'תורנויות מר"ג',
+    component: Calling,
+    laptopVariant: "home",
+  },
   smsGal: {
-  label: "SmsGal",
-  navbarTitle: 'תורנויות מר"ג',
-  component: SmsGal,
-  laptopVariant: "home",
-},
+    label: "SmsGal",
+    navMenuLabel: "תורנויות מרג שליחת sms", 
+    navbarTitle: 'תורנויות מר"ג',
+    component: SmsGal,
+    laptopVariant: "home",
+  },
   duolingo: {
-  label: "duolingo",
-  navbarTitle: 'שאלות לסיכום',
-  component: Duolingo,
-  laptopVariant: "empty",
-}
+    label: "duolingo",
+    navMenuLabel: "סיכום ושאלות - duolingo", // ⭐
+    navbarTitle: 'שאלות לסיכום',
+    component: Duolingo,
+    laptopVariant: "empty",
+  },
+
 };
 
 const APP_GLOW_COLORS = {
@@ -162,8 +174,8 @@ const APP_GLOW_COLORS = {
   },
 
   setting: {
-    glow: "#607d8b",
-    glow2: "#90a4ae",
+    glow: "#a29b9b",
+    glow2: "#d5dce0",
   },
 
   newsToday: {
@@ -211,6 +223,8 @@ function createDefaultProgress() {
     visitedApps: [],
     completedApps: [],
     appPages: { ...initialAppPages },
+        pendingCompleteAppId: null, 
+
   };
 }
 
@@ -380,50 +394,44 @@ function closeIntroPopup() {
       },
     }));
   }
+function finishApp(appId, destination = "home") {
+  const appIndex = COURSE_APPS.findIndex((app) => app.id === appId);
+  if (appIndex === -1) return;
 
-  function finishApp(appId, destination = "home") {
-    const appIndex = COURSE_APPS.findIndex((app) => app.id === appId);
+  const nextIndex = appIndex + 1;
+  const nextApp = COURSE_APPS[nextIndex];
 
-    if (appIndex === -1) {
-      return;
+  setProgress((previous) => {
+    const completedApps = Array.from(new Set([...previous.completedApps, appId]));
+    const highestUnlockedIndex = Math.max(
+      previous.highestUnlockedIndex,
+      Math.min(nextIndex, COURSE_APPS.length)
+    );
+
+    const base = {
+      ...previous,
+      completedApps,
+      highestUnlockedIndex,
+      pendingCompleteAppId: null, // ⭐ מנקים כדי לא "לדלוף" לפעם הבאה
+    };
+
+    if (destination === "next" && nextApp) {
+      return {
+        ...base,
+        screen: nextApp.id,
+        visitedApps: Array.from(new Set([...previous.visitedApps, nextApp.id])),
+      };
     }
 
-    const nextIndex = appIndex + 1;
-    const nextApp = COURSE_APPS[nextIndex];
-
-    setProgress((previous) => {
-      const completedApps = Array.from(
-        new Set([...previous.completedApps, appId])
-      );
-      const highestUnlockedIndex = Math.max(
-        previous.highestUnlockedIndex,
-        Math.min(nextIndex, COURSE_APPS.length)
-      );
-
-      if (destination === "next" && nextApp) {
-        return {
-          ...previous,
-          screen: nextApp.id,
-          completedApps,
-          highestUnlockedIndex,
-          visitedApps: Array.from(
-            new Set([...previous.visitedApps, nextApp.id])
-          ),
-        };
-      }
-
-      return {
-        ...previous,
-        screen: "hub",
-        completedApps,
-        highestUnlockedIndex,
-      };
-    });
-  }
+    return { ...base, screen: "hub" };
+  });
+}
 // ⭐ חדש - קפיצה ישירה לאפליקציה אחרת + עמוד ספציפי בתוכה,
 // בלי לעבור דרך שרשרת ה-"הבא" הרגילה. משמש למשל לקישור
 // בהודעת SMS שמוביל ישר לטבלה מסוימת באקסל.
-function jumpToApp(appId, targetPage = 0) {
+// ⭐ completionAppId - איזו אפליקציה תיחשב "הושלמה" כשחוזרים הביתה
+// מהמסך שאליו קופצים (למשל smsGal, גם שהמסך בפועל יהיה excel)
+function jumpToApp(appId, targetPage = 0, completionAppId = null) {
   const exists = COURSE_APPS.some((app) => app.id === appId);
   if (!exists) return;
 
@@ -435,6 +443,7 @@ function jumpToApp(appId, targetPage = 0) {
       ...previous.appPages,
       [appId]: targetPage,
     },
+    pendingCompleteAppId: completionAppId, // ⭐
   }));
 }
   function goToPreviousApp(appId) {
@@ -457,27 +466,27 @@ function jumpToApp(appId, targetPage = 0) {
         : INTRO_NAVBAR_TITLE
       : activeApp?.navbarTitle ?? "";
 
-  const navbarItems = COURSE_APPS.map((app, index) => {
-    const isCurrent = progress.screen === app.id;
-    const isCompleted = progress.completedApps.includes(app.id);
-    const isVisited = progress.visitedApps.includes(app.id);
-    const isUnlocked =
-      progress.introPopupSeen &&
-      (index <= progress.highestUnlockedIndex || isVisited || isCompleted);
+const navbarItems = COURSE_APPS.map((app, index) => {
+  const isCurrent = progress.screen === app.id;
+  const isCompleted = progress.completedApps.includes(app.id);
+  const isVisited = progress.visitedApps.includes(app.id);
+  const isUnlocked =
+    progress.introPopupSeen &&
+    (index <= progress.highestUnlockedIndex || isVisited || isCompleted);
 
-    let status = "locked";
+  let status = "locked";
 
-    if (isCurrent) status = "current";
-    else if (isCompleted) status = "completed";
-    else if (isUnlocked) status = "next";
+  if (isCurrent) status = "current";
+  else if (isCompleted) status = "completed";
+  else if (isUnlocked) status = "next";
 
-    return {
-      id: app.id,
-      label: app.label,
-      status,
-      disabled: !isUnlocked,
-    };
-  });
+  return {
+    id: app.id,
+    label: app.navMenuLabel ?? app.label, // ⭐ שינוי כאן
+    status,
+    disabled: !isUnlocked,
+  };
+});
 
   function renderHub({ blockApps = false } = {}) {
     return (
@@ -533,15 +542,16 @@ function jumpToApp(appId, targetPage = 0) {
       );
     }
 
-  const appProps = {
+const appProps = {
   page: progress.appPages[activeApp.id] ?? 0,
   onPageChange: (newPage) => setAppPage(activeApp.id, newPage),
   onBack: () => goToPreviousApp(activeApp.id),
   onHome: goHome,
-  onComplete: () => finishApp(activeApp.id, "home"),
+  onComplete: () =>
+    finishApp(progress.pendingCompleteAppId ?? activeApp.id, "home"), // ⭐
   onNext: () => finishApp(activeApp.id, "next"),
   onSpeechChange: setSpeechText,
-  onJumpToApp: jumpToApp, // ⭐ חדש
+  onJumpToApp: jumpToApp,
 };
     if (activeApp.showDesktopBehind) {
       return (

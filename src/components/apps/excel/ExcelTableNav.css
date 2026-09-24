@@ -1,0 +1,67 @@
+.excel-table-nav {
+  position: relative;
+  display: inline-block;
+}
+
+.excel-table-nav__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.excel-table-nav__label {
+  font: inherit;
+  color: inherit;
+}
+
+.excel-table-nav__arrow {
+  font-size: 0.7em;
+  transition: transform 0.15s ease;
+}
+
+.excel-table-nav__arrow.is-open {
+  transform: rotate(180deg);
+}
+
+.excel-table-nav__menu {
+  position: absolute;
+  top: 100%;
+  right: 0; /* RTL - נפתח מתחת ומיושר לימין */
+  margin-top: 4px;
+  background: #ffffff;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  list-style: none;
+  padding: 4px 0;
+  min-width: 200px;
+  z-index: 50;
+}
+
+.excel-table-nav__item {
+  display: block;
+  width: 100%;
+  text-align: right;
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #222;
+  white-space: nowrap;
+}
+
+.excel-table-nav__item:hover {
+  background: #f2f2f2;
+}
+
+.excel-table-nav__item.is-active {
+  font-weight: 700;
+  color: #217346;
+}

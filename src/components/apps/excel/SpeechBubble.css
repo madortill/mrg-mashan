@@ -1,7 +1,7 @@
 .character-bubble {
   position: absolute;
   bottom: 4%;
-  right: 2%; /* יוצאת מגבולות ה-excel-window, לא מוסתרת כי היא לא בתוכו */
+  right: 4%; /* יוצאת מגבולות ה-excel-window, לא מוסתרת כי היא לא בתוכו */
   display: flex;
   flex-direction: column;
   align-items: flex-end;

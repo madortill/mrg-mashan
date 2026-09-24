@@ -36,7 +36,7 @@ const Google = ({ onComplete }) => {
     <div className="ynet-div">
 <div className="ynet-header">
   <div className="ynet-header-inner">
-      <img className="ynet_img" src={ynet} />
+      {/* <img className="ynet_img" src={ynet} /> */}
     <div className="ynet-logo">ynet</div>
 
     <div className="ynet-menu">

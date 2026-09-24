@@ -5,6 +5,7 @@ import "./EmptyDetails.css";
 import emptyDetailsIcon from "../../../assets/images/folder.svg";
 import phoneReportImage from "../../../assets/images/phone-report.png";
 import bankReportImage from "../../../assets/images/bank-report.png";
+import { image } from "framer-motion/client";
 /**
  * אייקונים - SVG מוטמעים ידנית (ללא תלות בחבילה חיצונית כמו lucide-react),
  * כדי שהקומפוננטה תרוץ על כל מחשב/סביבה בלי צורך בהתקנת עוד תלויות.
@@ -130,7 +131,7 @@ image: phoneReportImage,
     label: "דו\"ח חסרי חשבון בנק",
     title: "דו\"ח חסרי חשבון בנק-",
     body: 'דו"ח זה מפרט על החיילים להם יש פער בפרטי חשבון בנק, דבר המשפיע על קבלת מענקים והשתתפות בהחזרי הוצאות נסיעה על ביצוע ימי מילואים. קבלת המשכורת איננה נפגעת כי היא לא דרך מופת, אלא דרך ביטוח לאומי. על מנת לטפל בדוח זה, יש ליצור קשר עם החייל ולהשלים מולו את פרטי חשבון הבנק. החייל צריך לשלוח טופס "ניהול חשבון" או כל אסמכתא אחרת המעידה על מספר חשבון הבנק שלו, ולאחר מכן על ק. משא"ן המילואים להזין את חשבון הבנק במערכת אנשים במסך "עדכון פרטים אישיים".',
-    
+    image: bankReportImage,
   },
 };
 
