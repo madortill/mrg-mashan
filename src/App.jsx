@@ -23,6 +23,49 @@ function AnimatedRoutes() {
   );
 }
 
+// ⭐ מציג את הרמז לסיבוב כל פעם שהמכשיר עובר למצב אנכי
+// (לא רק בטעינה הראשונה), על ידי שינוי ה-key בכל מעבר.
+function RotateHint() {
+  const [hintKey, setHintKey] = useState(0);
+  const [isPortrait, setIsPortrait] = useState(
+    window.matchMedia("(max-width: 600px) and (orientation: portrait)").matches
+  );
+
+  useEffect(() => {
+    const query = window.matchMedia(
+      "(max-width: 600px) and (orientation: portrait)"
+    );
+
+    function handleChange(event) {
+      if (event.matches) {
+        // ⭐ נכנסנו למצב אנכי - מעלים את ה-key כדי להריץ את האנימציה מההתחלה
+        setHintKey((previous) => previous + 1);
+      }
+
+      setIsPortrait(event.matches);
+    }
+
+    query.addEventListener("change", handleChange);
+
+    return () => {
+      query.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  if (!isPortrait) {
+    return null;
+  }
+
+  return (
+    <div className="rotate-hint" key={hintKey} aria-hidden="true">
+      <span className="rotate-hint__icon" />
+      <span className="rotate-hint__text">
+        סובבו את המכשיר לרוחב לחוויה הטובה ביותר
+      </span>
+    </div>
+  );
+}
+
 function App() {
   const [assetsLoaded, setAssetsLoaded] = useState(false);
 
@@ -44,6 +87,9 @@ function App() {
       <div className="symbols">
         <img src={logos} alt="bahad11" className="bahad11" />
       </div>
+
+      <RotateHint />
+
       <AnimatedRoutes />
     </div>
   );

@@ -155,3 +155,101 @@ img {
 .bahad11 {
   width: 12vw;
 }
+/* ========================================
+   הודעת "הפוך את המכשיר" - טלפון במצב אנכי
+   מוצגת ל-3 שניות ואז נעלמת לצמיתות,
+   וחוזרת בכל פעם שמסתובבים שוב לאנכי
+======================================== */
+
+.rotate-hint {
+  position: fixed;
+  inset: 0;
+
+  z-index: 99999;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1.2rem;
+
+  background-color: #0d1b2a;
+  color: #ffffff;
+
+  direction: rtl;
+  text-align: center;
+
+  pointer-events: none;
+
+  animation: rotate-hint-fade 3s ease forwards;
+}
+
+.rotate-hint__icon {
+  width: 4.5rem;
+  height: 7rem;
+
+  position: relative;
+
+  border: 0.25rem solid #ffffff;
+  border-radius: 0.9rem;
+
+  animation: rotate-hint-spin 1.6s ease-in-out infinite;
+}
+
+.rotate-hint__icon::after {
+  content: "";
+
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+
+  width: 0.35rem;
+  height: 0.35rem;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background-color: #ffffff;
+}
+
+.rotate-hint__text {
+  font-family: ploni;
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  max-width: 80%;
+}
+
+@keyframes rotate-hint-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(90deg);
+  }
+
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+/*
+  0%-80%: מוצג במלואו.
+  100%: שקוף לגמרי,
+  כך שתוך 3 שניות ה-JS מסיר את הרכיב
+  (isPortrait) והמסך מתפנה.
+*/
+@keyframes rotate-hint-fade {
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
